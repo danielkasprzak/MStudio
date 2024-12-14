@@ -4,10 +4,10 @@ interface PanelProps {
 }
 
 export default ({ children, panelType } : PanelProps) => {
-    let cssClass = 'flex flex-col justify-start mt-8';
+    let cssClass = 'flex flex-col justify-start py-8';
     
     if (panelType === 'left') {
-        cssClass += ' mr-4'
+        cssClass += ' mr-4 sticky top-0 h-screen'
     } 
     else {
         cssClass += ' ml-4'

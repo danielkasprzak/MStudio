@@ -3,5 +3,10 @@
 @tailwind utilities;
 
 ::selection {
-    background-color: bisque;
+    background-color: rgb(46, 46, 46);
+}
+
+* {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }

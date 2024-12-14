@@ -7,7 +7,7 @@ function App() {
     //   <Login />
     // </div>
 
-    <div className='bg-dark-background w-screen h-screen flex flex-row justify-center'>
+    <div className='bg-dark-background w-full h-full flex flex-row justify-center'>
       <Reservation />
     </div>
   )
