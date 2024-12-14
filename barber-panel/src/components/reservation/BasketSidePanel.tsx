@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useAppSelector } from '../../store/hooks';
 
 import Title from './PanelTitle';
 import SelectedOffer from './SelectedOffer';
@@ -11,6 +12,8 @@ interface BasketPanelProps {
 }
 
 export default ({ isActive, onHover, activeHeight, inactiveHeight }: BasketPanelProps) => {
+    const myOffers = useAppSelector((state) => state.cart.items)
+
     return (
         <motion.div
             className='w-[26rem] h-[33%] bg-dark-foreground rounded-2xl mt-8 p-8 flex flex-col justify-between'
