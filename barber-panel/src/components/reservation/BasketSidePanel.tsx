@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import { useAppSelector } from '../../store/hooks';
+import { basketActions } from "../../store/basket-slice";
+import { useAppDispatch } from "../../store/hooks";
 
 import Title from './PanelTitle';
 import SelectedOffer from './SelectedOffer';
@@ -13,6 +15,11 @@ interface BasketPanelProps {
 
 export default ({ isActive, onHover, activeHeight, inactiveHeight }: BasketPanelProps) => {
     const basketItems = useAppSelector((state) => state.cart.items);
+    const dispatch = useAppDispatch();
+
+    const clearItemsHandler = () => {
+        dispatch(basketActions.clearItems());
+    }
 
     const totalPrice = basketItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
     // const totalTime = basketItems.reduce((sum, item) => sum + item.time, 0);
@@ -24,7 +31,10 @@ export default ({ isActive, onHover, activeHeight, inactiveHeight }: BasketPanel
             animate={{ height: isActive ? activeHeight : inactiveHeight }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
         >
-            <Title>Koszyk</Title>
+            <div className="flex flex-row items-center">
+                <Title>Koszyk</Title>
+                <button onClick={clearItemsHandler} className='text-white pl-3'>U</button>
+            </div>
 
             <ul className="flex flex-col justify-center text-sm text-neutral-300 font-normal font-montserrat">
             {basketItems.length === 0 ? (

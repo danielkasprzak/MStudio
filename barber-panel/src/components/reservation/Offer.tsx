@@ -27,7 +27,7 @@ export default ({ id, label, description, price, time } : OfferProps) => {
         </div>
         <div className="flex flex-row items-center justify-end pl-4">
             <p className="text-white font-normal text-normal px-3 text-nowrap"><span className="font-semibold">{price}</span>zł</p>
-            <button onClick={() => addItemHandler(id, label, price, time)} className="border border-neutral-800 rounded-xl py-2 px-4 tracking-wide text-sm">Umów</button>
+            <button onClick={() => addItemHandler(id, label, price, time)} className="border border-neutral-800 rounded-xl py-2 px-4 tracking-wide text-sm select-none">Umów</button>
         </div>
     </li>
     )
