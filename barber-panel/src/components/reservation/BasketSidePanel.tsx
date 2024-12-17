@@ -12,7 +12,7 @@ interface BasketPanelProps {
 }
 
 export default ({ isActive, onHover, activeHeight, inactiveHeight }: BasketPanelProps) => {
-    const myOffers = useAppSelector((state) => state.cart.items)
+    const basketItems = useAppSelector((state) => state.cart.items)
 
     return (
         <motion.div
@@ -24,8 +24,30 @@ export default ({ isActive, onHover, activeHeight, inactiveHeight }: BasketPanel
             <Title>Koszyk</Title>
 
             <ul className="flex flex-col justify-center text-sm text-neutral-300 font-normal">
-                <SelectedOffer label='Strzyżenie męskie' price='40' time='25' />
-                <li>...więcej</li>
+            {basketItems.length === 0 ? (
+                <li>Brak</li>
+                ) : isActive ? (
+                    basketItems.map((item) => (
+                        <SelectedOffer 
+                            key={item.id}
+                            id={item.id} 
+                            label={item.label} 
+                            price={item.price} 
+                            time={item.time} 
+                        />
+                    ))
+                ) : (
+                    <>
+                        <SelectedOffer 
+                            key={basketItems[0].id}
+                            id={basketItems[0].id} 
+                            label={basketItems[0].label} 
+                            price={basketItems[0].price} 
+                            time={basketItems[0].time} 
+                        />
+                        {basketItems.length > 1 && <li>...więcej</li>}
+                    </>
+                )}
             </ul>
 
             <div className="flex flex-col justify-center pt-2">
