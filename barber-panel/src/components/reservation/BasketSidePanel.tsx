@@ -12,7 +12,10 @@ interface BasketPanelProps {
 }
 
 export default ({ isActive, onHover, activeHeight, inactiveHeight }: BasketPanelProps) => {
-    const basketItems = useAppSelector((state) => state.cart.items)
+    const basketItems = useAppSelector((state) => state.cart.items);
+
+    const totalPrice = basketItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    // const totalTime = basketItems.reduce((sum, item) => sum + item.time, 0);
 
     return (
         <motion.div
@@ -34,6 +37,7 @@ export default ({ isActive, onHover, activeHeight, inactiveHeight }: BasketPanel
                             label={item.label} 
                             price={item.price} 
                             time={item.time} 
+                            quantity={item.quantity}
                         />
                     ))
                 ) : (
@@ -44,6 +48,7 @@ export default ({ isActive, onHover, activeHeight, inactiveHeight }: BasketPanel
                             label={basketItems[0].label} 
                             price={basketItems[0].price} 
                             time={basketItems[0].time} 
+                            quantity={basketItems[0].quantity}
                         />
                         {basketItems.length > 1 && <li>...więcej</li>}
                     </>
@@ -51,7 +56,7 @@ export default ({ isActive, onHover, activeHeight, inactiveHeight }: BasketPanel
             </ul>
 
             <div className="flex flex-col justify-center pt-2">
-                <p className="font-montserrat text-neutral-300 text-sm font-normal pb-2">Do zapłaty: <span className="font-medium text-white pl-3">260 PLN</span></p>
+                <p className="font-montserrat text-neutral-300 text-sm font-normal pb-2">Do zapłaty: <span className="font-medium text-white pl-3">{totalPrice}zł</span></p>
                 <button className="w-full font-montserrat font-normal border border-neutral-800 px-4 py-2 rounded-xl tracking-wide text-neutral-300 flex flex-row justify-center items-center">Zarezerwuj</button>
             </div>
         </motion.div>
