@@ -26,7 +26,7 @@ export default ({ isActive, onHover, activeHeight, inactiveHeight }: BasketPanel
         >
             <Title>Koszyk</Title>
 
-            <ul className="flex flex-col justify-center text-sm text-neutral-300 font-normal">
+            <ul className="flex flex-col justify-center text-sm text-neutral-300 font-normal font-montserrat">
             {basketItems.length === 0 ? (
                 <li>Brak</li>
                 ) : isActive ? (
