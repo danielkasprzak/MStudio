@@ -1,11 +1,24 @@
+import { NavLink } from "react-router-dom"
 import NavButton from "./NavButton"
 
 export default () => {
     return (
-        <div className='w-[46rem] h-auto py-4 flex flex-row items-center justify-end'>
-            <NavButton>Panel administratora</NavButton>
-            <NavButton>Moje rezerwacje</NavButton>
-            <NavButton>Rezerwacja</NavButton>
+        <div className='w-[46rem] h-auto py-4 flex flex-row items-center justify-end'>   
+            <NavButton isActive={false}>Panel administratora</NavButton>
+            <NavLink to="/rezerwacja/moje-rezerwacje">
+                {({ isActive }) => (
+                    <NavButton isActive={isActive}>
+                        Moje rezerwacje
+                    </NavButton>
+                )}
+            </NavLink>
+            <NavLink to="/rezerwacja" end>
+                {({ isActive }) => (
+                    <NavButton isActive={isActive}>
+                        Rezerwacja
+                    </NavButton>
+                )}
+            </NavLink>
         </div>
     )
 }
