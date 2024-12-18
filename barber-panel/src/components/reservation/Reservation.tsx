@@ -9,7 +9,7 @@ export default () => {
     const [activeSidePanel, setActiveSidePanel] = useState<number | null>(1);
 
     return (
-        <>
+        <div className='bg-dark-background w-full h-full flex flex-row justify-center'>
             <Panel panelType='left'>
                 <Info isActive={activeSidePanel === 1} onHover={() => setActiveSidePanel(1)} activeHeight="66%" inactiveHeight="40%" />
                 <Basket isActive={activeSidePanel === 2} onHover={() => setActiveSidePanel(2)} activeHeight="66%" inactiveHeight="33%" />
@@ -18,6 +18,6 @@ export default () => {
                 <NavBar />
                 <Offers />
             </Panel>
-        </>
+        </div>
     )
 }

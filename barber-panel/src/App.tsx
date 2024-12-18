@@ -1,16 +1,14 @@
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './components/auth/Login';
 import Reservation from './components/reservation/Reservation';
 
-function App() {
-  return (
-    // <div className='flex justify-center items-center bg-dark-background w-screen h-screen'>
-    //   <Login />
-    // </div>
+const router = createBrowserRouter([
+  { path: '/', element: <Reservation /> },
+  { path: '/login', element: <Login /> }
+]);
 
-    <div className='bg-dark-background w-full h-full flex flex-row justify-center'>
-      <Reservation />
-    </div>
-  )
+function App() {
+  return <RouterProvider router={router} />;
 }
 
 export default App
