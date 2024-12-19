@@ -5,6 +5,7 @@ import { useAppDispatch } from "../../store/hooks";
 
 import Title from './PanelTitle';
 import SelectedOffer from './SelectedOffer';
+import Price from './Price';
 
 interface BasketPanelProps {
   isActive: boolean;
@@ -22,7 +23,6 @@ export default ({ isActive, onHover, activeHeight, inactiveHeight }: BasketPanel
     }
 
     const totalPrice = basketItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    // const totalTime = basketItems.reduce((sum, item) => sum + item.time, 0);
 
     return (
         <motion.div
@@ -66,7 +66,9 @@ export default ({ isActive, onHover, activeHeight, inactiveHeight }: BasketPanel
             </ul>
 
             <div className="flex flex-col justify-center pt-2">
-                <p className="font-montserrat text-neutral-300 text-sm font-normal pb-2">Do zapłaty: <span className="font-medium text-white pl-3">{totalPrice}zł</span></p>
+                <p className="font-montserrat text-neutral-300 text-sm font-normal pb-2">Do zapłaty: 
+                    <Price totalPrice={totalPrice} />
+                </p>
                 <button className="w-full font-montserrat font-normal border border-neutral-800 px-4 py-2 rounded-xl tracking-wide text-neutral-300 flex flex-row justify-center items-center">Zarezerwuj</button>
             </div>
         </motion.div>
