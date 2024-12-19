@@ -67,7 +67,7 @@ export default ({ isActive, onHover, activeHeight, inactiveHeight }: BasketPanel
 
             <div className="flex flex-col justify-center pt-2">
                 <p className="font-montserrat text-neutral-300 text-sm font-normal pb-2">Do zapłaty: 
-                    <Price totalPrice={totalPrice} />
+                    <Price totalPrice={totalPrice} />zł
                 </p>
                 <button className="w-full font-montserrat font-normal border border-neutral-800 px-4 py-2 rounded-xl tracking-wide text-neutral-300 flex flex-row justify-center items-center">Zarezerwuj</button>
             </div>

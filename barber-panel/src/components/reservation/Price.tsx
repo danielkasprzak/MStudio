@@ -1,32 +1,25 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 
 interface PriceProps {
     totalPrice: number;
 }
 
 export default ({ totalPrice }: PriceProps) => {
-    const [displayedPrice, setDisplayedPrice] = useState(0);
+    const count = useMotionValue(0);
+    const rounded = useTransform(count, Math.round);
 
     useEffect(() => {
-        const controls = setInterval(() => {
-            setDisplayedPrice((prev) => {
-                if (prev < totalPrice) {
-                    return prev + 1;
-                } else if (prev > totalPrice) {
-                    return prev - 1;
-                } else {
-                    clearInterval(controls);
-                    return prev;
-                }
-            });
-        }, 10);
+        const animation = animate(count, totalPrice, {
+            duration: 1,
+        });
 
-        return () => clearInterval(controls);
+        return animation.stop;
     }, [totalPrice]);
 
     return (
-        <span className='font-medium text-white pl-3'>
-            {displayedPrice}zł
-        </span>
+        <motion.span className='font-medium text-white pl-3'>
+            {rounded}
+        </motion.span>
     );
 };
