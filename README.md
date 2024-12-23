@@ -6,6 +6,7 @@
  - Redux
  - TailwindCSS
  - motion
+ - Lenis
  - TanStack Query
  - Vite
 
