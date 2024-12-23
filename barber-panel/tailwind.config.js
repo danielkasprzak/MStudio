@@ -12,6 +12,7 @@ export default {
         'cormorant': ['Cormorant Garamond', 'serif'],
       },
       colors: {
+        'charcoal': '#353535',
         'dark-background': '#181818',
         'dark-foreground': '#0D0D0D'
       }
