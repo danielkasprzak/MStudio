@@ -16,14 +16,28 @@ export default () => {
         frame.update(update, true)
     
         return () => cancelFrame(update)
-      }, []);
+    }, []);
+
+    useEffect(() => {
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+
+        const handleLoad = () => {
+            window.scrollTo(0, 0);
+        };
+
+        window.addEventListener('load', handleLoad);
+
+        return () => {
+            window.removeEventListener('load', handleLoad);
+        };
+    }, []);
     
     return (
         <ReactLenis options={{ autoRaf: false, smoothWheel: true }} ref={lenisRef} root>
             <div className='min-h-screen bg-white'>
                 <Hero/>
-                <About/>
-
             </div>
         </ReactLenis>
     )
