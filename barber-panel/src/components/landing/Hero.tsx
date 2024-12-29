@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import HeroVideo from '../../assets/hero_vid.mp4';
 import VidBackground from './VidBackground';
+import HeadParagraph from './HeadParagraph';
 
 export default () => {
     const ref = useRef(null);
@@ -30,7 +31,7 @@ export default () => {
                         className='absolute text-9xl text-center font-cormorant font-medium text-white'
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, ease: 'easeInOut' }}
+                        transition={{ duration: 0.5, ease: 'easeInOut' }}
                         style={{ opacity: opacityH1 }}
                     >
                         MSTUDIO
@@ -40,8 +41,8 @@ export default () => {
                         style={{ opacity: opacityH2 }}
                     >
                         <h2 className='font-lato text-white font-bold text-xs tracking-wider'>WSTĘP</h2>
-                        <motion.p className='font-cormorant text-xl font-medium' style={{ color: textColor2 }}>nasze włosy to deklaracja stylu,</motion.p>
-                        <motion.p className='font-cormorant text-xl font-medium' style={{ color: textColor }}>afirmacja piękna i wyraz miłości do siebie</motion.p>
+                        <HeadParagraph textColor={textColor2}>nasze włosy to deklaracja stylu,</HeadParagraph>
+                        <HeadParagraph textColor={textColor}>afirmacja piękna i wyraz miłości do siebie</HeadParagraph>
                     </motion.div>
                 </div>
             </div>
