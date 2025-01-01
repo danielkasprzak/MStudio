@@ -3,7 +3,6 @@ import { cancelFrame, frame } from 'motion';
 import { useEffect, useRef } from 'react';
 
 import Hero from './Hero';
-import About from './About';
 
 export default () => {
     const lenisRef = useRef<LenisRef | null>(null);
