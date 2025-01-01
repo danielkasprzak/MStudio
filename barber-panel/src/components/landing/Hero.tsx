@@ -1,8 +1,10 @@
 import { useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform, useAnimation } from 'framer-motion';
 import HeroVideo from '../../assets/hero_vid.mp4';
+import SecondVideo from '../../assets/second_vid.mp4';
+import EdgeOverlay from './EdgeOverlay';
 import VidBackground from './VidBackground';
-import HeadParagraph from './HeadParagraph';
+import Introduction from './Introduction';
 
 export default () => {
     const ref = useRef(null);
@@ -10,20 +12,34 @@ export default () => {
         target: ref,
     });
 
-    const opacityH1 = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
-    const opacityH2 = useTransform(scrollYProgress, [0.4, 0.7], [0, 1]);
-    const textColor = useTransform(scrollYProgress, [0.9, 1], ['#E5E7EB', '#FFFFFF']);
-    const textColor2 = useTransform(scrollYProgress, [0.9, 1], ['#FFFFFF', '#E5E7EB']);
-
+    const opacityTitle = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+    const opacityParagraph = useTransform(scrollYProgress, [0.3, 0.4], [0, 1]);
+    const textColorFirst = useTransform(scrollYProgress, [0.5, 0.6], ['#E5E7EB', '#FFFFFF']);
+    const textColorSecond = useTransform(scrollYProgress, [0.5, 0.6], ['#FFFFFF', '#E5E7EB']);
+    const videoX = useAnimation();
     const controlsHeight = useAnimation();
     const controlsWidth = useAnimation();
 
     useEffect(() => {
         const unsubscribe = scrollYProgress.onChange((latest) => {
-            if (latest >= 0.4) {
+            if (latest >= 0.8) {
+                videoX.start({ x: '-100%', transition: { duration: 0.3 } });
+            } else {
+                videoX.start({ x: '0%', transition: { duration: 0.3 } });
+            }
+        });
+
+        return () => unsubscribe();
+    }, [scrollYProgress, videoX]);
+
+
+    useEffect(() => {
+        const unsubscribe = scrollYProgress.onChange((latest) => {
+            if (latest >= 0.3 && latest < 0.9) {
                 controlsHeight.start({ height: '20%', transition: { duration: 0.3 } });
                 controlsWidth.start({ width: '12%', transition: { duration: 0.3 } });
-            } else {
+            } 
+            else {
                 controlsHeight.start({ height: '0%', transition: { duration: 0.3 } });
                 controlsWidth.start({ width: '0%', transition: { duration: 0.3 } });
             }
@@ -32,60 +48,19 @@ export default () => {
         return () => unsubscribe();
     }, [scrollYProgress, controlsHeight, controlsWidth]);
 
-    return (
-        <section ref={ref} className="relative h-[160vh]">
-            <div className='h-screen flex flex-col justify-center sticky top-0 overflow-hidden'>
-                <motion.div className="absolute inset-0 flex items-center justify-center -z-10 bg-white">
-                    <div className="relative w-full h-full bg-white">
-                        <video className="absolute inset-0 w-full h-full object-cover" autoPlay muted loop>
-                            <source src={HeroVideo} type="video/mp4" />
-                        </video>
+    return (  
+        <section ref={ref} className="relative h-[360vh]">
+            <div className='h-screen flex justify-center sticky top-0 overflow-hidden'>
+                <motion.div className="absolute w-[200vw] inset-0 flex" >
+                    <div className="relative w-screen h-screen flex items-center justify-center">
+                        <Introduction textColorFirst={textColorFirst} textColorSecond={textColorSecond} opacityTitle={opacityTitle} opacityParagraph={opacityParagraph} />
+                        <VidBackground source={HeroVideo} zClass='-z-40' />
                     </div>
-                </motion.div>
-
-                <motion.div
-                    className="w-screen absolute inset-0 z-0 bg-white"
-                    initial={{ height: '0%' }}
-                    animate={controlsHeight}
-                />
-                
-                <motion.div
-                    className="w-screen absolute bottom-0 z-0 bg-white"
-                    initial={{ height: '0%' }}
-                    animate={controlsHeight}
-                />
-                
-                <motion.div
-                    className="h-screen absolute right-0 z-0 bg-white"
-                    initial={{ width: '0%' }}
-                    animate={controlsWidth}
-                />
-                
-                <motion.div
-                    className="h-screen absolute left-0 z-0 bg-white"
-                    initial={{ width: '0%' }}
-                    animate={controlsWidth}
-                />
-
-                <div className="relative flex flex-col items-center justify-center">
-                    <motion.h1
-                        className='absolute text-9xl text-center font-cormorant font-medium text-white'
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, ease: 'easeInOut' }}
-                        style={{ opacity: opacityH1 }}
-                    >
-                        MSTUDIO
-                    </motion.h1>
-                    <motion.div
-                        className='absolute text-left max-w-80 mr-20'
-                        style={{ opacity: opacityH2 }}
-                    >
-                        <h2 className='font-lato text-white font-bold text-xs tracking-wider'>WSTĘP</h2>
-                        <HeadParagraph textColor={textColor2}>nasze włosy to deklaracja stylu,</HeadParagraph>
-                        <HeadParagraph textColor={textColor}>afirmacja piękna i wyraz miłości do siebie</HeadParagraph>
+                    <motion.div className="relative w-screen h-screen" animate={videoX}>
+                        <VidBackground source={SecondVideo} zClass='-z-20' />
                     </motion.div>
-                </div>
+                </motion.div>
+                <EdgeOverlay controlsHeight={controlsHeight} controlsWidth={controlsWidth} />
             </div>
         </section>
     );
