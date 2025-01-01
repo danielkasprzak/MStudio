@@ -1,10 +1,11 @@
 interface VidBackgroundProps {
     source: string;
+    zClass: string;
 }
 
-export default ({ source } : VidBackgroundProps) => {
+export default ({ source, zClass } : VidBackgroundProps) => {
     return (
-        <video className="w-full h-full object-cover" autoPlay muted loop>
+        <video className={`absolute inset-0 w-full h-full object-cover ${zClass}`} autoPlay muted loop>
             <source src={source} type="video/mp4" />
         </video>
     );
