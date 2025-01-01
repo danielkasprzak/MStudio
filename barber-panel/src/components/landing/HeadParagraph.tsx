@@ -2,7 +2,7 @@ import { motion, MotionValue } from 'framer-motion';
 
 interface HeadParagraphProps {
     children?: React.ReactNode;
-    textColor: string | MotionValue<string>;
+    textColor: MotionValue<string>;
 }
 
 export default ({ children, textColor } : HeadParagraphProps) => {
