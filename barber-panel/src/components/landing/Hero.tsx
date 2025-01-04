@@ -7,9 +7,9 @@ import VidBackground from './VidBackground';
 import Introduction from './Introduction';
 
 export default () => {
-    const ref = useRef(null);
+    const heroRef = useRef(null);
     const { scrollYProgress } = useScroll({
-        target: ref,
+        target: heroRef,
     });
 
     const opacityTitle = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
@@ -17,8 +17,26 @@ export default () => {
     const textColorFirst = useTransform(scrollYProgress, [0.5, 0.6], ['#E5E7EB', '#FFFFFF']);
     const textColorSecond = useTransform(scrollYProgress, [0.5, 0.6], ['#FFFFFF', '#E5E7EB']);
     const videoX = useAnimation();
-    const controlsHeight = useAnimation();
-    const controlsWidth = useAnimation();
+    const controls = useAnimation();
+
+    useEffect(() => {
+        const unsubscribe = scrollYProgress.onChange((latest) => {
+            if (latest >= 0.3 && latest < 0.9) {
+                controls.start({
+                    clipPath: 'inset(20% 10% 20% 10%)',
+                    transition: { duration: 0.3 },
+                });
+            } else {
+                controls.start({
+                    clipPath: 'inset(0 0 0 0)',
+                    transition: { duration: 0.3 },
+                });
+            }
+        });
+
+        return () => unsubscribe();
+    }, [scrollYProgress, controls]);
+
 
     useEffect(() => {
         const unsubscribe = scrollYProgress.onChange((latest) => {
@@ -32,26 +50,10 @@ export default () => {
         return () => unsubscribe();
     }, [scrollYProgress, videoX]);
 
-
-    useEffect(() => {
-        const unsubscribe = scrollYProgress.onChange((latest) => {
-            if (latest >= 0.3 && latest < 0.9) {
-                controlsHeight.start({ height: '20%', transition: { duration: 0.3 } });
-                controlsWidth.start({ width: '12%', transition: { duration: 0.3 } });
-            } 
-            else {
-                controlsHeight.start({ height: '0%', transition: { duration: 0.3 } });
-                controlsWidth.start({ width: '0%', transition: { duration: 0.3 } });
-            }
-        });
-
-        return () => unsubscribe();
-    }, [scrollYProgress, controlsHeight, controlsWidth]);
-
     return (  
-        <section ref={ref} className="relative h-[360vh]">
-            <div className='h-screen flex justify-center sticky top-0 overflow-hidden'>
-                <motion.div className="absolute w-[200vw] inset-0 flex" >
+        <section ref={heroRef} className="relative h-[360vh]">
+            <motion.div className='h-screen flex justify-center sticky top-0 overflow-hidden' animate={controls}>
+                <div className="absolute w-[200vw] inset-0 flex" >
                     <div className="relative w-screen h-screen flex items-center justify-center">
                         <Introduction textColorFirst={textColorFirst} textColorSecond={textColorSecond} opacityTitle={opacityTitle} opacityParagraph={opacityParagraph} />
                         <VidBackground source={HeroVideo} zClass='-z-40' />
@@ -59,9 +61,8 @@ export default () => {
                     <motion.div className="relative w-screen h-screen" animate={videoX}>
                         <VidBackground source={SecondVideo} zClass='-z-20' />
                     </motion.div>
-                </motion.div>
-                <EdgeOverlay controlsHeight={controlsHeight} controlsWidth={controlsWidth} />
-            </div>
+                </div>
+            </motion.div>
         </section>
     );
 };
