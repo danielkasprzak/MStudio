@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform, useAnimation } from 'framer-motion';
 import HeroVideo from '../../assets/hero_vid.mp4';
 import SecondVideo from '../../assets/second_vid.mp4';
-import VidBackground from './VidBackground';
+import Video from './Video';
 import Introduction from './Introduction';
 
 export default () => {
@@ -55,10 +55,10 @@ export default () => {
                 <div className="absolute w-[200vw] inset-0 flex" >
                     <div className="relative w-screen h-screen flex items-center justify-center">
                         <Introduction textColorFirst={textColorFirst} textColorSecond={textColorSecond} opacityTitle={opacityTitle} opacityParagraph={opacityParagraph} />
-                        <VidBackground source={HeroVideo} zClass='-z-40' />
+                        <Video source={HeroVideo} zClass='-z-40' />
                     </div>
                     <motion.div className="relative w-screen h-screen" animate={videoX}>
-                        <VidBackground source={SecondVideo} zClass='-z-20' />
+                        <Video source={SecondVideo} zClass='-z-20' />
                     </motion.div>
                 </div>
             </motion.div>
