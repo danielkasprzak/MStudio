@@ -3,9 +3,13 @@ import { cancelFrame, frame } from 'motion';
 import { useEffect, useRef } from 'react';
 
 import Hero from './Hero';
+import Section from './Section';
+import Footer from './Footer';
+import NavBar from './NavBar';
 
 export default () => {
     const lenisRef = useRef<LenisRef | null>(null);
+    const heroRef = useRef(null);
 
     useEffect(() => {
         function update(data: { timestamp: number }) {
@@ -35,8 +39,13 @@ export default () => {
     
     return (
         <ReactLenis options={{ autoRaf: false, smoothWheel: true }} ref={lenisRef} root>
-            <div className='min-h-screen bg-white'>
-                <Hero/>
+            <div className='relative min-h-screen bg-white'>
+                <Hero heroRef={heroRef}/>
+                <Section/>
+                <Section/>
+                <Footer/>
+
+                <NavBar heroRef={heroRef} />
             </div>
         </ReactLenis>
     )
