@@ -16,7 +16,7 @@ export default ({ heroRef }: Props) => {
 
     return (
         <motion.nav
-            className='fixed w-full h-20 flex flex-row justify-center items-center z-60 transform -translate-y-1/2'
+            className='fixed w-screen h-20 flex flex-row justify-center items-center z-60 transform -translate-y-1/2'
             style={{ top: navX, opacity: isVisible }}
         >
             <NavButton>MENU</NavButton>
