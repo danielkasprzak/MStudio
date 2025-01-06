@@ -15,7 +15,7 @@ export default () => {
     const opacityParagraph = useTransform(scrollYProgress, [0.3, 0.4], [0, 1]);
     const textColorFirst = useTransform(scrollYProgress, [0.5, 0.6], ['#E5E7EB', '#FFFFFF']);
     const textColorSecond = useTransform(scrollYProgress, [0.5, 0.6], ['#FFFFFF', '#E5E7EB']);
-    const videoX = useAnimation();
+    const videoOverlay = useAnimation();
     const controls = useAnimation();
 
     useEffect(() => {
@@ -40,24 +40,24 @@ export default () => {
     useEffect(() => {
         const unsubscribe = scrollYProgress.onChange((latest) => {
             if (latest >= 0.8) {
-                videoX.start({ x: '-100%', transition: { duration: 0.3 } });
+                videoOverlay.start({ y: '-100%', transition: { duration: 0.3 } });
             } else {
-                videoX.start({ x: '0%', transition: { duration: 0.3 } });
+                videoOverlay.start({ y: '0%', transition: { duration: 0.3 } });
             }
         });
 
         return () => unsubscribe();
-    }, [scrollYProgress, videoX]);
+    }, [scrollYProgress, videoOverlay]);
 
     return (  
         <section ref={heroRef} className="relative h-[360vh]">
             <motion.div className='h-screen flex justify-center sticky top-0 overflow-hidden' animate={controls}>
-                <div className="absolute w-[200vw] inset-0 flex" >
+                <div className="absolute h-[200vh] inset-0 flex flex-col" >
                     <div className="relative w-screen h-screen flex items-center justify-center">
                         <Introduction textColorFirst={textColorFirst} textColorSecond={textColorSecond} opacityTitle={opacityTitle} opacityParagraph={opacityParagraph} />
                         <Video source={HeroVideo} zClass='-z-40' />
                     </div>
-                    <motion.div className="relative w-screen h-screen" animate={videoX}>
+                    <motion.div className="relative w-screen h-screen" animate={videoOverlay}>
                         <Video source={SecondVideo} zClass='-z-20' />
                     </motion.div>
                 </div>
