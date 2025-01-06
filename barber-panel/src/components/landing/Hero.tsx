@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useEffect } from 'react';
 import { motion, useScroll, useTransform, useAnimation } from 'framer-motion';
 import HeroVideo from '../../assets/hero_vid.mp4';
 import SecondVideo from '../../assets/second_vid.mp4';
