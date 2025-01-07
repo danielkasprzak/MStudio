@@ -2,14 +2,14 @@ import { motion, MotionValue } from 'framer-motion';
 
 import Paragraph from './Paragraph';
 
-interface IntroductionProps {
+interface Props {
     opacityTitle: MotionValue<number>;
     opacityParagraph: MotionValue<number>;
     textColorFirst: MotionValue<string>;
     textColorSecond: MotionValue<string>;
 }
 
-export default ({ opacityTitle, opacityParagraph, textColorFirst, textColorSecond } : IntroductionProps) => {
+export default ({ opacityTitle, opacityParagraph, textColorFirst, textColorSecond } : Props) => {
     return (
         <>
             <motion.h1
