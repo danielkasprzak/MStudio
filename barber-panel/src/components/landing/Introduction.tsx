@@ -1,6 +1,6 @@
 import { motion, MotionValue } from 'framer-motion';
 
-import HeadParagraph from './HeadParagraph';
+import Paragraph from './Paragraph';
 
 interface IntroductionProps {
     opacityTitle: MotionValue<number>;
@@ -22,12 +22,12 @@ export default ({ opacityTitle, opacityParagraph, textColorFirst, textColorSecon
                 MSTUDIO
             </motion.h1>
             <motion.div
-                className='absolute text-left max-w-80 mr-20 -z-30'
+                className='absolute text-left max-w-80 -z-30'
                 style={{ opacity: opacityParagraph }}
             >
                 <h2 className='font-lato text-white font-bold text-xs tracking-wider'>WSTĘP</h2>
-                <HeadParagraph textColor={textColorSecond}>nasze włosy to deklaracja stylu,</HeadParagraph>
-                <HeadParagraph textColor={textColorFirst}>afirmacja piękna i wyraz miłości do siebie</HeadParagraph>
+                <Paragraph textColor={textColorSecond}>nasze włosy to deklaracja stylu,</Paragraph>
+                <Paragraph textColor={textColorFirst}>afirmacja piękna i wyraz miłości do siebie</Paragraph>
             </motion.div>
         </>
     );

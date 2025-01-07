@@ -39,7 +39,7 @@ export default () => {
     
     return (
         <ReactLenis options={{ autoRaf: false, smoothWheel: true }} ref={lenisRef} root>
-            <div className='relative min-h-screen bg-white'>
+            <div className='bg-white'>
                 <Hero heroRef={heroRef}/>
                 <Section/>
                 <Section/>
