@@ -11,6 +11,9 @@ export default {
         'lato': ['Lato', 'sans-serif'],
         'cormorant': ['Cormorant Garamond', 'serif'],
       },
+      fontSize: {
+        '10xl': ['12rem', { lineHeight: '1' }]
+      },
       colors: {
         'charcoal': '#353535',
         'dark-background': '#181818',

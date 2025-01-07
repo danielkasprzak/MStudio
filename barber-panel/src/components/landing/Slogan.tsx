@@ -1,9 +1,13 @@
 import { motion } from 'framer-motion';
 
-export default () => {
+interface Props { 
+    text: string;
+}
+
+export default ({ text }: Props) => {
     return (
-        <motion.h1 className='absolute text-9xl text-center font-cormorant font-medium text-white -z-10'>
-            ODKRYJ <motion.span className='italic'>SIEBIE</motion.span>
+        <motion.h1 className='pt-[14%] text-10xl text-center font-cormorant font-medium text-white -z-10'>
+            ODKRYJ <motion.span className='italic'>{text}</motion.span>
         </motion.h1>
     );
 }
