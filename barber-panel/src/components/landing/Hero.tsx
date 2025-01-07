@@ -4,6 +4,7 @@ import HeroVideo from '../../assets/hero_vid.mp4';
 import SecondVideo from '../../assets/second_vid.mp4';
 import Video from './Video';
 import Introduction from './Introduction';
+import Slogan from './Slogan';
 
 interface Props {
     heroRef: React.RefObject<HTMLElement>;
@@ -62,6 +63,7 @@ export default ({ heroRef }: Props) => {
                         <Video source={HeroVideo} zClass='-z-40' />
                     </div>
                     <motion.div className="relative w-screen h-screen" animate={videoOverlay}>
+                        <Slogan/>
                         <Video source={SecondVideo} zClass='-z-20' />
                     </motion.div>
                 </div>
