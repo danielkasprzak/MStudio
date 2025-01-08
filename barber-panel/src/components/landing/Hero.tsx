@@ -20,6 +20,8 @@ export default ({ heroRef }: Props) => {
     const textColorFirst = useTransform(scrollYProgress, [0.15, 0.25], ['#E5E7EB', '#FFFFFF']);
     const textColorSecond = useTransform(scrollYProgress, [0.15, 0.25], ['#FFFFFF', '#E5E7EB']);
 
+    const sloganIndex = useTransform(scrollYProgress, [0.9, 0.95, 1], [0, 1, 2]);
+
     const videoOverlay = useAnimation();
     const controls = useAnimation();
 
@@ -63,7 +65,7 @@ export default ({ heroRef }: Props) => {
                         <Video source={HeroVideo} zClass='-z-40' />
                     </div>
                     <motion.div className="relative w-screen h-screen" animate={videoOverlay}>
-                        <Slogan/>
+                        <Slogan sloganIndex={sloganIndex} />
                         <Video source={SecondVideo} zClass='-z-20' />
                     </motion.div>
                 </div>
