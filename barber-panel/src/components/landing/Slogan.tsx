@@ -1,19 +1,22 @@
-import { motion, MotionValue, useTransform } from 'framer-motion';
+import { AnimationControls, motion, MotionValue, useTransform } from 'framer-motion';
 
 interface Props { 
-    sloganIndex: MotionValue<number>;
+    sloganAnimation: AnimationControls;
 }
 
-export default ({ sloganIndex }: Props) => {
+export default ({ sloganAnimation }: Props) => {
     const texts = ["STYL", "PIĘKNO", "SIEBIE"];
-    const sloganText = useTransform(sloganIndex, index => texts[Math.round(index)]);
 
     return (
         <motion.div className='pt-[14%] flex flex-row justify-center items-center w-full h-auto -z-10 text-10xl font-cormorant font-medium text-white'>
-            <h1 className='w-full text-right'>ODKRYJ</h1>
-            <div className='h-auto w-full'>
-                <motion.span className='italic pl-8 text-center' layout style={{ y: sloganText }}>{sloganText}</motion.span>
-            </div>
+            <h1 className='p-4'>ODKRYJ</h1>
+            <motion.div className='h-60 p-4 overflow-y-hidden flex flex-col'>
+                {texts.map((text, index) => (
+                    <motion.span key={index} className='italic' animate={sloganAnimation}>
+                        {text}
+                    </motion.span>
+                ))}
+            </motion.div>
         </motion.div>
     );
 }

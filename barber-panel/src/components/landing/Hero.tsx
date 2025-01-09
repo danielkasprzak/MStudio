@@ -20,10 +20,9 @@ export default ({ heroRef }: Props) => {
     const textColorFirst = useTransform(scrollYProgress, [0.15, 0.25], ['#E5E7EB', '#FFFFFF']);
     const textColorSecond = useTransform(scrollYProgress, [0.15, 0.25], ['#FFFFFF', '#E5E7EB']);
 
-    const sloganIndex = useTransform(scrollYProgress, [0.9, 0.95, 1], [0, 1, 2]);
-
     const videoOverlay = useAnimation();
     const controls = useAnimation();
+    const sloganAnimation = useAnimation();
 
     useEffect(() => {
         const unsubscribe = scrollYProgress.on('change', (latest) => {
@@ -56,6 +55,20 @@ export default ({ heroRef }: Props) => {
         return () => unsubscribe();
     }, [scrollYProgress, videoOverlay]);
 
+    useEffect(() => {
+        const unsubscribe = scrollYProgress.on('change', (latest) => {
+            if (latest >= 0.95) {
+                sloganAnimation.start({ y: '-200%', transition: { duration: 0.5 } });
+            } else if (latest >= 0.9) {
+                sloganAnimation.start({ y: '-100%', transition: { duration: 0.5 } });
+            } else {
+                sloganAnimation.start({ y: '0%', transition: { duration: 0.5 } });
+            }
+        });
+
+        return () => unsubscribe();
+    }, [scrollYProgress, sloganAnimation]);
+
     return (  
         <section ref={heroRef} className="relative h-[460vh]">
             <motion.div className='h-screen sticky top-0' animate={controls}>
@@ -65,7 +78,7 @@ export default ({ heroRef }: Props) => {
                         <Video source={HeroVideo} zClass='-z-40' />
                     </div>
                     <motion.div className="relative w-screen h-screen" animate={videoOverlay}>
-                        <Slogan sloganIndex={sloganIndex} />
+                        <Slogan sloganAnimation={sloganAnimation} />
                         <Video source={SecondVideo} zClass='-z-20' />
                     </motion.div>
                 </div>
