@@ -12,7 +12,7 @@ export default ({ sloganAnimation }: Props) => {
             <h1 className='p-4'>ODKRYJ</h1>
             <motion.div className='h-60 p-4 overflow-y-hidden flex flex-col'>
                 {texts.map((text, index) => (
-                    <motion.span key={index} className='italic' animate={sloganAnimation}>
+                    <motion.span key={index} className='italic pb-16' animate={sloganAnimation} transition={{ duration: 0.2 }}>
                         {text}
                     </motion.span>
                 ))}
