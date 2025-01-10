@@ -1,9 +1,10 @@
 import SideButton from "./SideButton";
+import Title from "./Title";
 
 export default () => {
     return (
         <div className='relative bg-white w-auto h-screen flex flex-col text-charcoal'>
-            <h1 className="font-cormorant text-xl font-medium p-16">MSTUDIO</h1>
+            <Title padding='16'>MSTUDIO</Title>
 
             <SideButton>Panel</SideButton>
             <SideButton>Rezerwacje</SideButton>
