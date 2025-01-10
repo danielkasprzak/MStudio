@@ -4,6 +4,6 @@ interface Props {
 
 export default ({children}: Props) => {
     return (
-        <button className="uppercase font-bold text-xs tracking-wider p-8">{children}</button>
+        <button className="uppercase font-bold text-xs tracking-wider p-4">{children}</button>
     )
 }
