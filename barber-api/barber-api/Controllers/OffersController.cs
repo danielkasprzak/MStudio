@@ -81,5 +81,29 @@ namespace barber_api.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
+        // DELETE: /offers/{id}
+        [HttpDelete("{id}")]
+        [Authorize]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var existingOffer = await _context.Offers.FindAsync(id);
+            if (existingOffer == null)
+            {
+                return NotFound("Offer not found.");
+            }
+
+            try
+            {
+                _context.Offers.Remove(existingOffer);
+                await _context.SaveChangesAsync();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting offer");
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
 }
