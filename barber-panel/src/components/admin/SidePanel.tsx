@@ -1,4 +1,4 @@
-import SideButton from "./SideButton";
+import SmallButton from "./SmallButton";
 import Title from "./Title";
 
 export default () => {
@@ -6,9 +6,9 @@ export default () => {
         <div className='relative bg-white w-auto h-screen flex flex-col text-charcoal'>
             <Title padding='16'>MSTUDIO</Title>
 
-            <SideButton>Panel</SideButton>
-            <SideButton>Rezerwacje</SideButton>
-            <SideButton>Oferty</SideButton>
+            <SmallButton>Panel</SmallButton>
+            <SmallButton>Rezerwacje</SmallButton>
+            <SmallButton>Oferty</SmallButton>
         </div>
     )
 }
