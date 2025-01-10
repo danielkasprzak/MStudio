@@ -18,16 +18,16 @@ namespace barber_api.Controllers
             _logger = logger;
         }
 
-        // GET: /offers/get
-        [HttpGet("get")]
+        // GET: /offers
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<Offer>>> Get()
         {
             var offers = await _context.Offers.ToListAsync();
             return Ok(offers);
         }
 
-        // POST: /offers/add
-        [HttpPost("add")]
+        // POST: /offers
+        [HttpPost]
         [Authorize]
         public async Task<ActionResult<Offer>> Add([FromBody] Offer offer)
         {
@@ -49,8 +49,8 @@ namespace barber_api.Controllers
             }
         }
 
-        // PUT: /offers/update/{id}
-        [HttpPut("update/{id}")]
+        // PUT: /offers/{id}
+        [HttpPut("{id}")]
         [Authorize]
         public async Task<IActionResult> Update(int id, [FromBody] Offer offer)
         {
