@@ -4,7 +4,7 @@
     {
         public required string DayOfWeek { get; set; }
         public bool IsOpen { get; set; }
-        public DateTime OpenHour { get; set; }
-        public DateTime CloseHour { get; set; }
+        public TimeSpan OpenHour { get; set; }
+        public TimeSpan CloseHour { get; set; }
     }
 }
