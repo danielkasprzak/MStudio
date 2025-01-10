@@ -1,16 +1,43 @@
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import { motion, AnimatePresence  } from 'framer-motion';
 
 import Phone from "./Phone"
 import Title from './PanelTitle';
 
-interface InfoPanelProps {
+interface Props {
     isActive: boolean;
     onHover: () => void;
     activeHeight: string;
     inactiveHeight: string;
 }
 
-export default ({ isActive, onHover, activeHeight, inactiveHeight }: InfoPanelProps) => {
+interface OpeningHoursModel {
+    dayOfWeek: string;
+    isOpen: boolean;
+    openHour: string;
+    closeHour: string;
+}
+
+async function fetchOpeningHours() {
+    const { data } = await axios.get('https://localhost:7190/openinghours');
+    return data.map((item: any) => ({
+        dayOfWeek: item.dayOfWeek,
+        isOpen: item.isOpen,
+        openHour: item.openHour.slice(0, 5),
+        closeHour: item.closeHour.slice(0, 5),
+    }));
+};
+
+export default ({ isActive, onHover, activeHeight, inactiveHeight }: Props) => {
+    const { data = [], error, isLoading } = useQuery<OpeningHoursModel[]>({
+        queryKey: ['openinghours'],
+        queryFn: fetchOpeningHours
+    });
+    
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>Error loading offers</div>;
+
     return (
         <motion.div 
             className='w-[26rem] h-[66%] bg-dark-foreground text-white rounded-2xl flex flex-col items-center p-8'
@@ -36,26 +63,18 @@ export default ({ isActive, onHover, activeHeight, inactiveHeight }: InfoPanelPr
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.2, ease: "easeInOut" }}
                 >
-                {[
-                    { day: "Poniedziałek", hours: "08:00 - 16:00" },
-                    { day: "Wtorek", hours: "08:00 - 16:00" },
-                    { day: "Środa", hours: "08:00 - 16:00" },
-                    { day: "Czwartek", hours: "08:00 - 16:00" },
-                    { day: "Piątek", hours: "08:00 - 16:00" },
-                    { day: "Sobota", hours: "08:00 - 14:00" },
-                    { day: "Niedziela", hours: "Nieczynne" },
-                ].map((entry, index) => (
-                    <motion.li
-                        key={entry.day}
-                        className="w-full flex flex-row justify-between"
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.2, delay: index * 0.05 }}
-                    >
-                        <span>{entry.day}</span>
-                        <span>{entry.hours}</span>
-                    </motion.li>
-                ))}
+                    {data.map((item, index) => (
+                        <motion.li
+                            key={item.dayOfWeek}
+                            className="w-full flex flex-row justify-between"
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.2, delay: index * 0.05 }}
+                        >
+                            <span>{item.dayOfWeek}</span>
+                            {item.isOpen ? <span>{item.openHour} - {item.closeHour}</span> : <span>Zamknięte</span>}
+                        </motion.li>
+                    ))}
                 </motion.ul>}
             </AnimatePresence>
         </motion.div>
