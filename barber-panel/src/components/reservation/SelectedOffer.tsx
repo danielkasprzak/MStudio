@@ -2,7 +2,7 @@ import { basketActions } from "../../store/basket-slice";
 import { useAppDispatch } from "../../store/hooks";
 
 interface SelectedOfferProps {
-    id: string;
+    id: number;
     label: string;
     price: number;
     time: number;
@@ -12,11 +12,11 @@ interface SelectedOfferProps {
 export default ({ id, label, price, time, quantity } : SelectedOfferProps) => {
     const dispatch = useAppDispatch();
 
-    const removeItemHandler = (id: string) => {
+    const removeItemHandler = (id: number) => {
         dispatch(basketActions.removeItem(id));
     }
 
-    const addItemHandler = (id: string, label: string, price: number, time: number) => {
+    const addItemHandler = (id: number, label: string, price: number, time: number) => {
         dispatch(basketActions.addItem({ id, label, price, time }));
     }
 
