@@ -6,6 +6,7 @@ import Reservation from './components/reservation/Reservation';
 import MyReservations from './components/reservation/MyReservations';
 import Offers from './components/reservation/Offers';
 import Landing from './components/landing/Landing';
+import Admin from './components/admin/Admin';
 
 const router = createBrowserRouter([
   { path: '/', element: <Landing />},
@@ -15,7 +16,8 @@ const router = createBrowserRouter([
       { path: 'moje-rezerwacje', element: <MyReservations /> }
     ]
   },
-  { path: '/login', element: <Login /> }
+  { path: '/login', element: <Login /> },
+  { path: '/admin', element: <Admin /> }
 ]);
 
 const queryClient = new QueryClient();
