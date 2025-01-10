@@ -19,10 +19,20 @@ interface OpeningHoursModel {
     closeHour: string;
 }
 
+const dayTranslations: { [key: string]: string } = {
+    Monday: 'Poniedziałek',
+    Tuesday: 'Wtorek',
+    Wednesday: 'Środa',
+    Thursday: 'Czwartek',
+    Friday: 'Piątek',
+    Saturday: 'Sobota',
+    Sunday: 'Niedziela',
+};
+
 async function fetchOpeningHours() {
     const { data } = await axios.get('https://localhost:7190/openinghours');
     return data.map((item: any) => ({
-        dayOfWeek: item.dayOfWeek,
+        dayOfWeek: dayTranslations[item.dayOfWeek] || item.dayOfWeek,
         isOpen: item.isOpen,
         openHour: item.openHour.slice(0, 5),
         closeHour: item.closeHour.slice(0, 5),
