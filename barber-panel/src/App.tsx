@@ -7,6 +7,7 @@ import MyReservations from './components/reservation/MyReservations';
 import Offers from './components/reservation/Offers';
 import Landing from './components/landing/Landing';
 import Admin from './components/admin/Admin';
+import OffersManage from './components/admin/offers/Offers';
 
 const router = createBrowserRouter([
   { path: '/', element: <Landing />},
@@ -17,7 +18,11 @@ const router = createBrowserRouter([
     ]
   },
   { path: '/login', element: <Login /> },
-  { path: '/admin', element: <Admin /> }
+  { path: '/admin', element: <Admin />,
+    children: [
+      { path: '', element: <OffersManage />}
+    ]
+  }
 ]);
 
 const queryClient = new QueryClient();
