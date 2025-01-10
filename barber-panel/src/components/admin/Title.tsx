@@ -4,5 +4,5 @@ interface Props {
 }
 
 export default ({children, padding}: Props) => {
-     <h1 className={`font-cormorant text-xl font-medium p-${padding}`}>{children}</h1>;
+    return <h1 className={`font-cormorant text-xl font-medium p-${padding}`}>{children}</h1>;
 }
