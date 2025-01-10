@@ -3,7 +3,7 @@ import SidePanel from "./SidePanel"
 
 export default () => {
     return (
-        <div className="bg-slate-200 h-screen w-screen flex flex-row justify-center overflow-hidden">
+        <div className="bg-slate-200 h-full w-full flex flex-row justify-center">
             <SidePanel />
             <MainPanel />
         </div>
