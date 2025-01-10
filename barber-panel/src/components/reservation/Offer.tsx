@@ -1,18 +1,18 @@
 import { basketActions } from "../../store/basket-slice";
 import { useAppDispatch } from "../../store/hooks";
 
-interface OfferProps {
-    id: string;
+interface Props {
+    id: number;
     label: string;
     description?: string;
     price: number;
     time: number;
 }
 
-export default ({ id, label, description, price, time } : OfferProps) => {
+export default ({ id, label, description, price, time } : Props) => {
     const dispatch = useAppDispatch();
 
-    const addItemHandler = (id: string, label: string, price: number, time: number) => {
+    const addItemHandler = (id: number, label: string, price: number, time: number) => {
         dispatch(basketActions.addItem({ id, label, price, time }));
     }
 

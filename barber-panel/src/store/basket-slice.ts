@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface Offer {
-    id: string;
+    id: number;
     label: string;
     description?: string;
     price: number;
@@ -32,7 +32,7 @@ const basketSlice = createSlice({
                 state.items.push({ id, label, price, time, quantity: 1 });
             }
         },
-        removeItem(state, action: PayloadAction<string>) {
+        removeItem(state, action: PayloadAction<number>) {
             const existingItem = state.items.find((item) => item.id === action.payload);
 
             if (existingItem) {
