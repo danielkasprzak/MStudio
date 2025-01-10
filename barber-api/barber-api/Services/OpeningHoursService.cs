@@ -17,7 +17,7 @@ namespace barber_api.Services
             return await _context.OpeningHours.ToListAsync();
         }
 
-        public async Task<OpeningHour> GetOpeningHourByDayAsync(string dayOfWeek)
+        public async Task<OpeningHour?> GetOpeningHourByDayAsync(string dayOfWeek)
         {
             return await _context.OpeningHours.FindAsync(dayOfWeek);
         }
