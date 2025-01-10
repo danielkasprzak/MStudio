@@ -1,7 +1,7 @@
 using barber_api.Models;
+using barber_api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace barber_api.Controllers
 {
@@ -9,12 +9,12 @@ namespace barber_api.Controllers
     [Route("offers")]
     public class OffersController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly OffersService _offersService;
         private readonly ILogger<OffersController> _logger;
 
-        public OffersController(AppDbContext context, ILogger<OffersController> logger)
+        public OffersController(OffersService offersService, ILogger<OffersController> logger)
         {
-            _context = context;
+            _offersService = offersService;
             _logger = logger;
         }
 
@@ -22,13 +22,13 @@ namespace barber_api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Offer>>> Get()
         {
-            var offers = await _context.Offers.ToListAsync();
+            var offers = await _offersService.GetOffersAsync();
             return Ok(offers);
         }
 
         // POST: /offers
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<Offer>> Add([FromBody] Offer offer)
         {
             if (offer == null)
@@ -38,9 +38,8 @@ namespace barber_api.Controllers
 
             try
             {
-                _context.Offers.Add(offer);
-                await _context.SaveChangesAsync();
-                return CreatedAtAction(nameof(Get), new { id = offer.Label }, offer);
+                await _offersService.AddOfferAsync(offer);
+                return CreatedAtAction(nameof(Get), new { id = offer.Id }, offer);
             }
             catch (Exception ex)
             {
@@ -51,7 +50,7 @@ namespace barber_api.Controllers
 
         // PUT: /offers/{id}
         [HttpPut("{id}")]
-        [Authorize]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Update(int id, [FromBody] Offer offer)
         {
             if (offer == null || id != offer.Id)
@@ -59,7 +58,7 @@ namespace barber_api.Controllers
                 return BadRequest("Invalid offer data.");
             }
 
-            var existingOffer = await _context.Offers.FindAsync(id);
+            var existingOffer = await _offersService.GetOfferByIdAsync(id);
             if (existingOffer == null)
             {
                 return NotFound("Offer not found.");
@@ -67,12 +66,7 @@ namespace barber_api.Controllers
 
             try
             {
-                existingOffer.Description = offer.Description;
-                existingOffer.Duration = offer.Duration;
-                existingOffer.Price = offer.Price;
-
-                _context.Offers.Update(existingOffer);
-                await _context.SaveChangesAsync();
+                await _offersService.UpdateOfferAsync(offer);
                 return NoContent();
             }
             catch (Exception ex)
@@ -84,10 +78,10 @@ namespace barber_api.Controllers
 
         // DELETE: /offers/{id}
         [HttpDelete("{id}")]
-        [Authorize]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int id)
         {
-            var existingOffer = await _context.Offers.FindAsync(id);
+            var existingOffer = await _offersService.GetOfferByIdAsync(id);
             if (existingOffer == null)
             {
                 return NotFound("Offer not found.");
@@ -95,8 +89,7 @@ namespace barber_api.Controllers
 
             try
             {
-                _context.Offers.Remove(existingOffer);
-                await _context.SaveChangesAsync();
+                await _offersService.DeleteOfferAsync(id);
                 return NoContent();
             }
             catch (Exception ex)
@@ -107,3 +100,4 @@ namespace barber_api.Controllers
         }
     }
 }
+

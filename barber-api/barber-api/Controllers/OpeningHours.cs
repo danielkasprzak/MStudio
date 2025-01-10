@@ -1,20 +1,20 @@
 ﻿using barber_api.Models;
+using barber_api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace barber_api.Controllers
 {
     [ApiController]
     [Route("openinghours")]
-    public class OpeningHours : Controller
+    public class OpeningHoursController : Controller
     {
-        private readonly AppDbContext _context;
-        private readonly ILogger<OffersController> _logger;
+        private readonly OpeningHoursService _openingHoursService;
+        private readonly ILogger<OpeningHoursController> _logger;
 
-        public OpeningHours(AppDbContext context, ILogger<OffersController> logger)
+        public OpeningHoursController(OpeningHoursService openingHoursService, ILogger<OpeningHoursController> logger)
         {
-            _context = context;
+            _openingHoursService = openingHoursService;
             _logger = logger;
         }
 
@@ -22,13 +22,13 @@ namespace barber_api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<OpeningHour>>> Get()
         {
-            var openingHours = await _context.OpeningHours.ToListAsync();
+            var openingHours = await _openingHoursService.GetOpeningHoursAsync();
             return Ok(openingHours);
         }
 
         // PUT: /openinghours/{dayOfWeek}
         [HttpPut("{dayOfWeek}")]
-        [Authorize]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Update(string dayOfWeek, [FromBody] OpeningHour openingHour)
         {
             if (openingHour == null || dayOfWeek != openingHour.DayOfWeek)
@@ -36,7 +36,7 @@ namespace barber_api.Controllers
                 return BadRequest("Invalid opening hour data.");
             }
 
-            var existingOpeningHour = await _context.OpeningHours.FindAsync(dayOfWeek);
+            var existingOpeningHour = await _openingHoursService.GetOpeningHourByDayAsync(dayOfWeek);
             if (existingOpeningHour == null)
             {
                 return NotFound("Opening hour not found.");
@@ -44,12 +44,7 @@ namespace barber_api.Controllers
 
             try
             {
-                existingOpeningHour.IsOpen = openingHour.IsOpen;
-                existingOpeningHour.OpenHour = openingHour.OpenHour;
-                existingOpeningHour.CloseHour = openingHour.CloseHour;
-
-                _context.OpeningHours.Update(existingOpeningHour);
-                await _context.SaveChangesAsync();
+                await _openingHoursService.UpdateOpeningHourAsync(openingHour);
                 return NoContent();
             }
             catch (Exception ex)
@@ -60,3 +55,4 @@ namespace barber_api.Controllers
         }
     }
 }
+
