@@ -1,9 +1,10 @@
 interface Props { 
     children?: React.ReactNode;
+    onClick?: () => void;
 }
 
-export default ({children}: Props) => {
+export default ({children, onClick}: Props) => {
     return (
-        <button className="uppercase font-bold text-xs tracking-wider p-4">{children}</button>
+        <button onClick={onClick} className="uppercase font-bold text-xs tracking-wider p-4">{children}</button>
     )
 }
