@@ -12,17 +12,17 @@ import Admin from './components/admin/Admin';
 import OffersManage, { loader as offersManageLoader } from './components/admin/offers/Offers';
 
 const router = createBrowserRouter([
-  { path: '/', element: <Landing />, errorElement: <Error /> },
+  { index: true, element: <Landing />, errorElement: <Error /> },
   { path: '/rezerwacja', element: <Reservation />,
     children: [
-      { path: '', element: <Offers /> },
+      { index: true, element: <Offers /> },
       { path: 'moje-rezerwacje', element: <MyReservations /> }
     ]
   },
   { path: '/login', element: <Login /> },
   { path: '/admin', element: <Admin />,
     children: [
-      { path: '', element: <OffersManage />,
+      { path: '/oferty', element: <OffersManage />,
         loader: offersManageLoader
       }
     ]
