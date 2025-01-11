@@ -19,12 +19,11 @@ export default () => {
     const [editType, setEditType] = useState('new');
     const [selectedOffer, setSelectedOffer] = useState<OfferModel | null>(null);
 
-    const { data = [], error, isLoading } = useQuery<OfferModel[]>({
+    const { data = [], error } = useQuery<OfferModel[]>({
         queryKey: ['offers'],
         queryFn: fetchOffers
     });
 
-    if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error loading offers</div>;
 
     const handleEditClick = (offer: OfferModel) => {
