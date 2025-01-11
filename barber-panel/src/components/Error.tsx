@@ -1,4 +1,4 @@
-import { useRouteError } from "react-router-dom"
+import { useRouteError, isRouteErrorResponse } from "react-router-dom"
 
 export default () => {
     const error = useRouteError();
@@ -6,23 +6,21 @@ export default () => {
     let title = "Wystąpił błąd!";
     let message = "Coś poszło nie tak!"
 
-    if (error instanceof Response && error.status === 500) {
-        error.json().then(data => {
-            message = data.message;
-        });
+    if (isRouteErrorResponse(error)) {
+        message = error.data.message || error.statusText;
     }
-
-    if (error instanceof Response && error.status === 404) {
-        title = "Nie znaleziono!";
-        message = "Strona nie istnieje!";
+    else if (error instanceof Error) {
+        message = error.message;
+    }
+    else if (typeof error === 'string') {
+        message = error;
     }
 
     return (
-        <div className="h-full w-full bg-slate-200 flex justify-center items-center">
-            <div className="bg-white p-8 border w-auto h-auto text-charcoal">
-                <h1 className="font-cormorant text-xl font-medium uppercase">{title}</h1>
-                <p className="font-lato uppercase font-bold text-xs tracking-wider">{message}</p>
-
+        <div className="h-screen w-screen bg-slate-200 flex justify-center items-center">
+            <div className="bg-white px-32 py-24 border border-stone-300 w-auto h-auto text-charcoal flex flex-col justify-center items-center">
+                <h1 className="font-cormorant text-xl font-medium uppercase p-4">{title}</h1>
+                <p className="font-lato uppercase font-bold text-xs tracking-wider p-4">{message}</p>
             </div>
         </div>
     );
