@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { motion, AnimatePresence  } from 'framer-motion';
+import { fetchOpeningHours } from '../../../util/http';
 
 import Phone from "./Phone"
 import Title from './PanelTitle';
@@ -18,26 +18,6 @@ interface OpeningHoursModel {
     openHour: string;
     closeHour: string;
 }
-
-const dayTranslations: { [key: string]: string } = {
-    Monday: 'Poniedziałek',
-    Tuesday: 'Wtorek',
-    Wednesday: 'Środa',
-    Thursday: 'Czwartek',
-    Friday: 'Piątek',
-    Saturday: 'Sobota',
-    Sunday: 'Niedziela',
-};
-
-async function fetchOpeningHours() {
-    const { data } = await axios.get('https://localhost:7190/openinghours');
-    return data.map((item: any) => ({
-        dayOfWeek: dayTranslations[item.dayOfWeek] || item.dayOfWeek,
-        isOpen: item.isOpen,
-        openHour: item.openHour.slice(0, 5),
-        closeHour: item.closeHour.slice(0, 5),
-    }));
-};
 
 export default ({ isActive, onHover, activeHeight, inactiveHeight }: Props) => {
     const { data = [], error, isLoading } = useQuery<OpeningHoursModel[]>({
