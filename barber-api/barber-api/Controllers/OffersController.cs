@@ -26,9 +26,21 @@ namespace barber_api.Controllers
             return Ok(offers);
         }
 
+        // GET: /offers/{id}
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Offer>> GetById(int id)
+        {
+            var offer = await _offersService.GetOfferByIdAsync(id);
+            if (offer == null)
+            {
+                return NotFound("Offer not found.");
+            }
+            return Ok(offer);
+        }
+
         // POST: /offers
         [HttpPost]
-        [Authorize(Roles = "Administrator")]
+        [Authorize]
         public async Task<ActionResult<Offer>> Add([FromBody] Offer offer)
         {
             if (offer == null)
@@ -50,7 +62,7 @@ namespace barber_api.Controllers
 
         // PUT: /offers/{id}
         [HttpPut("{id}")]
-        [Authorize(Roles = "Administrator")]
+        [Authorize]
         public async Task<IActionResult> Update(int id, [FromBody] Offer offer)
         {
             if (offer == null || id != offer.Id)
@@ -78,7 +90,7 @@ namespace barber_api.Controllers
 
         // DELETE: /offers/{id}
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Administrator")]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             var existingOffer = await _offersService.GetOfferByIdAsync(id);
