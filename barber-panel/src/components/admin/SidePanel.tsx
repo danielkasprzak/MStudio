@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import SmallButton from "./SmallButton";
 import Title from "./Title";
 
@@ -9,7 +10,7 @@ export default () => {
 
                 <SmallButton>Panel</SmallButton>
                 <SmallButton>Rezerwacje</SmallButton>
-                <SmallButton>Oferta</SmallButton>
+                <SmallButton><Link to={`oferty`}>Oferta</Link></SmallButton>
             </div>
             <div className="flex flex-col pb-8">
                 <SmallButton>Powrót</SmallButton>
