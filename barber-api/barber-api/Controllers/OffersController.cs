@@ -40,7 +40,6 @@ namespace barber_api.Controllers
 
         // POST: /offers
         [HttpPost]
-        [Authorize]
         public async Task<ActionResult<Offer>> Add([FromBody] Offer offer)
         {
             if (offer == null)
@@ -62,7 +61,6 @@ namespace barber_api.Controllers
 
         // PUT: /offers/{id}
         [HttpPut("{id}")]
-        [Authorize]
         public async Task<IActionResult> Update(int id, [FromBody] Offer offer)
         {
             if (offer == null || id != offer.Id)
@@ -90,7 +88,6 @@ namespace barber_api.Controllers
 
         // DELETE: /offers/{id}
         [HttpDelete("{id}")]
-        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             var existingOffer = await _offersService.GetOfferByIdAsync(id);
