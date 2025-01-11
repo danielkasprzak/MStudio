@@ -10,7 +10,7 @@ import Offers from './components/reservation/Offers';
 import Landing from './components/landing/Landing';
 import Admin from './components/admin/Admin';
 import OffersManage, { loader as offersManageLoader } from './components/admin/offers/Offers';
-import OfferEdit, { loader as offersEditLoader } from './components/admin/offers/OfferEdit';
+import OfferEdit, { loader as offersEditLoader, action as offersEditAction } from './components/admin/offers/OfferEdit';
 import OfferNew from './components/admin/offers/OfferNew';
 
 const router = createBrowserRouter([
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
         loader: offersManageLoader,
         children: [
           { path: 'nowa', element: <OfferNew /> },
-          { path: ':id', element: <OfferEdit />, loader: offersEditLoader }
+          { path: ':id', element: <OfferEdit />, loader: offersEditLoader, action: offersEditAction }
         ]
       }
     ]

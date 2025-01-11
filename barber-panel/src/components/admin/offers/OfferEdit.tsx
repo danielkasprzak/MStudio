@@ -1,8 +1,8 @@
 import Title from '../Title';
 import SmallButton from '../SmallButton';
-import { ActionFunction, LoaderFunctionArgs, useParams, useSubmit, useNavigation } from 'react-router-dom';
+import { ActionFunction, LoaderFunctionArgs, useParams, useSubmit, useNavigation, redirect } from 'react-router-dom';
 import { queryClient, fetchOffer, updateOffer } from '../../../../util/http';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import OfferForm from './OfferForm';
 
 interface OfferModel {
@@ -24,22 +24,10 @@ export default () => {
         enabled: !!params.id
     });
 
-    const { mutate } = useMutation({
-        mutationFn: updateOffer,
-        onMutate: () => {
-            queryClient.setQueryData(['offer', params.id], {
-
-            });
-        }
-        // onSuccess: () => {
-        //     queryClient.invalidateQueries({ queryKey: ['offers'] });
-        // }
-    });
-
     if (error) return <div>Error loading offers</div>;
 
     function handleSubmit(formData: FormData) {
-        submit(formData, )
+        submit(formData, {method: 'PUT' });
     }
 
     return (
@@ -67,5 +55,8 @@ export const action: ActionFunction = async ({ request, params }) => {
     const formData = await request.formData();
     const updatedOfferData = Object.fromEntries(formData);
 
-    
+    await updateOffer({ id: Number(params.id), offer: updatedOfferData });  
+    await queryClient.invalidateQueries({ queryKey: ['offers'] });
+
+    return redirect('../');
 }
