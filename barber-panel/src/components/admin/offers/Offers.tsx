@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import { queryClient, fetchOffers } from '../../../../util/http';
 
 import Offer from './Offer';
 import Title from '../Title';
@@ -14,11 +14,6 @@ interface OfferModel {
     duration: number;
     description?: string;
 }
-
-async function fetchOffers() {
-    const { data } = await axios.get('https://localhost:7190/offers');
-    return data;
-};
 
 export default () => {
     const [editType, setEditType] = useState('new');
@@ -67,4 +62,11 @@ export default () => {
         </div>
 
     )
+}
+
+export function loader() {
+    return queryClient.fetchQuery({
+        queryKey: ['offers'],
+        queryFn: fetchOffers
+    });
 }
