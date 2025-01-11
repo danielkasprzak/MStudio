@@ -11,6 +11,7 @@ import Landing from './components/landing/Landing';
 import Admin from './components/admin/Admin';
 import OffersManage, { loader as offersManageLoader } from './components/admin/offers/Offers';
 import OfferEdit, { loader as offersEditLoader } from './components/admin/offers/OfferEdit';
+import OfferNew from './components/admin/offers/OfferNew';
 
 const router = createBrowserRouter([
   { index: true, element: <Landing />, errorElement: <Error /> },
@@ -26,8 +27,8 @@ const router = createBrowserRouter([
       { path: 'oferty', element: <OffersManage />,
         loader: offersManageLoader,
         children: [
-          { path: 'nowa', element: <OfferEdit editType='new' /> },
-          { path: ':id', element: <OfferEdit editType='edit' />, loader: offersEditLoader }
+          { path: 'nowa', element: <OfferNew /> },
+          { path: ':id', element: <OfferEdit />, loader: offersEditLoader }
         ]
       }
     ]
