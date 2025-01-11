@@ -40,7 +40,7 @@ export default () => {
                                 </div>
                             </div>
                         ))}
-                        <SmallButton>Dodaj</SmallButton>
+                        <SmallButton><Link to={`nowa`}>Dodaj</Link></SmallButton>
                     </ul>
                 </div>
             </div>
