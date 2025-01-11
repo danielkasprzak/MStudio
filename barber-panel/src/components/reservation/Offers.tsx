@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import { fetchOffers } from '../../../util/http';
 
 import Offer from "./Offer"
 
@@ -10,11 +10,6 @@ interface OfferModel {
     duration: number;
     description?: string;
 }
-
-async function fetchOffers() {
-    const { data } = await axios.get('https://localhost:7190/offers');
-    return data;
-};
 
 export default () => {
     const { data = [], error, isLoading } = useQuery<OfferModel[]>({
