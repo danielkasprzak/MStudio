@@ -1,10 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
-import { queryClient, fetchOffers } from '../../../../util/http';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { queryClient, fetchOffers, deleteOffer } from '../../../../util/http';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 import Offer from './Offer';
 import Title from '../Title';
 import SmallButton from '../SmallButton';
-import { Link, Outlet } from 'react-router-dom';
 
 interface OfferModel {
     id: number;
@@ -15,12 +15,26 @@ interface OfferModel {
 }
 
 export default () => {
+    const navigate = useNavigate();
+
     const { data = [], error } = useQuery<OfferModel[]>({
         queryKey: ['offers'],
         queryFn: fetchOffers
     });
 
     if (error) return <div>Error loading offers</div>;
+
+    const { mutate, isPending } = useMutation({
+        mutationFn: deleteOffer,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['offers'] });
+            navigate('/admin/oferty');
+        }
+    });
+    
+    function handleDeleteClick(id: number) {
+        mutate({ id });
+    }    
 
     return (
         <div className='flex flex-row justify-center'>
@@ -36,7 +50,7 @@ export default () => {
                                     <SmallButton>
                                         <Link to={`${offer.id}`}>Edytuj</Link>
                                     </SmallButton>
-                                    <SmallButton>Usuń</SmallButton>
+                                    {isPending ? <div>Usuwanie...</div> : <SmallButton onClick={() => handleDeleteClick(offer.id)}>Usuń</SmallButton>}
                                 </div>
                             </div>
                         ))}
