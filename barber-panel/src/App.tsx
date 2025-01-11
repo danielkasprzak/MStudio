@@ -10,7 +10,7 @@ import Offers from './components/reservation/Offers';
 import Landing from './components/landing/Landing';
 import Admin from './components/admin/Admin';
 import OffersManage, { loader as offersManageLoader } from './components/admin/offers/Offers';
-import OfferEdit from './components/admin/offers/OfferEdit';
+import OfferEdit, { loader as offersEditLoader } from './components/admin/offers/OfferEdit';
 
 const router = createBrowserRouter([
   { index: true, element: <Landing />, errorElement: <Error /> },
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
         loader: offersManageLoader,
         children: [
           { path: 'nowa', element: <OfferEdit editType='new' /> },
-          { path: ':id', element: <OfferEdit editType='edit' /> }
+          { path: ':id', element: <OfferEdit editType='edit' />, loader: offersEditLoader }
         ]
       }
     ]

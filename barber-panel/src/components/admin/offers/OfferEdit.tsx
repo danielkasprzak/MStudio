@@ -1,12 +1,12 @@
-import axios from 'axios';
 import Title from '../Title';
 import SmallButton from '../SmallButton';
 import { useEffect, useState } from 'react';
-import { Form } from 'react-router-dom';
+import { Form, ActionFunction, LoaderFunctionArgs, useParams } from 'react-router-dom';
+import { queryClient, fetchOffer } from '../../../../util/http';
+import { useQuery } from '@tanstack/react-query';
 
 interface Props {
     editType: string;
-    offer: OfferModel | null;
 }
 
 interface OfferModel {
@@ -17,35 +17,30 @@ interface OfferModel {
     description?: string;
 }
 
-export default ({editType, offer} : Props) => {
+export default ({ editType } : Props) => {
     const [label, setLabel] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState(0);
     const [duration, setDuration] = useState(0);
 
+    const params = useParams();
+
+    const { data, error } = useQuery<OfferModel>({
+        queryKey: ['offer', params.id],
+        queryFn: () => fetchOffer({ id: Number(params.id) }),
+        enabled: !!params.id
+    });
+        
     useEffect(() => {
-        if (offer) {
-            setLabel(offer.label);
-            setDescription(offer.description || '');
-            setPrice(offer.price);
-            setDuration(offer.duration);
+        if (data) {
+            setLabel(data.label);
+            setDescription(data.description || '');
+            setPrice(data.price);
+            setDuration(data.duration);
         }
-    }, [offer]);
+    }, [data]);
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        const newOffer = { label, description, price, duration };
-
-        try {
-            if (editType === 'new') {
-                await axios.post('https://localhost:7190/offers', newOffer);
-            } else if (offer) {
-                await axios.put(`https://localhost:7190/offers/${offer.id}`, newOffer);
-            }
-        } catch (error) {
-            console.error('Error saving offer:', error);
-        }
-    };
+    if (error) return <div>Error loading offers</div>;
 
     return (
         <div className='sticky right-0 top-16 w-fit h-full bg-white m-16 ml-8 text-charcoal p-8'>
@@ -63,4 +58,18 @@ export default ({editType, offer} : Props) => {
             </Form>
         </div>
     );
+}
+
+export function loader({ params }: LoaderFunctionArgs) {
+    return queryClient.fetchQuery({
+        queryKey: ['offer', params.id],
+        queryFn: () => fetchOffer({ id: Number(params.id) })
+    });
+}
+
+export const action: ActionFunction = async ({ request, params }) => {
+    const formData = await request.formData();
+    const updatedOfferData = Object.fromEntries(formData);
+
+    
 }

@@ -1,11 +1,10 @@
-import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { queryClient, fetchOffers } from '../../../../util/http';
 
 import Offer from './Offer';
 import Title from '../Title';
 import SmallButton from '../SmallButton';
-import OfferEdit from './OfferEdit';
+import { Link, Outlet } from 'react-router-dom';
 
 interface OfferModel {
     id: number;
@@ -16,25 +15,12 @@ interface OfferModel {
 }
 
 export default () => {
-    const [editType, setEditType] = useState('new');
-    const [selectedOffer, setSelectedOffer] = useState<OfferModel | null>(null);
-
     const { data = [], error } = useQuery<OfferModel[]>({
         queryKey: ['offers'],
         queryFn: fetchOffers
     });
 
     if (error) return <div>Error loading offers</div>;
-
-    const handleEditClick = (offer: OfferModel) => {
-        setEditType('edit');
-        setSelectedOffer(offer);
-    };
-
-    const handleNewClick = () => {
-        setEditType('new');
-        setSelectedOffer(null);
-    };
 
     return (
         <div className='flex flex-row justify-center'>
@@ -47,17 +33,19 @@ export default () => {
                             <div className='flex flex-row'>
                                 <Offer key={offer.id} id={offer.id} label={offer.label} price={offer.price} time={offer.duration} description={offer.description} />
                                 <div className='flex flex-row'>
-                                    <SmallButton onClick={() => handleEditClick(offer)}>Edytuj</SmallButton>
+                                    <SmallButton>
+                                        <Link to={`${offer.id}`}>Edytuj</Link>
+                                    </SmallButton>
                                     <SmallButton>Usuń</SmallButton>
                                 </div>
                             </div>
                         ))}
-                        <SmallButton onClick={handleNewClick}>Dodaj</SmallButton>
+                        <SmallButton>Dodaj</SmallButton>
                     </ul>
                 </div>
             </div>
         
-            <OfferEdit editType={editType} offer={selectedOffer} />
+            <Outlet />
         </div>
 
     )
