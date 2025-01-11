@@ -53,3 +53,7 @@ export async function createOffer(offer: NewOffer) {
     const { data } = await axios.post('https://localhost:7190/offers', offer);
     return data;
 }
+export async function deleteOffer({ id }: { id: number }) {
+    const { data } = await axios.delete(`https://localhost:7190/offers/${id}`);
+    return data;
+}
