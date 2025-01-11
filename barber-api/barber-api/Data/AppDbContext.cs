@@ -14,5 +14,7 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<OpeningHour>().HasNoKey();
+
+        modelBuilder.Entity<Offer>().Property(o => o.Id).ValueGeneratedOnAdd();
     }
 }

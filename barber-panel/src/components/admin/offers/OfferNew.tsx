@@ -1,12 +1,10 @@
 import Title from '../Title';
 import SmallButton from '../SmallButton';
-import { useState } from 'react';
-import { Form, ActionFunction } from 'react-router-dom';
-import { queryClient, updateOffer } from '../../../../util/http';
-import { useMutation } from '@tanstack/react-query';
+import { ActionFunction, redirect, useNavigation, useSubmit } from 'react-router-dom';
+import { queryClient, createOffer } from '../../../../util/http';
+import OfferForm from './OfferForm';
 
-interface OfferModel {
-    id: number;
+interface NewOffer {
     label: string;
     price: number;
     duration: number;
@@ -14,39 +12,40 @@ interface OfferModel {
 }
 
 export default () => {
-    const [label, setLabel] = useState('');
-    const [description, setDescription] = useState('');
-    const [price, setPrice] = useState(0);
-    const [duration, setDuration] = useState(0);
+    const { state } = useNavigation();
+    const submit = useSubmit();
 
-    const { mutate } = useMutation({
-        mutationFn: updateOffer,
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['offers'] });
-        }
-    });
+    function handleSubmit(formData: FormData) {
+        submit(formData, {method: 'POST' });
+    }
 
     return (
         <div className='sticky right-0 top-16 w-fit h-full bg-white m-16 ml-8 text-charcoal p-8'>
             <Title padding='8'>Dodaj ofertę</Title>
-            <Form className='font-lato flex flex-col'>
-                <input value={label} className='py-4 my-4 px-12 outline-none font-bold text-xs tracking-wider border' type='text' placeholder='Nazwa'
-                onChange={(e) => setLabel(e.target.value)}/>
-                <input value={description} className='py-4 my-4 px-12 outline-none font-bold text-xs tracking-wider border' type='text' placeholder='Opis'
-                onChange={(e) => setDescription(e.target.value)}/>
-                <input value={price} className='py-4 my-4 px-12 outline-none font-bold text-xs tracking-wider border' type='number' placeholder='Cena'
-                onChange={(e) => setPrice(Number(e.target.value))} />
-                <input value={duration} className='py-4 my-4 px-12 outline-none font-bold text-xs tracking-wider border' type='number' placeholder='Czas trwania'
-                onChange={(e) => setDuration(Number(e.target.value))}/>
-                <SmallButton type='submit'>Dodaj</SmallButton>
-            </Form>
+
+            <OfferForm inputData={{ label: '', price: 0, duration: 0, description: '' }} onSubmit={handleSubmit}>
+                {state === 'submitting' ? (<div>Wysyłanie...</div> 
+                ) : (
+                    <SmallButton type='submit'>Dodaj</SmallButton>
+                )}
+            </OfferForm>
+
         </div>
     );
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
     const formData = await request.formData();
-    const updatedOfferData = Object.fromEntries(formData);
-
     
+    const updatedOfferData: NewOffer = {
+        label: formData.get('label') as string,
+        price: Number(formData.get('price')),
+        duration: Number(formData.get('duration')),
+        description: formData.get('description') as string | undefined
+    };
+
+    await createOffer(updatedOfferData);  
+    await queryClient.invalidateQueries({ queryKey: ['offers'] });
+
+    return redirect('../');
 }

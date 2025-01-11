@@ -42,7 +42,7 @@ namespace barber_api.Controllers
         [HttpPost]
         public async Task<ActionResult<Offer>> Add([FromBody] Offer offer)
         {
-            if (offer == null)
+            if (offer == null || string.IsNullOrEmpty(offer.Label) || offer.Duration <= 0 || offer.Price <= 0)
             {
                 return BadRequest("Invalid offer data.");
             }

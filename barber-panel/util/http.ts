@@ -33,6 +33,13 @@ interface Offer {
     price: number;
 }
 
+interface NewOffer {
+    label: string;
+    description?: string;
+    duration: number;
+    price: number;
+}
+
 interface UpdateOffer {
     id: number,
     offer: Offer
@@ -40,5 +47,9 @@ interface UpdateOffer {
 
 export async function updateOffer({ id, offer }: UpdateOffer) { 
     const { data } = await axios.put(`https://localhost:7190/offers/${id}`, offer);
+    return data;
+}
+export async function createOffer(offer: NewOffer) {
+    const { data } = await axios.post('https://localhost:7190/offers', offer);
     return data;
 }
