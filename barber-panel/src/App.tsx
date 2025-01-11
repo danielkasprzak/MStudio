@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from '../util/http';
 
 import Login from './components/auth/Login';
 import Reservation from './components/reservation/Reservation';
@@ -7,7 +8,7 @@ import MyReservations from './components/reservation/MyReservations';
 import Offers from './components/reservation/Offers';
 import Landing from './components/landing/Landing';
 import Admin from './components/admin/Admin';
-import OffersManage from './components/admin/offers/Offers';
+import OffersManage, { loader as offersManageLoader } from './components/admin/offers/Offers';
 
 const router = createBrowserRouter([
   { path: '/', element: <Landing />},
@@ -20,12 +21,12 @@ const router = createBrowserRouter([
   { path: '/login', element: <Login /> },
   { path: '/admin', element: <Admin />,
     children: [
-      { path: '', element: <OffersManage />}
+      { path: '', element: <OffersManage />,
+        loader: offersManageLoader
+      }
     ]
   }
 ]);
-
-const queryClient = new QueryClient();
 
 function App() {
   return <QueryClientProvider client={queryClient}><RouterProvider router={router} /></QueryClientProvider>;
