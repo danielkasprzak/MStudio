@@ -38,6 +38,7 @@ export default ({ children, inputData, onSubmit }: Props) => {
             <input
                 name='label'
                 value={label}
+                required
                 onChange={(e) => setLabel(e.target.value)}
                 className='py-4 my-4 px-12 outline-none font-bold text-xs tracking-wider border'
                 type='text'
@@ -54,21 +55,23 @@ export default ({ children, inputData, onSubmit }: Props) => {
             />
 
             <input
-                name='price'
-                value={price}
-                onChange={(e) => setPrice(Number(e.target.value))}
-                className='py-4 my-4 px-12 outline-none font-bold text-xs tracking-wider border'
-                type='number'
-                placeholder='Cena'
-            />
-
-            <input
                 name='duration'
                 value={duration}
+                required
                 onChange={(e) => setDuration(Number(e.target.value))}
                 className='py-4 my-4 px-12 outline-none font-bold text-xs tracking-wider border'
                 type='number'
                 placeholder='Czas trwania'
+            />
+
+            <input
+                name='price'
+                value={price}
+                required
+                onChange={(e) => setPrice(Number(e.target.value))}
+                className='py-4 my-4 px-12 outline-none font-bold text-xs tracking-wider border'
+                type='number'
+                placeholder='Cena'
             />
 
             {children}

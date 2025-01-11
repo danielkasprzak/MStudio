@@ -30,6 +30,12 @@ namespace barber_api.Services
 
         public async Task UpdateOfferAsync(Offer offer)
         {
+            var existingOffer = await _context.Offers.FindAsync(offer.Id);
+            if (existingOffer != null)
+            {
+                _context.Entry(existingOffer).State = EntityState.Detached;
+            }
+
             _context.Offers.Update(offer);
             await _context.SaveChangesAsync();
         }

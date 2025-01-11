@@ -53,7 +53,14 @@ export function loader({ params }: LoaderFunctionArgs) {
 
 export const action: ActionFunction = async ({ request, params }) => {
     const formData = await request.formData();
-    const updatedOfferData = Object.fromEntries(formData);
+    
+    const updatedOfferData: OfferModel = {
+        id: Number(params.id),
+        label: formData.get('label') as string,
+        price: Number(formData.get('price')),
+        duration: Number(formData.get('duration')),
+        description: formData.get('description') as string | undefined
+    };
 
     await updateOffer({ id: Number(params.id), offer: updatedOfferData });  
     await queryClient.invalidateQueries({ queryKey: ['offers'] });

@@ -28,7 +28,7 @@ export async function fetchOpeningHours() {
 interface Offer {
     id: number;
     label: string;
-    description: string;
+    description?: string;
     duration: number;
     price: number;
 }
