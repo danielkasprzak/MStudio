@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import FormInput from '../FormInput';
+
 interface Props {
     children: React.ReactNode;
     inputData: {
@@ -35,44 +37,10 @@ export default ({ children, inputData, onSubmit }: Props) => {
 
     return (
         <form onSubmit={handleSubmit} className='font-lato flex flex-col'>
-            <input
-                name='label'
-                value={label}
-                required
-                onChange={(e) => setLabel(e.target.value)}
-                className='py-4 my-4 px-12 outline-none font-bold text-xs tracking-wider border'
-                type='text'
-                placeholder='Tytuł'
-            />
-
-            <input
-                name='description'
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className='py-4 my-4 px-12 outline-none font-bold text-xs tracking-wider border'
-                type='text'
-                placeholder='Opis'
-            />
-
-            <input
-                name='duration'
-                value={duration}
-                required
-                onChange={(e) => setDuration(Number(e.target.value))}
-                className='py-4 my-4 px-12 outline-none font-bold text-xs tracking-wider border'
-                type='number'
-                placeholder='Czas trwania'
-            />
-
-            <input
-                name='price'
-                value={price}
-                required
-                onChange={(e) => setPrice(Number(e.target.value))}
-                className='py-4 my-4 px-12 outline-none font-bold text-xs tracking-wider border'
-                type='number'
-                placeholder='Cena'
-            />
+            <FormInput name='label' defaultVal={label} required onChange={(e) => setLabel(e.target.value)} type='text' placeholder='Tytuł'/>
+            <FormInput name='description' defaultVal={description} onChange={(e) => setDescription(e.target.value)} type='text' placeholder='Opis'/>
+            <FormInput name='duration' defaultVal={duration} required onChange={(e) => setDuration(Number(e.target.value))} type='number' placeholder='Czas trwania'/>
+            <FormInput name='price' defaultVal={price} required onChange={(e) => setPrice(Number(e.target.value))} type='number' placeholder='Cena'/>
 
             {children}
         </form>

@@ -1,14 +1,13 @@
 interface Props {
-    id: number;
     label: string;
     description?: string;
     price: number;
     time: number;
 }
 
-export default ({ id, label, description, price, time } : Props) => {
+export default ({ label, description, price, time } : Props) => {
     return (
-        <li className="border p-8 m-4 w-full h-auto flex flex-row items-center justify-between">
+        <li className="border border-stone-200 p-8 m-4 w-full h-auto flex flex-row items-center justify-between">
             <div className="flex flex-col justify-center px-8">
                 <h1 className="font-cormorant font-medium text-xl">{label}</h1>
                 <p className="font-semibold text-xs text-stone-600 tracking-wider">{description}</p>
