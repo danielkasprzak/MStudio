@@ -34,7 +34,7 @@ export default () => {
     );
 }
 
-export const action: ActionFunction = async ({ request, params }) => {
+export const action: ActionFunction = async ({ request }) => {
     const formData = await request.formData();
     
     const updatedOfferData: NewOffer = {
