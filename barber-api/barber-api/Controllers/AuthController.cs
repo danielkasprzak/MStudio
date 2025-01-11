@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 [ApiController]
 [Route("auth")]
@@ -14,8 +15,20 @@ public class AuthController : ControllerBase
     [HttpPost("google")]
     public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginRequest request)
     {
-        var token = await _authService.AuthenticateWithGoogleAsync(request.Code);
-        return Ok(new { token });
+        await _authService.AuthenticateWithGoogleAsync(request.Code);
+        return Ok(new { message = "Authenticated successfully" });
+    }
+
+    [HttpGet("check")]
+    public IActionResult CheckAuth()
+    {
+        var roles = _authService.CheckAuth();
+        if (roles == null)
+        {
+            return Unauthorized();
+        }
+
+        return Ok(new { roles });
     }
 }
 

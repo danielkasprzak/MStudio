@@ -13,14 +13,16 @@ public class AuthService
 {
     private readonly IConfiguration _configuration;
     private readonly HttpClient _httpClient;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public AuthService(IConfiguration configuration, HttpClient httpClient)
+    public AuthService(IConfiguration configuration, HttpClient httpClient, IHttpContextAccessor httpContextAccessor)
     {
         _configuration = configuration;
         _httpClient = httpClient;
+        _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<string> AuthenticateWithGoogleAsync(string code)
+    public async Task AuthenticateWithGoogleAsync(string code)
     {
         Console.WriteLine($"Received code: {code}");
 
@@ -31,12 +33,18 @@ public class AuthService
             Audience = new[] { _configuration["Authentication:Google:ClientId"] }
         });
 
-        var claims = new[]
+        var claims = new List<Claim>
         {
-        new Claim(JwtRegisteredClaimNames.Sub, payload.Subject),
-        new Claim(JwtRegisteredClaimNames.Email, payload.Email),
-        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-    };
+            new Claim(JwtRegisteredClaimNames.Sub, payload.Subject),
+            new Claim(JwtRegisteredClaimNames.Email, payload.Email),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
+
+        var adminEmails = _configuration.GetSection("AdminEmails").Get<List<string>>();
+        if (adminEmails.Contains(payload.Email))
+        {
+            claims.Add(new Claim(ClaimTypes.Role, "admin"));
+        }
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -48,7 +56,22 @@ public class AuthService
             expires: DateTime.Now.AddMinutes(30),
             signingCredentials: creds);
 
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+        SetTokenCookie(tokenString);
+    }
+
+    private void SetTokenCookie(string token)
+    {
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.None,
+            Expires = DateTime.Now.AddMinutes(30)
+        };
+
+        _httpContextAccessor.HttpContext.Response.Cookies.Append("AuthToken", token, cookieOptions);
     }
 
     private async Task<string> ExchangeAuthorizationCodeForIdTokenAsync(string authorizationCode)
@@ -82,6 +105,18 @@ public class AuthService
         var tokenResponse = JsonSerializer.Deserialize<GoogleTokenResponse>(responseContent);
 
         return tokenResponse.IdToken;
+    }
+
+    public List<string> CheckAuth()
+    {
+        var user = _httpContextAccessor.HttpContext.User;
+        if (user == null)
+        {
+            return null;
+        }
+
+        var roles = user.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList();
+        return roles;
     }
 }
 

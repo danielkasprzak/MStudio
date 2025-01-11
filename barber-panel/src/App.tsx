@@ -3,6 +3,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '../util/http';
 
 import Error from './components/Error';
+import { protectedLoader, adminLoader } from '../util/http';
 import Login from './components/auth/Login';
 import Reservation from './components/reservation/Reservation';
 import MyReservations from './components/reservation/MyReservations';
@@ -15,14 +16,14 @@ import OfferNew, { action as offersNewAction } from './components/admin/offers/O
 
 const router = createBrowserRouter([
   { index: true, element: <Landing />, errorElement: <Error /> },
-  { path: 'rezerwacja', element: <Reservation />,
+  { path: 'rezerwacja', element: <Reservation />, loader: protectedLoader,
     children: [
       { index: true, element: <Offers /> },
       { path: 'moje-rezerwacje', element: <MyReservations /> }
     ]
   },
   { path: 'login', element: <Login /> },
-  { path: 'admin', element: <Admin />,
+  { path: 'admin', element: <Admin />, errorElement: <Error />, loader: adminLoader,
     children: [
       { path: 'oferty', element: <OffersManage />,
         loader: offersManageLoader,

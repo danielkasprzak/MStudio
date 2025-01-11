@@ -5,6 +5,37 @@ import { dayTranslations } from "./constants";
 
 export const queryClient = new QueryClient();
 
+axios.defaults.withCredentials = true;
+
+// AUTH
+
+const checkAuth = async () => {
+    try {
+      const response = await axios.get('https://localhost:7190/auth/check');
+      return response.data;
+    } catch (error) {
+      return null;
+    }
+};
+
+export async function protectedLoader() {
+    const auth = await checkAuth();
+    if (!auth) {
+      throw new Response('Unauthorized', { status: 401 });
+    }
+    return auth;
+  }
+  
+export async function adminLoader() {
+    const auth = await checkAuth();
+    if (!auth || !auth.roles.includes('admin')) {
+      throw new Response('Forbidden', { status: 403 });
+    }
+    return auth;
+}
+
+// OFFERS
+
 export async function fetchOffers() {
     const { data } = await axios.get('https://localhost:7190/offers');
     return data;
@@ -13,16 +44,6 @@ export async function fetchOffers() {
 export async function fetchOffer({ id }: { id: number }) {
     const { data } = await axios.get(`https://localhost:7190/offers/${id}`);
     return data;
-};
-
-export async function fetchOpeningHours() {
-    const { data } = await axios.get('https://localhost:7190/openinghours');
-    return data.map((item: any) => ({
-        dayOfWeek: dayTranslations[item.dayOfWeek] || item.dayOfWeek,
-        isOpen: item.isOpen,
-        openHour: item.openHour.slice(0, 5),
-        closeHour: item.closeHour.slice(0, 5),
-    }));
 };
 
 interface Offer {
@@ -55,5 +76,34 @@ export async function createOffer(offer: NewOffer) {
 }
 export async function deleteOffer({ id }: { id: number }) {
     const { data } = await axios.delete(`https://localhost:7190/offers/${id}`);
+    return data;
+}
+
+// OPENING HOURS
+
+export async function fetchOpeningHours() {
+    const { data } = await axios.get('https://localhost:7190/openinghours');
+    return data.map((item: any) => ({
+        dayOfWeek: dayTranslations[item.dayOfWeek] || item.dayOfWeek,
+        isOpen: item.isOpen,
+        openHour: item.openHour.slice(0, 5),
+        closeHour: item.closeHour.slice(0, 5),
+    }));
+};
+
+interface OpeningHour {
+    dayOfWeek: string;
+    isOpen: boolean;
+    openHour: string;
+    closeHour: string;
+}
+
+interface UpdateOpeningHour {
+    dayOfWeek: string;
+    openingHour: OpeningHour;
+}
+
+export async function updateOpeningHour({ dayOfWeek, openingHour }: UpdateOpeningHour) {
+    const { data } = await axios.put(`https://localhost:7190/openinghours/${dayOfWeek}`, openingHour);
     return data;
 }
