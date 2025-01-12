@@ -152,8 +152,8 @@ interface SpecialOpeningHour {
 }
 
 interface UpdateSpecialOpeningHour {
-    dayOfWeek: string;
-    openingHour: SpecialOpeningHour;
+    date: string;
+    updatedSpecialHour: SpecialOpeningHour;
 }
 
 export async function createSpecialOpeningHour(specialDate: SpecialOpeningHour) {
@@ -161,7 +161,7 @@ export async function createSpecialOpeningHour(specialDate: SpecialOpeningHour) 
     return data;
 }
 
-export async function updateSpecialOpeningHour({ dayOfWeek, openingHour }: UpdateOpeningHour) {
-    const { data } = await axiosInstance.put(`https://localhost:7190/specialopeninghours/${dayOfWeek}`, openingHour);
+export async function updateSpecialOpeningHour({ date, updatedSpecialHour }: UpdateSpecialOpeningHour) {
+    const { data } = await axiosInstance.put(`https://localhost:7190/specialopeninghours/${date}`, updatedSpecialHour);
     return data;
 }

@@ -1,7 +1,7 @@
 import Title from '../Title';
 import SmallButton from '../SmallButton';
 import { ActionFunction, LoaderFunctionArgs, useParams, useSubmit, useNavigation, redirect } from 'react-router-dom';
-import { queryClient, fetchSpecialOpeningHour, updateOpeningHour } from '../../../utils/http';
+import { queryClient, fetchSpecialOpeningHour, updateSpecialOpeningHour } from '../../../utils/http';
 import { useQuery } from '@tanstack/react-query';
 
 import SpecialOpeningHourForm from './SpecialOpeningHourForm';
@@ -63,7 +63,7 @@ export const action: ActionFunction = async ({ request, params }) => {
         closeHour: formData.get('closeHour') as string
     };
 
-    // await fetchSpecialOpeningHour({ date: params.date || '', openingHour: updatedSpecialOpeningHour });  
+    await updateSpecialOpeningHour({ date: params.date || '', updatedSpecialHour: updatedSpecialOpeningHour });  
     await queryClient.invalidateQueries({ queryKey: ['specialOpeningHours'] });
 
     return redirect('../');
