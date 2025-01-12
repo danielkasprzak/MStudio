@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { queryClient, fetchOpeningHours } from '../../../util/http';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 import Title from '../Title';
 import SmallButton from '../SmallButton';
@@ -14,8 +14,6 @@ interface OpeningHoursModel {
 }
 
 export default () => {
-    const navigate = useNavigate();
-
     const { data = [], error } = useQuery<OpeningHoursModel[]>({
         queryKey: ['openingHours'],
         queryFn: fetchOpeningHours
@@ -41,7 +39,6 @@ export default () => {
                                 </div>
                             </div>
                         ))}
-                        {/* <SmallButton><Link to={`nowa`}>Dodaj</Link></SmallButton> */}
                     </ul>
                 </div>
             </div>
