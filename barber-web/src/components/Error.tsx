@@ -1,6 +1,9 @@
 import { useRouteError, isRouteErrorResponse } from "react-router-dom"
+import useDocumentTitle from "../hooks/useDocumentTitle";
 
 export default () => {
+    useDocumentTitle("MStudio - Błąd")
+
     const error = useRouteError();
 
     let title = "Wystąpił błąd!";
