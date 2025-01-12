@@ -1,10 +1,10 @@
-import axios from 'axios';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 import Button from './Button';
 import Spacer from './Spacer';
+import axiosInstance from '../../util/axiosInstance';
 
 export default () => {
     useDocumentTitle("MStudio - logowanie");
@@ -12,7 +12,7 @@ export default () => {
 
     const googleLogin = useGoogleLogin({
         onSuccess: async ({ code }) => {
-            const tokens = await axios.post('https://localhost:7190/auth/google', { code });
+            const tokens = await axiosInstance.post('https://localhost:7190/auth/google', { code });
             if (tokens) {
                 navigate('/rezerwacja');
             }

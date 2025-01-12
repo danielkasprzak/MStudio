@@ -1,15 +1,13 @@
-import axios from "axios";
+import axiosInstance from './axiosInstance';
 import { QueryClient } from '@tanstack/react-query';
 
 export const queryClient = new QueryClient();
-
-axios.defaults.withCredentials = true;
 
 // AUTH
 
 const checkAuth = async () => {
     try {
-      const response = await axios.get('https://localhost:7190/auth/check');
+      const response = await axiosInstance.get('https://localhost:7190/auth/check');
       return response.data;
     } catch (error) {
       return null;
@@ -33,19 +31,19 @@ export async function adminLoader() {
 }
 
 export async function logout() {
-    await axios.post('https://localhost:7190/auth/logout');
+    await axiosInstance.post('https://localhost:7190/auth/logout');
     return true;
 }
 
 // OFFERS
 
 export async function fetchOffers() {
-    const { data } = await axios.get('https://localhost:7190/offers');
+    const { data } = await axiosInstance.get('https://localhost:7190/offers');
     return data;
 };
 
 export async function fetchOffer({ id }: { id: number }) {
-    const { data } = await axios.get(`https://localhost:7190/offers/${id}`);
+    const { data } = await axiosInstance.get(`https://localhost:7190/offers/${id}`);
     return data;
 };
 
@@ -70,22 +68,22 @@ interface UpdateOffer {
 }
 
 export async function updateOffer({ id, offer }: UpdateOffer) { 
-    const { data } = await axios.put(`https://localhost:7190/offers/${id}`, offer);
+    const { data } = await axiosInstance.put(`https://localhost:7190/offers/${id}`, offer);
     return data;
 }
 export async function createOffer(offer: NewOffer) {
-    const { data } = await axios.post('https://localhost:7190/offers', offer);
+    const { data } = await axiosInstance.post('https://localhost:7190/offers', offer);
     return data;
 }
 export async function deleteOffer({ id }: { id: number }) {
-    const { data } = await axios.delete(`https://localhost:7190/offers/${id}`);
+    const { data } = await axiosInstance.delete(`https://localhost:7190/offers/${id}`);
     return data;
 }
 
 // OPENING HOURS
 
 export async function fetchOpeningHours() {
-    const { data } = await axios.get('https://localhost:7190/openinghours');
+    const { data } = await axiosInstance.get('https://localhost:7190/openinghours');
     return data.map((item: any) => ({
         dayOfWeek: item.dayOfWeek,
         isOpen: item.isOpen,
@@ -95,7 +93,7 @@ export async function fetchOpeningHours() {
 };
 
 export async function fetchOpeningHour({ dayOfWeek }: { dayOfWeek: string }) {
-    const { data } = await axios.get(`https://localhost:7190/openinghours/${dayOfWeek}`);
+    const { data } = await axiosInstance.get(`https://localhost:7190/openinghours/${dayOfWeek}`);
     return {
         dayOfWeek: data.dayOfWeek,
         isOpen: data.isOpen,
@@ -117,6 +115,6 @@ interface UpdateOpeningHour {
 }
 
 export async function updateOpeningHour({ dayOfWeek, openingHour }: UpdateOpeningHour) {
-    const { data } = await axios.put(`https://localhost:7190/openinghours/${dayOfWeek}`, openingHour);
+    const { data } = await axiosInstance.put(`https://localhost:7190/openinghours/${dayOfWeek}`, openingHour);
     return data;
 }
