@@ -32,6 +32,11 @@ export async function adminLoader() {
     return auth;
 }
 
+export async function logout() {
+    await axios.post('https://localhost:7190/auth/logout');
+    return true;
+}
+
 // OFFERS
 
 export async function fetchOffers() {
