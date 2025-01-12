@@ -1,6 +1,6 @@
 interface Props {
     name: string;
-    placeholder: string;
+    placeholder?: string;
     defaultVal: any;
     onChange: (e: any) => void;
     type: string;
@@ -8,7 +8,6 @@ interface Props {
 }
 
 export default ({ name, placeholder, defaultVal, onChange, type, required } : Props) => {
-
     if (type === 'checkbox') 
     {
         return (

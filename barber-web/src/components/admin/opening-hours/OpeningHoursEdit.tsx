@@ -60,7 +60,7 @@ export const action: ActionFunction = async ({ request, params }) => {
         openHour: formData.get('openHour') as string,
         closeHour: formData.get('closeHour') as string
     };
-    
+
     await updateOpeningHour({ dayOfWeek: params.day || '', openingHour: updatedOpeningHourData });  
     await queryClient.invalidateQueries({ queryKey: ['openingHours'] });
 
