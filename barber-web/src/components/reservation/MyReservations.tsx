@@ -60,7 +60,7 @@ const reservations = [
 export default () => {
     return (
         <div className="h-auto w-auto">
-            <ul className='w-[46rem] h-fit bg-dark-foreground rounded-2xl px-8 pt-8 pb-4'>
+            <ul className='w-[46rem] h-fit bg-white border border-stone-300 px-8 pt-8 pb-4'>
                 {reservations.map((reservation) => (
                     <li key={reservation.id} className="mb-4">
                         <h2 className="text-white font-semibold">{reservation.id}</h2>
