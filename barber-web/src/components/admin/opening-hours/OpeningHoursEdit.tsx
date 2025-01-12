@@ -1,16 +1,16 @@
 import Title from '../Title';
 import SmallButton from '../SmallButton';
 import { ActionFunction, LoaderFunctionArgs, useParams, useSubmit, useNavigation, redirect } from 'react-router-dom';
-import { queryClient, fetchOffer, updateOffer } from '../../../util/http';
+import { queryClient, fetchOpeningHour, updateOpeningHour } from '../../../util/http';
 import { useQuery } from '@tanstack/react-query';
-import OfferForm from '../offers/OfferForm';
 
-interface OfferModel {
-    id: number;
-    label: string;
-    price: number;
-    duration: number;
-    description?: string;
+import OpeningHourForm from './OpeningHourForm';
+
+interface OpeningHourModel {
+    dayOfWeek: string;
+    isOpen: boolean;
+    openHour: string;
+    closeHour: string;
 }
 
 export default () => {
@@ -18,10 +18,10 @@ export default () => {
     const submit = useSubmit();
     const params = useParams();
 
-    const { data, error } = useQuery<OfferModel>({
-        queryKey: ['offer', params.id],
-        queryFn: () => fetchOffer({ id: Number(params.id) }),
-        enabled: !!params.id
+    const { data, error } = useQuery<OpeningHourModel>({
+        queryKey: ['openingHour', params.day],
+        queryFn: () => fetchOpeningHour({ dayOfWeek: params.day || '' }),
+        enabled: !!params.day
     });
 
     if (error) return <div>Error loading offers</div>;
@@ -32,38 +32,37 @@ export default () => {
 
     return (
         <div className='sticky right-0 top-16 w-fit h-full bg-white m-16 ml-8 text-charcoal p-8'>
-            <Title padding='8'>Edytuj ofertę</Title>
+            <Title padding='8'>Edytuj godziny</Title>
 
-            {data && <OfferForm inputData={data} onSubmit={handleSubmit}>
+            {data && <OpeningHourForm inputData={data} onSubmit={handleSubmit}>
                 {state === 'submitting' ? (<div>Wysyłanie...</div> 
                 ) : (
                     <SmallButton type='submit'>Zapisz</SmallButton>
                 )}
-            </OfferForm>}
+            </OpeningHourForm>}
         </div>
     );
 }
 
 export function loader({ params }: LoaderFunctionArgs) {
     return queryClient.fetchQuery({
-        queryKey: ['offer', params.id],
-        queryFn: () => fetchOffer({ id: Number(params.id) })
+        queryKey: ['openingHour', params.day],
+        queryFn: () => fetchOpeningHour({ dayOfWeek: params.day || '' })
     });
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
     const formData = await request.formData();
     
-    const updatedOfferData: OfferModel = {
-        id: Number(params.id),
-        label: formData.get('label') as string,
-        price: Number(formData.get('price')),
-        duration: Number(formData.get('duration')),
-        description: formData.get('description') as string | undefined
+    const updatedOpeningHourData: OpeningHourModel = {
+        dayOfWeek: params.day || '',
+        isOpen: formData.get('isOpen') === 'true',
+        openHour: formData.get('openHour') as string,
+        closeHour: formData.get('closeHour') as string
     };
-
-    await updateOffer({ id: Number(params.id), offer: updatedOfferData });  
-    await queryClient.invalidateQueries({ queryKey: ['offers'] });
+    
+    await updateOpeningHour({ dayOfWeek: params.day || '', openingHour: updatedOpeningHourData });  
+    await queryClient.invalidateQueries({ queryKey: ['openingHours'] });
 
     return redirect('../');
 }
