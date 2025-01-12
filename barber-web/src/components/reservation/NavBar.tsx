@@ -3,8 +3,7 @@ import NavButton from "./NavButton"
 
 export default () => {
     return (
-        <div className='w-[46rem] h-auto py-4 flex flex-row items-center justify-end relative overflow-hidden'>   
-            <NavButton isActive={false}>Panel administratora</NavButton>
+        <div className='w-[46rem] h-auto py-4 flex flex-row items-center justify-end relative overflow-hidden'>
             <NavLink to="/rezerwacja/moje-rezerwacje">
                 {({ isActive }) => (
                     <NavButton isActive={isActive}>

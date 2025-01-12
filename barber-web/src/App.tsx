@@ -10,6 +10,8 @@ import Offers from './components/reservation/Offers';
 import OffersManage, { loader as offersManageLoader } from './components/admin/offers/Offers';
 import OfferEdit, { loader as offersEditLoader, action as offersEditAction } from './components/admin/offers/OfferEdit';
 import OfferNew, { action as offersNewAction } from './components/admin/offers/OfferNew';
+import OpeningHours, { loader as openingHoursLoader } from './components/admin/opening-hours/OpeningHours';
+import OpeningHoursEdit from './components/admin/opening-hours/OpeningHoursEdit';
 
 const Landing = lazy(() => import('./components/landing/Landing'));
 const Login = lazy(() => import('./components/auth/Login'));
@@ -32,6 +34,11 @@ const router = createBrowserRouter([
         children: [
           { path: 'nowa', element: <OfferNew />, action: offersNewAction },
           { path: ':id', element: <OfferEdit />, loader: offersEditLoader, action: offersEditAction }
+        ]
+      },
+      { path: 'otwarcie', element: <OpeningHours />, loader: openingHoursLoader,
+        children: [
+          { path: ':day', element: <OpeningHoursEdit /> }
         ]
       }
     ]

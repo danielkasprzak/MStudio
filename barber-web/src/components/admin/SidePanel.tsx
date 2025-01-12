@@ -11,6 +11,7 @@ export default () => {
                 <SmallButton>Panel</SmallButton>
                 <SmallButton>Rezerwacje</SmallButton>
                 <SmallButton><Link to={`oferty`}>Oferta</Link></SmallButton>
+                <SmallButton><Link to={`otwarcie`}>Harmonogram</Link></SmallButton>
             </div>
             <div className="flex flex-col pb-8">
                 <SmallButton>Powrót</SmallButton>
