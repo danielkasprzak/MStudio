@@ -12,7 +12,7 @@ export default {
         'cormorant': ['Cormorant Garamond', 'serif'],
       },
       fontSize: {
-        '10xl': ['12rem', { lineHeight: '1' }]
+        '10xl': ['20rem', { lineHeight: '1' }]
       },
       colors: {
         'charcoal': '#353535',

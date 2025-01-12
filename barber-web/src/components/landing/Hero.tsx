@@ -78,7 +78,7 @@ export default ({ heroRef }: Props) => {
                         <Video source={HeroVideo} zClass='-z-40' />
                     </div>
                     <motion.div className="relative w-screen h-screen" animate={videoOverlay}>
-                        <Slogan sloganAnimation={sloganAnimation} />
+                        {/* <Slogan sloganAnimation={sloganAnimation} /> */}
                         <Video source={SecondVideo} zClass='-z-20' />
                     </motion.div>
                 </div>

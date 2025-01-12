@@ -6,6 +6,7 @@ import Hero from './Hero';
 import Section from './Section';
 import Footer from './Footer';
 import NavBar from './NavBar';
+import UnderFooter from './UnderFooter';
 
 export default () => {
     const lenisRef = useRef<LenisRef | null>(null);
@@ -43,7 +44,9 @@ export default () => {
                 <Hero heroRef={heroRef}/>
                 <Section/>
                 <Section/>
+                
                 <Footer/>
+                <UnderFooter/>
 
                 <NavBar heroRef={heroRef} />
             </div>
