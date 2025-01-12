@@ -1,18 +1,20 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '../util/http';
+import { lazy } from 'react';
 
 import Error from './components/Error';
 import { protectedLoader, adminLoader } from '../util/http';
-import Login from './components/auth/Login';
-import Reservation from './components/reservation/Reservation';
 import MyReservations from './components/reservation/MyReservations';
 import Offers from './components/reservation/Offers';
-import Landing from './components/landing/Landing';
-import Admin from './components/admin/Admin';
 import OffersManage, { loader as offersManageLoader } from './components/admin/offers/Offers';
 import OfferEdit, { loader as offersEditLoader, action as offersEditAction } from './components/admin/offers/OfferEdit';
 import OfferNew, { action as offersNewAction } from './components/admin/offers/OfferNew';
+
+const Landing = lazy(() => import('./components/landing/Landing'));
+const Login = lazy(() => import('./components/auth/Login'));
+const Admin = lazy(() => import('./components/admin/Admin'));
+const Reservation = lazy(() => import('./components/reservation/Reservation'));
 
 const router = createBrowserRouter([
   { index: true, element: <Landing />, errorElement: <Error /> },
