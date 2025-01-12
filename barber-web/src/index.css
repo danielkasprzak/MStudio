@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::selection {
+    background-color: rgb(236, 236, 236);
+}
+
+* {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
