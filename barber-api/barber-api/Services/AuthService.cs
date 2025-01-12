@@ -26,9 +26,9 @@ public class AuthService
     {
         Console.WriteLine($"Received code: {code}");
 
-        var idToken = await ExchangeAuthorizationCodeForIdTokenAsync(code);
+        var tokenResponse = await ExchangeAuthorizationCodeForIdTokenAsync(code);
 
-        var payload = await GoogleJsonWebSignature.ValidateAsync(idToken, new GoogleJsonWebSignature.ValidationSettings
+        var payload = await GoogleJsonWebSignature.ValidateAsync(tokenResponse.IdToken, new GoogleJsonWebSignature.ValidationSettings
         {
             Audience = new[] { _configuration["Authentication:Google:ClientId"] }
         });
@@ -59,6 +59,12 @@ public class AuthService
         var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
         SetTokenCookie(tokenString);
+
+        if (!string.IsNullOrEmpty(tokenResponse.RefreshToken))
+        {
+            Console.WriteLine($"Received refresh token: {tokenResponse.RefreshToken}");
+            SetRefreshTokenCookie(tokenResponse.RefreshToken);
+        }
     }
 
     private void SetTokenCookie(string token)
@@ -74,13 +80,23 @@ public class AuthService
         _httpContextAccessor.HttpContext.Response.Cookies.Append("MSTOKEN", token, cookieOptions);
     }
 
-    private async Task<string> ExchangeAuthorizationCodeForIdTokenAsync(string authorizationCode)
+    private void SetRefreshTokenCookie(string refreshToken)
+    {
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.None,
+            Expires = DateTime.Now.AddDays(30)
+        };
+
+        _httpContextAccessor.HttpContext.Response.Cookies.Append("MSRTOKEN", refreshToken, cookieOptions);
+    }
+
+    private async Task<GoogleTokenResponse> ExchangeAuthorizationCodeForIdTokenAsync(string authorizationCode)
     {
         var clientId = _configuration["Authentication:Google:ClientId"];
         var clientSecret = _configuration["Authentication:Google:ClientSecret"];
-        var redirectUri = _configuration["Authentication:Google:RedirectUri"];
-
-        Console.WriteLine(redirectUri);
 
         var requestBody = new Dictionary<string, string>
     {
@@ -103,8 +119,38 @@ public class AuthService
         }
 
         var tokenResponse = JsonSerializer.Deserialize<GoogleTokenResponse>(responseContent);
+        return tokenResponse;
+    }
 
-        return tokenResponse.IdToken;
+    public async Task<string> RefreshAccessTokenAsync(string refreshToken)
+    {
+        var clientId = _configuration["Authentication:Google:ClientId"];
+        var clientSecret = _configuration["Authentication:Google:ClientSecret"];
+
+        var requestBody = new Dictionary<string, string>
+    {
+        { "refresh_token", refreshToken },
+        { "client_id", clientId },
+        { "client_secret", clientSecret },
+        { "grant_type", "refresh_token" }
+    };
+
+        var requestContent = new FormUrlEncodedContent(requestBody);
+
+        var response = await _httpClient.PostAsync("https://oauth2.googleapis.com/token", requestContent);
+        var responseContent = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            response.EnsureSuccessStatusCode();
+        }
+
+        var tokenResponse = JsonSerializer.Deserialize<GoogleTokenResponse>(responseContent);
+        var newAccessToken = tokenResponse.IdToken;
+
+        SetTokenCookie(newAccessToken);
+
+        return newAccessToken;
     }
 
     public List<string> CheckAuth()
@@ -112,7 +158,28 @@ public class AuthService
         var user = _httpContextAccessor.HttpContext.User;
         if (user == null || !user.Identity.IsAuthenticated)
         {
-            return null;
+            var refreshToken = _httpContextAccessor.HttpContext.Request.Cookies["MSRTOKEN"];
+            if (!string.IsNullOrEmpty(refreshToken))
+            {
+                try
+                {
+                    var newAccessToken = RefreshAccessTokenAsync(refreshToken).Result;
+                    var handler = new JwtSecurityTokenHandler();
+                    var token = handler.ReadJwtToken(newAccessToken);
+                    var claims = token.Claims;
+                    var identity = new ClaimsIdentity(claims, "jwt");
+                    _httpContextAccessor.HttpContext.User = new ClaimsPrincipal(identity);
+                    user = _httpContextAccessor.HttpContext.User;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
         }
 
         var roles = user.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList();
@@ -124,4 +191,7 @@ public class GoogleTokenResponse
 {
     [JsonPropertyName("id_token")]
     public required string IdToken { get; set; }
+
+    [JsonPropertyName("refresh_token")]
+    public string? RefreshToken { get; set; }
 }

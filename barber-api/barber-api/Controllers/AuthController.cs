@@ -19,6 +19,26 @@ public class AuthController : ControllerBase
         return Ok(new { message = "Authenticated successfully" });
     }
 
+    [HttpPost("refresh-token")]
+    public async Task<IActionResult> RefreshToken()
+    {
+        var refreshToken = Request.Cookies["REFRESH_TOKEN"];
+        if (string.IsNullOrEmpty(refreshToken))
+        {
+            return Unauthorized("Refresh token is missing.");
+        }
+
+        try
+        {
+            var newAccessToken = await _authService.RefreshAccessTokenAsync(refreshToken);
+            return Ok(new { accessToken = newAccessToken });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "Internal server error");
+        }
+    }
+
     [HttpGet("check")]
     public IActionResult CheckAuth()
     {
