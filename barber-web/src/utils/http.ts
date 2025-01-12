@@ -118,3 +118,47 @@ export async function updateOpeningHour({ dayOfWeek, openingHour }: UpdateOpenin
     const { data } = await axiosInstance.put(`https://localhost:7190/openinghours/${dayOfWeek}`, openingHour);
     return data;
 }
+
+// SPECIAL OPENING HOURS
+
+export async function fetchSpecialOpeningHours() {
+    const { data } = await axiosInstance.get('https://localhost:7190/specialopeninghours');
+    return data.map((item: any) => ({
+        date: item.date,
+        isOpen: item.isOpen,
+        openHour: item.openHour.slice(0, 5),
+        closeHour: item.closeHour.slice(0, 5),
+    }));
+};
+
+export async function fetchSpecialOpeningHour({ date }: { date: string }) {
+    const { data } = await axiosInstance.get(`https://localhost:7190/specialopeninghours/${date}`);
+    return {
+        date: data.date,
+        isOpen: data.isOpen,
+        openHour: data.openHour.slice(0, 5),
+        closeHour: data.closeHour.slice(0, 5),
+    };
+}
+
+interface SpecialOpeningHour {
+    date: string;
+    isOpen: boolean;
+    openHour: string;
+    closeHour: string;
+}
+
+interface UpdateSpecialOpeningHour {
+    dayOfWeek: string;
+    openingHour: SpecialOpeningHour;
+}
+
+export async function createSpecialOpeningHour(specialDate: SpecialOpeningHour) {
+    const { data } = await axiosInstance.post('https://localhost:7190/specialopeninghours', specialDate);
+    return data;
+}
+
+export async function updateSpecialOpeningHour({ dayOfWeek, openingHour }: UpdateOpeningHour) {
+    const { data } = await axiosInstance.put(`https://localhost:7190/specialopeninghours/${dayOfWeek}`, openingHour);
+    return data;
+}

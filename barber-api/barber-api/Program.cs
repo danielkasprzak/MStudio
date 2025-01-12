@@ -75,6 +75,7 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<OffersService>();
 builder.Services.AddScoped<OpeningHoursService>();
+builder.Services.AddScoped<SpecialOpeningHoursService>();
 builder.Services.AddScoped<ReservationsService>();
 
 builder.Services.AddControllers();
@@ -99,7 +100,7 @@ app.Use(async (context, next) =>
 {
     var antiforgery = context.RequestServices.GetRequiredService<IAntiforgery>();
     var tokens = antiforgery.GetAndStoreTokens(context);
-    context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken, new CookieOptions { HttpOnly = false, Secure = true });
+    context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken, new CookieOptions { HttpOnly = false, Secure = true, SameSite = SameSiteMode.None });
     await next();
 });
 

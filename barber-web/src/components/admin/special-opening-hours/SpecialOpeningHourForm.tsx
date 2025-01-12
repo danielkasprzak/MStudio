@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import FormInput from '../FormInput';
-import { dayTranslations } from '../../../utils/utils';
 
 interface Props {
     children: React.ReactNode;
     inputData: {
-        dayOfWeek: string;
+        date: string;
         isOpen: boolean;
         openHour: string;
         closeHour: string;
@@ -15,11 +14,13 @@ interface Props {
 }
 
 export default ({ children, inputData, onSubmit }: Props) => {
+    const [date, setDate] = useState(inputData.date);
     const [isOpen, setIsOpen] = useState(inputData.isOpen);
     const [openHour, setOpenHour] = useState(inputData.openHour);
     const [closeHour, setCloseHour] = useState(inputData.closeHour);
 
     useEffect(() => {
+        setDate(inputData.date);
         setIsOpen(inputData.isOpen);
         setOpenHour(inputData.openHour);
         setCloseHour(inputData.closeHour);
@@ -41,8 +42,7 @@ export default ({ children, inputData, onSubmit }: Props) => {
 
     return (
         <form onSubmit={handleSubmit} className='font-lato flex flex-col'>
-            <h1 className='font-cormorant text-charcoal font-medium text-md text-center'>{dayTranslations[inputData.dayOfWeek]}</h1>
-
+            <FormInput name='date' defaultVal={date} required onChange={(e) => setDate(e.target.value)} type='date' placeholder='Data'/>
             <FormInput name='isOpen' defaultVal={isOpen} onChange={(e) => setIsOpen(e.target.checked)} type='checkbox'/>
             <FormInput name='openHour' defaultVal={openHour} required onChange={(e) => setOpenHour(e.target.value)} type='time' placeholder='Open Hour'/>
             <FormInput name='closeHour' defaultVal={closeHour} required onChange={(e) => setCloseHour(e.target.value)} type='time' placeholder='Close Hour'/>

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchOffers } from '../../util/http';
+import { fetchOffers } from '../../utils/http';
 
 import Offer from "./Offer"
 

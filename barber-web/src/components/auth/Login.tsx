@@ -4,7 +4,7 @@ import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 import Button from './Button';
 import Spacer from './Spacer';
-import axiosInstance from '../../util/axiosInstance';
+import axiosInstance from '../../utils/axiosInstance';
 
 export default () => {
     useDocumentTitle("MStudio - logowanie");

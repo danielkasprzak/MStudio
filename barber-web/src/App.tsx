@@ -1,10 +1,10 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { queryClient } from './util/http';
+import { queryClient } from './utils/http';
 import { lazy } from 'react';
 
 import Error from './components/Error';
-import { protectedLoader, adminLoader } from './util/http';
+import { protectedLoader, adminLoader } from './utils/http';
 import MyReservations from './components/reservation/MyReservations';
 import Offers from './components/reservation/Offers';
 import OffersManage, { loader as offersManageLoader } from './components/admin/offers/Offers';
@@ -12,6 +12,8 @@ import OfferEdit, { loader as offersEditLoader, action as offersEditAction } fro
 import OfferNew, { action as offersNewAction } from './components/admin/offers/OfferNew';
 import OpeningHours, { loader as openingHoursLoader } from './components/admin/opening-hours/OpeningHours';
 import OpeningHoursEdit, { loader as openingHoursEditLoader, action as openingHoursEditAction } from './components/admin/opening-hours/OpeningHoursEdit';
+import SpecialOpeningHours, { loader as specialOpeningHoursLoader } from './components/admin/special-opening-hours/SpecialOpeningHours';
+import SpecialOpeningHourNew, { action as specialOpeningHourNewAction } from './components/admin/special-opening-hours/SpecialOpeningHourNew';
 
 const Landing = lazy(() => import('./components/landing/Landing'));
 const Login = lazy(() => import('./components/auth/Login'));
@@ -36,9 +38,14 @@ const router = createBrowserRouter([
           { path: ':id', element: <OfferEdit />, loader: offersEditLoader, action: offersEditAction }
         ]
       },
-      { path: 'otwarcie', element: <OpeningHours />, loader: openingHoursLoader,
+      { path: 'godziny-otwarcia', element: <OpeningHours />, loader: openingHoursLoader,
         children: [
           { path: ':day', element: <OpeningHoursEdit />, loader: openingHoursEditLoader, action: openingHoursEditAction }
+        ]
+      },
+      { path: 'specjalne-godziny-otwarcia', element: <SpecialOpeningHours />, loader: specialOpeningHoursLoader,
+        children: [
+          { path: 'dodaj', element: <SpecialOpeningHourNew />, action: specialOpeningHourNewAction }
         ]
       }
     ]

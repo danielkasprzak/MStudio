@@ -1,22 +1,22 @@
 import { useQuery } from '@tanstack/react-query';
-import { queryClient, fetchOpeningHours } from '../../../utils/http';
+import { queryClient, fetchSpecialOpeningHours } from '../../../utils/http';
 import { Link, Outlet } from 'react-router-dom';
 
 import Title from '../Title';
 import SmallButton from '../SmallButton';
-import OpeningHour from './OpeningHour';
+import SpecialOpeningHour from './SpecialOpeningHour';
 
-interface OpeningHoursModel {
-    dayOfWeek: string;
+interface SpecialOpeningHoursModel {
+    date: string;
     isOpen: boolean;
     openHour: string;
     closeHour: string;
 }
 
 export default () => {
-    const { data = [], error } = useQuery<OpeningHoursModel[]>({
-        queryKey: ['openingHours'],
-        queryFn: fetchOpeningHours
+    const { data = [], error } = useQuery<SpecialOpeningHoursModel[]>({
+        queryKey: ['specialOpeningHours'],
+        queryFn: fetchSpecialOpeningHours
     });
 
     if (error) return <div>Error loading offers</div>;
@@ -24,17 +24,22 @@ export default () => {
     return (
         <div className='flex flex-row justify-center'>
             <div className='relative w-fit h-full bg-white m-16 mr-8 text-charcoal font-lato p-8'>
-                <Title padding='8'>Harmonogram otwarcia</Title>
-            
+                <div className='flex flex-row'>
+                    <Title padding='8'>Specjalny harmonogram otwarcia</Title>
+                    <SmallButton>
+                        <Link to={`dodaj`}>Dodaj</Link>
+                    </SmallButton>
+                </div>
+
                 <div className='relative w-auto p-16 pt-8 h-full text-charcoal font-lato'>
                     <ul className='h-fit w-fit'>
                         {data.map((date) => (
                             <div className='flex flex-row'>
-                                <OpeningHour key={date.dayOfWeek} date={date.dayOfWeek} isOpen={date.isOpen} openHour={date.openHour} closeHour={date.closeHour} />
+                                <SpecialOpeningHour key={date.date} date={date.date} isOpen={date.isOpen} openHour={date.openHour} closeHour={date.closeHour} />
 
                                 <div className='flex flex-row'>
                                     <SmallButton>
-                                        <Link to={`${date.dayOfWeek}`}>Edytuj</Link>
+                                        <Link to={`${date.date}`}>Edytuj</Link>
                                     </SmallButton>
                                 </div>
                             </div>
@@ -51,7 +56,7 @@ export default () => {
 
 export function loader() {
     return queryClient.fetchQuery({
-        queryKey: ['openingHours'],
-        queryFn: fetchOpeningHours
+        queryKey: ['specialOpeningHours'],
+        queryFn: fetchSpecialOpeningHours
     });
 }

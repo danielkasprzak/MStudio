@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { logout } from "../../util/http";
+import { logout } from "../../utils/http";
 
 import SmallButton from "./SmallButton";
 import Title from "./Title";
@@ -30,7 +30,8 @@ export default () => {
                 <SmallButton>Panel</SmallButton>
                 <SmallButton>Rezerwacje</SmallButton>
                 <SmallButton><Link to={`oferty`}>Oferta</Link></SmallButton>
-                <SmallButton><Link to={`otwarcie`}>Harmonogram</Link></SmallButton>
+                <SmallButton><Link to={`godziny-otwarcia`}>Harmonogram</Link></SmallButton>
+                <SmallButton><Link to={`specjalne-godziny-otwarcia`}>Specjalne</Link></SmallButton>
             </div>
             <div className="flex flex-col pb-8">
                 <SmallButton>Powrót</SmallButton>

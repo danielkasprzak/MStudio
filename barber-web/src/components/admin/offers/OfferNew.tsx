@@ -1,7 +1,7 @@
 import Title from '../Title';
 import SmallButton from '../SmallButton';
 import { ActionFunction, redirect, useNavigation, useSubmit } from 'react-router-dom';
-import { queryClient, createOffer } from '../../../util/http';
+import { queryClient, createOffer } from '../../../utils/http';
 import OfferForm from './OfferForm';
 
 interface NewOffer {
