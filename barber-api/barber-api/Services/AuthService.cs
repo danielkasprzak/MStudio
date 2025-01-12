@@ -110,7 +110,7 @@ public class AuthService
     public List<string> CheckAuth()
     {
         var user = _httpContextAccessor.HttpContext.User;
-        if (user == null)
+        if (user == null || !user.Identity.IsAuthenticated)
         {
             return null;
         }

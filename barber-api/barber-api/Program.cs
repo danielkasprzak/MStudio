@@ -34,6 +34,17 @@ builder.Services.AddAuthentication(options =>
     options.ClientSecret = configurationSection["ClientSecret"] ?? throw new ArgumentNullException("ClientSecret");
 }).AddJwtBearer(options =>
 {
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            var token = context.Request.Cookies["AuthToken"];
+            if (token != null)
+                context.Token = token;
+            
+            return Task.CompletedTask;
+        }
+    };
     options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
     {
         ValidateIssuer = true,
