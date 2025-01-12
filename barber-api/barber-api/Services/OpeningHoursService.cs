@@ -24,6 +24,12 @@ namespace barber_api.Services
 
         public async Task UpdateOpeningHourAsync(OpeningHour openingHour)
         {
+            var existingEntity = await _context.OpeningHours.FindAsync(openingHour.DayOfWeek);
+            if (existingEntity != null)
+            {
+                _context.Entry(existingEntity).State = EntityState.Detached;
+            }
+
             _context.OpeningHours.Update(openingHour);
             await _context.SaveChangesAsync();
         }
