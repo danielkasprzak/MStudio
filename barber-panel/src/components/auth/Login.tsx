@@ -9,8 +9,9 @@ export default () => {
     const googleLogin = useGoogleLogin({
         onSuccess: async ({ code }) => {
             const tokens = await axios.post('https://localhost:7190/auth/google', { code });
-        
-            console.log(tokens);
+            if (tokens) {
+                window.location.href = '/rezerwacja';
+            }
         },
         onError: errorResponse => console.log(errorResponse),
         flow: 'auth-code'
