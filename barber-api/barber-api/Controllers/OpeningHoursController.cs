@@ -26,9 +26,20 @@ namespace barber_api.Controllers
             return Ok(openingHours);
         }
 
+        // GET: /openinghours/{dayOfWeek}
+        [HttpGet("{dayOfWeek}")]
+        public async Task<ActionResult<OpeningHour>> GetByDay(string dayOfWeek)
+        {
+            var openingHour = await _openingHoursService.GetOpeningHourByDayAsync(dayOfWeek);
+            if (openingHour == null)
+            {
+                return NotFound("Opening hour not found.");
+            }
+            return Ok(openingHour);
+        }
+
         // PUT: /openinghours/{dayOfWeek}
         [HttpPut("{dayOfWeek}")]
-        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Update(string dayOfWeek, [FromBody] OpeningHour openingHour)
         {
             if (openingHour == null || dayOfWeek != openingHour.DayOfWeek)

@@ -13,7 +13,7 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<OpeningHour>().HasNoKey();
+        modelBuilder.Entity<OpeningHour>().HasKey(oh => oh.DayOfWeek);
 
         modelBuilder.Entity<Offer>().Property(o => o.Id).ValueGeneratedOnAdd();
     }
