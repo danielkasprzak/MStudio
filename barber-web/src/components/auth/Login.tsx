@@ -20,16 +20,17 @@ export default () => {
         flow: 'auth-code'
     });
 
+    const traditionalLogin = () => { };
 
     return (
-        <div className='flex justify-center items-center bg-dark-background w-screen h-screen'>
-            <div className='w-[34rem] h-[40rem] bg-dark-foreground rounded-2xl'>
-                    <Title/>
+        <div className='w-screen h-screen bg-stone-100 flex justify-center items-center'>
+            <div className='p-16 bg-white border border-stone-300 text-charcoal flex flex-col justify-center items-center'>
+                <h1 className="font-cormorant text-xl font-medium uppercase pb-8">MSTUDIO</h1>
 
                     <div className='flex justify-center items-center flex-col'>
                         <Button onClick={() => googleLogin()}>Rezerwacja z Google</Button>
                         <Spacer>lub</Spacer>
-                        {/* <Button>Rezerwacja tradycyjna</Button> */}
+                        <Button onClick={traditionalLogin}>Rezerwacja tradycyjna</Button>
                     </div>
             </div>
         </div>

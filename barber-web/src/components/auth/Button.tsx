@@ -4,5 +4,5 @@ interface Props {
 }
 
 export default ({ children, onClick } : Props) => {
-    return <button onClick={onClick} className="py-3 m-4 w-80 rounded-3xl border-neutral-900 border text-white text-sm font-montserrat tracking-wider font-light">{children}</button>;
+    return <button onClick={onClick} className="py-3 m-4 w-80 border border-stone-300 text-charcoal uppercase font-bold text-xs tracking-wider font-lato">{children}</button>;
 }
