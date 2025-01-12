@@ -148,9 +148,38 @@ public class AuthService
         var tokenResponse = JsonSerializer.Deserialize<GoogleTokenResponse>(responseContent);
         var newAccessToken = tokenResponse.IdToken;
 
-        SetTokenCookie(newAccessToken);
+        var handler = new JwtSecurityTokenHandler();
+        var jwtToken = handler.ReadJwtToken(newAccessToken);
+        var email = jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Email)?.Value;
 
-        return newAccessToken;
+        var claims = new List<Claim>
+        {
+            new Claim(JwtRegisteredClaimNames.Sub, jwtToken.Subject),
+            new Claim(JwtRegisteredClaimNames.Email, email),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
+
+        var adminEmails = _configuration.GetSection("AdminEmails").Get<List<string>>();
+        if (adminEmails.Contains(email))
+        {
+            claims.Add(new Claim(ClaimTypes.Role, "admin"));
+        }
+
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        var newToken = new JwtSecurityToken(
+            issuer: _configuration["Jwt:Issuer"],
+            audience: _configuration["Jwt:Audience"],
+            claims: claims,
+            expires: DateTime.Now.AddMinutes(30),
+            signingCredentials: creds);
+
+        var newTokenString = new JwtSecurityTokenHandler().WriteToken(newToken);
+
+        SetTokenCookie(newTokenString);
+
+        return newTokenString;
     }
 
     public List<string> CheckAuth()
