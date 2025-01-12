@@ -7,7 +7,7 @@ import Button from './Button';
 import Spacer from './Spacer';
 
 export default () => {
-    useDocumentTitle("MStudio - Logowanie");
+    useDocumentTitle("MStudio - logowanie");
     const navigate = useNavigate();
 
     const googleLogin = useGoogleLogin({

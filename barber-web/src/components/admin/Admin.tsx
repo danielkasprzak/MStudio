@@ -4,7 +4,7 @@ import MainPanel from "./MainPanel"
 import SidePanel from "./SidePanel"
 
 export default () => {
-    useDocumentTitle("MStudio - Panel administratora");
+    useDocumentTitle("MStudio - panel administratora");
 
     return (
         <div className="bg-stone-100 h-full w-full flex flex-row justify-center">
