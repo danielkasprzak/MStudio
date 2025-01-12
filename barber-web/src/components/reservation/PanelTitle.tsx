@@ -4,6 +4,6 @@ interface TitleProps {
 
 export default ({ children } : TitleProps) => {
     return (
-        <h2 className="font-montserrat text-2xl text-white font-semibold tracking-wider">{children}</h2>
+        <h2 className="font-cormorant text-xl font-medium uppercase text-charcoal">{children}</h2>
     )
 }

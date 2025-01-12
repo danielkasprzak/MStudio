@@ -3,7 +3,6 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 
 import Button from './Button';
-import Title from './ResTitle';
 import Spacer from './Spacer';
 
 export default () => {

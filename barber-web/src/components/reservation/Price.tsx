@@ -18,7 +18,7 @@ export default ({ totalPrice }: PriceProps) => {
     }, [totalPrice]);
 
     return (
-        <motion.span className='font-medium text-white pl-3'>
+        <motion.span className='uppercase font-bold text-xs tracking-wider font-lato text-charcoal pl-3'>
             {rounded}
         </motion.span>
     );

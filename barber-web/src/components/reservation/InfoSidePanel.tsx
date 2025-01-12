@@ -30,7 +30,7 @@ export default ({ isActive, onHover, activeHeight, inactiveHeight }: Props) => {
 
     return (
         <motion.div 
-            className='w-[26rem] h-[66%] bg-dark-foreground text-white rounded-2xl flex flex-col items-center p-8'
+            className='w-[26rem] h-[66%] bg-white border border-stone-300 text-charcoal flex flex-col items-center p-8'
             onMouseEnter={onHover}
             animate={{ height: isActive ? activeHeight : inactiveHeight }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
@@ -47,7 +47,7 @@ export default ({ isActive, onHover, activeHeight, inactiveHeight }: Props) => {
 
             <AnimatePresence>
             {isActive && <motion.ul
-                className="w-full h-full mt-8 font-montserrat text-sm text-neutral-300 tracking-wide px-12 py-4 border leading-6 rounded-xl border-neutral-800"
+                className="w-full h-full mt-8 text-charcoal px-12 py-4 uppercase font-bold text-xs tracking-wider font-lato border border-stone-300"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
