@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { queryClient, fetchOffers, deleteOffer } from '../../../../util/http';
+import { queryClient, fetchOffers, deleteOffer } from '../../../util/http';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 import Offer from './Offer';

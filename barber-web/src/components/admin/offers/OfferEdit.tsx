@@ -1,7 +1,7 @@
 import Title from '../Title';
 import SmallButton from '../SmallButton';
 import { ActionFunction, LoaderFunctionArgs, useParams, useSubmit, useNavigation, redirect } from 'react-router-dom';
-import { queryClient, fetchOffer, updateOffer } from '../../../../util/http';
+import { queryClient, fetchOffer, updateOffer } from '../../../util/http';
 import { useQuery } from '@tanstack/react-query';
 import OfferForm from './OfferForm';
 

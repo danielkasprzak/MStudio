@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { queryClient, fetchOpeningHours } from '../../../../util/http';
+import { queryClient, fetchOpeningHours } from '../../../util/http';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 import Title from '../Title';

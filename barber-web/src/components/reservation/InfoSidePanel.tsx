@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence  } from 'framer-motion';
-import { fetchOpeningHours } from '../../../util/http';
+import { fetchOpeningHours } from '../../util/http';
 
 import Phone from "./Phone"
 import Title from './PanelTitle';

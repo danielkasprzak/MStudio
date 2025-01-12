@@ -1,10 +1,10 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { queryClient } from '../util/http';
+import { queryClient } from './util/http';
 import { lazy } from 'react';
 
 import Error from './components/Error';
-import { protectedLoader, adminLoader } from '../util/http';
+import { protectedLoader, adminLoader } from './util/http';
 import MyReservations from './components/reservation/MyReservations';
 import Offers from './components/reservation/Offers';
 import OffersManage, { loader as offersManageLoader } from './components/admin/offers/Offers';
