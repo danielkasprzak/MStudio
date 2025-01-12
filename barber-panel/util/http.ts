@@ -21,7 +21,7 @@ const checkAuth = async () => {
 export async function protectedLoader() {
     const auth = await checkAuth();
     if (!auth) {
-      throw new Response('Unauthorized', { status: 401 });
+      throw new Response('Forbidden', { status: 403 });
     }
     return auth;
   }

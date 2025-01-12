@@ -7,7 +7,12 @@ export default () => {
     let message = "Coś poszło nie tak!"
 
     if (isRouteErrorResponse(error)) {
-        message = error.data.message || error.statusText;
+        if (error.status === 403) {
+            title = "Dostęp zabroniony!";
+            message = "Nie masz uprawnień do przeglądania tej strony";
+        } else {
+            message = error.data.message || error.statusText;
+        }
     }
     else if (error instanceof Error) {
         message = error.message;
