@@ -1,16 +1,19 @@
 import axios from 'axios';
 import { useGoogleLogin } from '@react-oauth/google';
+import { useNavigate } from 'react-router-dom';
 
 import Button from './Button';
 import Title from './ResTitle';
 import Spacer from './Spacer';
 
 export default () => {
+    const navigate = useNavigate();
+
     const googleLogin = useGoogleLogin({
         onSuccess: async ({ code }) => {
             const tokens = await axios.post('https://localhost:7190/auth/google', { code });
             if (tokens) {
-                window.location.href = '/rezerwacja';
+                navigate('/rezerwacja');
             }
         },
         onError: errorResponse => console.log(errorResponse),
