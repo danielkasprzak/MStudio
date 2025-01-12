@@ -125,6 +125,7 @@ export async function fetchSpecialOpeningHours() {
     const { data } = await axiosInstance.get('https://localhost:7190/specialopeninghours');
     return data.map((item: any) => ({
         date: item.date,
+        endDate: item.endDate || null,
         isOpen: item.isOpen,
         openHour: item.openHour.slice(0, 5),
         closeHour: item.closeHour.slice(0, 5),
@@ -135,6 +136,7 @@ export async function fetchSpecialOpeningHour({ date }: { date: string }) {
     const { data } = await axiosInstance.get(`https://localhost:7190/specialopeninghours/${date}`);
     return {
         date: data.date,
+        endDate: data.endDate || null,
         isOpen: data.isOpen,
         openHour: data.openHour.slice(0, 5),
         closeHour: data.closeHour.slice(0, 5),
@@ -143,6 +145,7 @@ export async function fetchSpecialOpeningHour({ date }: { date: string }) {
 
 interface SpecialOpeningHour {
     date: string;
+    endDate: string | null;
     isOpen: boolean;
     openHour: string;
     closeHour: string;

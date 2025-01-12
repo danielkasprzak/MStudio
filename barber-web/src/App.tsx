@@ -14,6 +14,7 @@ import OpeningHours, { loader as openingHoursLoader } from './components/admin/o
 import OpeningHoursEdit, { loader as openingHoursEditLoader, action as openingHoursEditAction } from './components/admin/opening-hours/OpeningHoursEdit';
 import SpecialOpeningHours, { loader as specialOpeningHoursLoader } from './components/admin/special-opening-hours/SpecialOpeningHours';
 import SpecialOpeningHourNew, { action as specialOpeningHourNewAction } from './components/admin/special-opening-hours/SpecialOpeningHourNew';
+import SpecialOpeningHourEdit, { loader as specialOpeningHourEditLoader } from './components/admin/special-opening-hours/SpecialOpeningHourEdit';
 
 const Landing = lazy(() => import('./components/landing/Landing'));
 const Login = lazy(() => import('./components/auth/Login'));
@@ -45,7 +46,8 @@ const router = createBrowserRouter([
       },
       { path: 'specjalne-godziny-otwarcia', element: <SpecialOpeningHours />, loader: specialOpeningHoursLoader,
         children: [
-          { path: 'dodaj', element: <SpecialOpeningHourNew />, action: specialOpeningHourNewAction }
+          { path: 'dodaj', element: <SpecialOpeningHourNew />, action: specialOpeningHourNewAction },
+          { path: ':date', element: <SpecialOpeningHourEdit />, loader: specialOpeningHourEditLoader }
         ]
       }
     ]

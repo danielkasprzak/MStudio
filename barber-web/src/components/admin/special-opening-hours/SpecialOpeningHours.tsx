@@ -8,6 +8,7 @@ import SpecialOpeningHour from './SpecialOpeningHour';
 
 interface SpecialOpeningHoursModel {
     date: string;
+    endDate: string | null;
     isOpen: boolean;
     openHour: string;
     closeHour: string;
@@ -35,7 +36,7 @@ export default () => {
                     <ul className='h-fit w-fit'>
                         {data.map((date) => (
                             <div className='flex flex-row'>
-                                <SpecialOpeningHour key={date.date} date={date.date} isOpen={date.isOpen} openHour={date.openHour} closeHour={date.closeHour} />
+                                <SpecialOpeningHour key={date.date} date={date.date} endDate={date.endDate} isOpen={date.isOpen} openHour={date.openHour} closeHour={date.closeHour} />
 
                                 <div className='flex flex-row'>
                                     <SmallButton>

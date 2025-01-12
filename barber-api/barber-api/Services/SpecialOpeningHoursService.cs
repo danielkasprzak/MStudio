@@ -26,6 +26,10 @@ namespace barber_api.Services
         public async Task AddSpecialOpeningHourAsync(SpecialOpeningHour specialOpeningHour)
         {
             specialOpeningHour.Date = specialOpeningHour.Date.ToUniversalTime();
+            if (specialOpeningHour.EndDate.HasValue)
+            {
+                specialOpeningHour.EndDate = specialOpeningHour.EndDate.Value.ToUniversalTime();
+            }
             await _context.SpecialOpeningHours.AddAsync(specialOpeningHour);
             await _context.SaveChangesAsync();
         }
@@ -33,6 +37,10 @@ namespace barber_api.Services
         public async Task UpdateSpecialOpeningHourAsync(SpecialOpeningHour specialOpeningHour)
         {
             specialOpeningHour.Date = specialOpeningHour.Date.ToUniversalTime();
+            if (specialOpeningHour.EndDate.HasValue)
+            {
+                specialOpeningHour.EndDate = specialOpeningHour.EndDate.Value.ToUniversalTime();
+            }
             var existingEntity = await _context.SpecialOpeningHours.FindAsync(specialOpeningHour.Date);
             if (existingEntity != null)
             {
