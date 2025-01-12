@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence  } from 'framer-motion';
 import { fetchOpeningHours } from '../../util/http';
+import { dayTranslations } from "../../util/constants";
 
 import Phone from "./Phone"
 import Title from './PanelTitle';
@@ -61,7 +62,7 @@ export default ({ isActive, onHover, activeHeight, inactiveHeight }: Props) => {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.2, delay: index * 0.05 }}
                         >
-                            <span>{item.dayOfWeek}</span>
+                            <span>{dayTranslations[item.dayOfWeek]}</span>
                             {item.isOpen ? <span>{item.openHour} - {item.closeHour}</span> : <span>Zamknięte</span>}
                         </motion.li>
                     ))}

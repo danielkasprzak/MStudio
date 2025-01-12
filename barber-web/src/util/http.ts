@@ -1,8 +1,6 @@
 import axios from "axios";
 import { QueryClient } from '@tanstack/react-query';
 
-import { dayTranslations } from "./constants";
-
 export const queryClient = new QueryClient();
 
 axios.defaults.withCredentials = true;
@@ -84,12 +82,22 @@ export async function deleteOffer({ id }: { id: number }) {
 export async function fetchOpeningHours() {
     const { data } = await axios.get('https://localhost:7190/openinghours');
     return data.map((item: any) => ({
-        dayOfWeek: dayTranslations[item.dayOfWeek] || item.dayOfWeek,
+        dayOfWeek: item.dayOfWeek,
         isOpen: item.isOpen,
         openHour: item.openHour.slice(0, 5),
         closeHour: item.closeHour.slice(0, 5),
     }));
 };
+
+export async function fetchOpeningHour({ dayOfWeek }: { dayOfWeek: string }) {
+    const { data } = await axios.get(`https://localhost:7190/openinghours/${dayOfWeek}`);
+    return {
+        dayOfWeek: data.dayOfWeek,
+        isOpen: data.isOpen,
+        openHour: data.openHour.slice(0, 5),
+        closeHour: data.closeHour.slice(0, 5),
+    };
+}
 
 interface OpeningHour {
     dayOfWeek: string;
