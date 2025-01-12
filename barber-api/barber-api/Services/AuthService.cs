@@ -71,7 +71,7 @@ public class AuthService
             Expires = DateTime.Now.AddMinutes(30)
         };
 
-        _httpContextAccessor.HttpContext.Response.Cookies.Append("AuthToken", token, cookieOptions);
+        _httpContextAccessor.HttpContext.Response.Cookies.Append("MSTOKEN", token, cookieOptions);
     }
 
     private async Task<string> ExchangeAuthorizationCodeForIdTokenAsync(string authorizationCode)

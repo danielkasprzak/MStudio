@@ -38,7 +38,7 @@ builder.Services.AddAuthentication(options =>
     {
         OnMessageReceived = context =>
         {
-            var token = context.Request.Cookies["AuthToken"];
+            var token = context.Request.Cookies["MSTOKEN"];
             if (token != null)
                 context.Token = token;
             
