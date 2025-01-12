@@ -16,13 +16,13 @@ import OfferNew, { action as offersNewAction } from './components/admin/offers/O
 
 const router = createBrowserRouter([
   { index: true, element: <Landing />, errorElement: <Error /> },
-  { path: 'rezerwacja', element: <Reservation />, loader: protectedLoader,
+  { path: 'rezerwacja', element: <Reservation />, errorElement: <Error />, loader: protectedLoader,
     children: [
       { index: true, element: <Offers /> },
       { path: 'moje-rezerwacje', element: <MyReservations /> }
     ]
   },
-  { path: 'login', element: <Login /> },
+  { path: 'login', element: <Login />, errorElement: <Error /> },
   { path: 'admin', element: <Admin />, errorElement: <Error />, loader: adminLoader,
     children: [
       { path: 'oferty', element: <OffersManage />,
