@@ -22,7 +22,7 @@ public class AuthController : ControllerBase
     [HttpPost("refresh-token")]
     public async Task<IActionResult> RefreshToken()
     {
-        var refreshToken = Request.Cookies["REFRESH_TOKEN"];
+        var refreshToken = Request.Cookies["MSRTOKEN"];
         if (string.IsNullOrEmpty(refreshToken))
         {
             return Unauthorized("Refresh token is missing.");
@@ -49,6 +49,13 @@ public class AuthController : ControllerBase
         }
 
         return Ok(new { roles });
+    }
+
+    [HttpPost("logout")]
+    public IActionResult Logout()
+    {
+        _authService.ClearAuthCookies();
+        return Ok(new { message = "Logged out successfully" });
     }
 }
 

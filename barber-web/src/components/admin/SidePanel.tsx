@@ -1,8 +1,27 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../../util/http";
+
 import SmallButton from "./SmallButton";
 import Title from "./Title";
+import { useMutation } from "@tanstack/react-query";
 
 export default () => {
+    const navigate = useNavigate();
+    
+    const { mutate, isPending } = useMutation({
+        mutationFn: logout,
+        onSuccess: () => {
+            navigate('/login');
+        },
+        onError: (error) => {
+            console.error("Logout failed:", error);
+        }
+    });
+    
+    function handleLogout() {
+        mutate();
+    }    
+
     return (
         <div className='sticky top-0 h-screen bg-white w-auto flex flex-col justify-between text-charcoal'>
             <div className="flex flex-col">
@@ -15,7 +34,7 @@ export default () => {
             </div>
             <div className="flex flex-col pb-8">
                 <SmallButton>Powrót</SmallButton>
-                <SmallButton>Wyloguj się</SmallButton>
+                {isPending ? <div>Wylogowuje...</div> : <SmallButton onClick={handleLogout}>Wyloguj się</SmallButton>}
             </div>
         </div>
     )

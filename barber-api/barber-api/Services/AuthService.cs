@@ -87,7 +87,7 @@ public class AuthService
             HttpOnly = true,
             Secure = true,
             SameSite = SameSiteMode.None,
-            Expires = DateTime.Now.AddDays(30)
+            Expires = DateTime.Now.AddDays(14)
         };
 
         _httpContextAccessor.HttpContext.Response.Cookies.Append("MSRTOKEN", refreshToken, cookieOptions);
@@ -213,6 +213,24 @@ public class AuthService
 
         var roles = user.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList();
         return roles;
+    }
+
+    public void ClearAuthCookies()
+    {
+        var context = _httpContextAccessor.HttpContext;
+        if (context != null)
+        {
+            var expiredCookieOptions = new CookieOptions
+            {
+                Expires = DateTime.UtcNow.AddDays(-1),
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None
+            };
+
+            context.Response.Cookies.Append("MSTOKEN", "", expiredCookieOptions);
+            context.Response.Cookies.Append("MSRTOKEN", "", expiredCookieOptions);
+        }
     }
 }
 
