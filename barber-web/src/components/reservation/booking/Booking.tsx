@@ -5,10 +5,13 @@ import { useAppSelector } from '../../../store/hooks';
 import { formatDateShortMonth, formatDateOnlyDay } from '../../../utils/utils';
 import { useState } from 'react';
 import { motion } from 'motion/react';
+import useDocumentTitle from '../../../hooks/useDocumentTitle';
 
 type AvailabilityModel = string;
 
 export default () => {
+    useDocumentTitle("MStudio - rezerwacja");
+
     const totalDuration = useAppSelector((state) => state.cart.totalDuration);
     const [activeDate, setActiveDate] = useState<string | null>(null);
 
