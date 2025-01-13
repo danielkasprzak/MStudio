@@ -18,6 +18,18 @@ namespace barber_api.Controllers
             _logger = logger;
         }
 
+
+        // GET: /reservation/available
+        [HttpGet("available")]
+        public async Task<ActionResult<IEnumerable<DateTime>>> GetAvailableTimeSlots()
+        {
+            var startDate = DateTime.Now;
+            var endDate = startDate.AddDays(14);
+
+            var availableTimeSlots = await _reservationService.GetAvailableTimeSlotsAsync(startDate, endDate);
+            return Ok(availableTimeSlots);
+        }
+
         // GET: /reservation
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reservation>>> Get()

@@ -170,3 +170,15 @@ export async function deleteSpecialOpeningHour({ date }: { date: string }) {
     const { data } = await axiosInstance.delete(`https://localhost:7190/specialopeninghours/${date}`);
     return data;
 }
+
+// RESERVATION
+
+export async function fetchAvailableSlots() {
+    const { data } = await axiosInstance.get('https://localhost:7190/reservation/available');
+    return data;
+};
+
+export async function fetchReservations() {
+    const { data } = await axiosInstance.get('https://localhost:7190/reservation');
+    return data;
+};

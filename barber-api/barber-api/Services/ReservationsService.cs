@@ -52,6 +52,55 @@ namespace barber_api.Services
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<IEnumerable<DateTime>> GetAvailableTimeSlotsAsync(DateTime startDate, DateTime endDate)
+        {
+            var availableTimeSlots = new List<DateTime>();
+
+            var openingHours = await _context.OpeningHours.ToListAsync();
+            var specialOpeningHours = await _context.SpecialOpeningHours.ToListAsync();
+            var reservations = await _context.Reservations
+                .Where(r => r.ReservationDateTime >= startDate && r.ReservationDateTime <= endDate)
+                .ToListAsync();
+
+            for (var date = startDate.Date; date <= endDate.Date; date = date.AddDays(1))
+            {
+                var dayOfWeek = date.DayOfWeek.ToString();
+                var specialOpeningHour = specialOpeningHours.FirstOrDefault(soh => soh.Date.Date <= date && (soh.EndDate == null || soh.EndDate.Value.Date >= date));
+                OpeningHour openingHour = null;
+
+                if (specialOpeningHour != null)
+                {
+                    openingHour = new OpeningHour
+                    {
+                        DayOfWeek = dayOfWeek,
+                        IsOpen = specialOpeningHour.IsOpen,
+                        OpenHour = specialOpeningHour.OpenHour,
+                        CloseHour = specialOpeningHour.CloseHour
+                    };
+                }
+                else
+                {
+                    openingHour = openingHours.FirstOrDefault(oh => oh.DayOfWeek == dayOfWeek);
+                }
+
+                if (openingHour != null && openingHour.IsOpen)
+                {
+                    var startTime = date.Add(openingHour.OpenHour);
+                    var endTime = date.Add(openingHour.CloseHour);
+
+                    for (var time = startTime; time < endTime; time = time.AddMinutes(30))
+                    {
+                        if (!reservations.Any(r => r.ReservationDateTime <= time && r.ReservationDateTime.AddMinutes(r.Duration) > time))
+                        {
+                            availableTimeSlots.Add(time);
+                        }
+                    }
+                }
+            }
+
+            return availableTimeSlots;
+        }
     }
 }
 
