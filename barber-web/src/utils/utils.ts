@@ -17,3 +17,8 @@ export const formatDate = (dateString: string) => {
     const minutes = String(date.getMinutes()).padStart(2, '0');
     return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
+
+export const formatDateShortMonth = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pl-PL', { month: 'short', day: 'numeric' });
+};

@@ -1,11 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import { queryClient, fetchAvailableSlots } from '../../utils/http';
-import store from '../../store/index';
-import { useAppSelector } from '../../store/hooks';
+import { queryClient, fetchAvailableSlots } from '../../../utils/http';
+import store from '../../../store/index';
+import { useAppSelector } from '../../../store/hooks';
+import { formatDateShortMonth } from '../../../utils/utils';
 
-interface AvailabilityModel {
-    dateTime: string;
-}
+type AvailabilityModel = string;
 
 export default () => {
     const totalDuration = useAppSelector((state) => state.cart.totalDuration);
@@ -18,11 +17,11 @@ export default () => {
     if (error) return <div>Error loading offers</div>;
 
     const groupedSlots = data.reduce((acc, slot) => {
-        const date = slot.dateTime.split('T')[0]; // Extract the date part
+        const date = slot.split('T')[0];
         if (!acc[date]) {
             acc[date] = [];
         }
-        acc[date].push(slot.dateTime);
+        acc[date].push(slot);
         return acc;
     }, {} as Record<string, string[]>);
 
@@ -35,10 +34,11 @@ export default () => {
                 <ul>
                     {Object.entries(groupedSlots).map(([date, slots]) => (
                         <li key={date}>
-                            <h2 className="font-bold text-lg">{date}</h2>
-                            <ul>
+                            <h2 className="font-bold text-lg">{formatDateShortMonth(date)}</h2>
+                            <ul className='flex flex-row'>
                                 {slots.map((slot) => (
-                                    <li key={slot}>{new Date(slot).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</li>
+                                    <li key={slot}
+                                    className='m-2 p-4 border border-stone-300'>{new Date(slot).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</li>
                                 ))}
                             </ul>
                         </li>
