@@ -53,7 +53,7 @@ namespace barber_api.Services
             }
         }
 
-        public async Task<IEnumerable<DateTime>> GetAvailableTimeSlotsAsync(DateTime startDate, DateTime endDate)
+        public async Task<IEnumerable<DateTime>> GetAvailableTimeSlotsAsync(DateTime startDate, DateTime endDate, int duration)
         {
             var availableTimeSlots = new List<DateTime>();
 
@@ -91,7 +91,7 @@ namespace barber_api.Services
 
                     for (var time = startTime; time < endTime; time = time.AddMinutes(30))
                     {
-                        if (!reservations.Any(r => r.ReservationDateTime <= time && r.ReservationDateTime.AddMinutes(r.Duration) > time))
+                        if (!reservations.Any(r => r.ReservationDateTime < time.AddMinutes(duration) && r.ReservationDateTime.AddMinutes(r.Duration) > time))
                         {
                             availableTimeSlots.Add(time);
                         }

@@ -11,10 +11,14 @@ interface Offer {
 
 interface Cart {
     items: Offer[];
+    totalPrice: number;
+    totalDuration: number;
 }
 
 const initialState: Cart = {
     items: [],
+    totalPrice: 0,
+    totalDuration: 0
 }
 
 const basketSlice = createSlice({
@@ -31,6 +35,9 @@ const basketSlice = createSlice({
             else {
                 state.items.push({ id, label, price, time, quantity: 1 });
             }
+
+            state.totalDuration += time;
+            state.totalPrice += price;
         },
         removeItem(state, action: PayloadAction<number>) {
             const existingItem = state.items.find((item) => item.id === action.payload);
@@ -41,10 +48,15 @@ const basketSlice = createSlice({
               } else {
                 state.items = state.items.filter((item) => item.id !== action.payload);
               }
+
+              state.totalDuration -= existingItem.time;
+              state.totalPrice -= existingItem.price;
             }
         },
         clearItems(state) {
             state.items = [];
+            state.totalDuration = 0;
+            state.totalPrice = 0;
         }
     } 
 });

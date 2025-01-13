@@ -4,7 +4,6 @@ import { basketActions } from "../../../store/basket-slice";
 import { useAppDispatch } from "../../../store/hooks";
 
 import Title from '../PanelTitle';
-import SelectedOffer from '../SelectedOffer';
 import Price from '../Price';
 import Cart from './Cart';
 
@@ -16,14 +15,12 @@ interface BasketPanelProps {
 }
 
 export default ({ isActive, onHover, activeHeight, inactiveHeight }: BasketPanelProps) => {
-    const basketItems = useAppSelector((state) => state.cart.items);
+    const totalPrice = useAppSelector((state) => state.cart.totalPrice);
     const dispatch = useAppDispatch();
 
     const clearItemsHandler = () => {
         dispatch(basketActions.clearItems());
     }
-
-    const totalPrice = basketItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
     return (
         <motion.div

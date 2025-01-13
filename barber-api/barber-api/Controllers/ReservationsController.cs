@@ -21,12 +21,12 @@ namespace barber_api.Controllers
 
         // GET: /reservation/available
         [HttpGet("available")]
-        public async Task<ActionResult<IEnumerable<DateTime>>> GetAvailableTimeSlots()
+        public async Task<ActionResult<IEnumerable<DateTime>>> GetAvailableTimeSlots([FromQuery] int duration)
         {
             var startDate = DateTime.Now;
             var endDate = startDate.AddDays(14);
 
-            var availableTimeSlots = await _reservationService.GetAvailableTimeSlotsAsync(startDate, endDate);
+            var availableTimeSlots = await _reservationService.GetAvailableTimeSlotsAsync(startDate, endDate, duration);
             return Ok(availableTimeSlots);
         }
 
