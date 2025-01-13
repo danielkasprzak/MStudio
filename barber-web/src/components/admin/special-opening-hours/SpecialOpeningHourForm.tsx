@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import FormInput from '../FormInput';
+import { formatDate } from '../../../utils/utils';
 
 interface Props {
     children: React.ReactNode;
+    isNew?: boolean;
     inputData: {
         date: string;
         endDate: string | null;
@@ -14,7 +16,7 @@ interface Props {
     onSubmit: (data: any) => void;
 }
 
-export default ({ children, inputData, onSubmit }: Props) => {
+export default ({ children, isNew, inputData, onSubmit }: Props) => {
     const [date, setDate] = useState(inputData.date.split('T')[0]);
     const [endDate, setEndDate] = useState(inputData.endDate ? inputData.endDate.split('T')[0] : null);
     const [isOpen, setIsOpen] = useState(inputData.isOpen);
@@ -45,7 +47,8 @@ export default ({ children, inputData, onSubmit }: Props) => {
 
     return (
         <form onSubmit={handleSubmit} className='font-lato flex flex-col'>
-            <FormInput name='date' defaultVal={date} required onChange={(e) => setDate(e.target.value)} type='date' placeholder='Date'/>
+            {isNew ? <FormInput name='date' defaultVal={date} required onChange={(e) => setDate(e.target.value)} type='date' placeholder='Date'/> : <h1 className='font-cormorant text-charcoal font-medium text-md text-center'>{formatDate(date)}</h1>}
+            
             <FormInput name='endDate' defaultVal={endDate} onChange={(e) => setEndDate(e.target.value)} type='date' placeholder='End Date'/>
             <FormInput name='isOpen' defaultVal={isOpen} onChange={(e) => setIsOpen(e.target.checked)} type='checkbox'/>
             <FormInput name='openHour' defaultVal={openHour} required onChange={(e) => setOpenHour(e.target.value)} type='time' placeholder='Open Hour'/>

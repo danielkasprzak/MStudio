@@ -17,8 +17,6 @@ export default () => {
     const { state } = useNavigation();
     const submit = useSubmit();
 
-
-
     function handleSubmit(formData: FormData) {
         submit(formData, {method: 'PUT' });
     }
@@ -27,7 +25,7 @@ export default () => {
         <div className='sticky right-0 top-16 w-fit h-full bg-white m-16 ml-8 text-charcoal p-8'>
             <Title padding='8'>Edytuj godziny</Title>
 
-            <SpecialOpeningHourForm inputData={{ date: '', endDate: null, isOpen: false, openHour: '', closeHour: '' }} onSubmit={handleSubmit}>
+            <SpecialOpeningHourForm isNew inputData={{ date: '', endDate: null, isOpen: false, openHour: '', closeHour: '' }} onSubmit={handleSubmit}>
                 {state === 'submitting' ? (<div>Wysyłanie...</div> 
                 ) : (
                     <SmallButton type='submit'>Zapisz</SmallButton>
