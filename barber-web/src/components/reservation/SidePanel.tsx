@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Basket from "./BasketSidePanel"
+import Basket from "./basket/BasketSidePanel"
 import Info from "./InfoSidePanel"
 
 export default () => {

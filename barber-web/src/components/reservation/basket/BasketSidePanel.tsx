@@ -1,11 +1,12 @@
 import { motion } from 'framer-motion';
-import { useAppSelector } from '../../store/hooks';
-import { basketActions } from "../../store/basket-slice";
-import { useAppDispatch } from "../../store/hooks";
+import { useAppSelector } from '../../../store/hooks';
+import { basketActions } from "../../../store/basket-slice";
+import { useAppDispatch } from "../../../store/hooks";
 
-import Title from './PanelTitle';
-import SelectedOffer from './SelectedOffer';
-import Price from './Price';
+import Title from '../PanelTitle';
+import SelectedOffer from '../SelectedOffer';
+import Price from '../Price';
+import Cart from './Cart';
 
 interface BasketPanelProps {
   isActive: boolean;
@@ -36,34 +37,7 @@ export default ({ isActive, onHover, activeHeight, inactiveHeight }: BasketPanel
                 <button onClick={clearItemsHandler} className='text-white pl-3'>U</button>
             </div>
 
-            <ul className="flex flex-col justify-center text-charcoal uppercase font-bold text-xs tracking-wider font-lato">
-            {basketItems.length === 0 ? (
-                <li>Brak</li>
-                ) : isActive ? (
-                    basketItems.map((item) => (
-                        <SelectedOffer 
-                            key={item.id}
-                            id={item.id} 
-                            label={item.label} 
-                            price={item.price} 
-                            time={item.time} 
-                            quantity={item.quantity}
-                        />
-                    ))
-                ) : (
-                    <>
-                        <SelectedOffer 
-                            key={basketItems[0].id}
-                            id={basketItems[0].id} 
-                            label={basketItems[0].label} 
-                            price={basketItems[0].price} 
-                            time={basketItems[0].time} 
-                            quantity={basketItems[0].quantity}
-                        />
-                        {basketItems.length > 1 && <li>...więcej</li>}
-                    </>
-                )}
-            </ul>
+            <Cart isActive={isActive} />
 
             <div className="flex flex-col justify-center pt-2">
                 <p className="uppercase font-bold text-xs tracking-wider font-lato text-charcoal pb-2">Do zapłaty: 
