@@ -27,8 +27,8 @@ export default () => {
     const { mutate, isPending } = useMutation({
         mutationFn: deleteSpecialOpeningHour,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['offers'] });
-            navigate('/admin/speciale-opening-hours');
+            queryClient.invalidateQueries({ queryKey: ['specialOpeningHours'] });
+            navigate('/admin/specjalne-godziny-otwarcia');
         }
     });
     

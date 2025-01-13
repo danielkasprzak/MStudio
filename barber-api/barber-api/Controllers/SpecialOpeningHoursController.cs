@@ -26,7 +26,7 @@ namespace barber_api.Controllers
         [HttpGet("{date}")]
         public async Task<IActionResult> GetSpecialOpeningHourByDate(DateTime date)
         {
-            var specialOpeningHour = await _service.GetSpecialOpeningHourByDateAsync(date.ToUniversalTime());
+            var specialOpeningHour = await _service.GetSpecialOpeningHourByDateAsync(date);
             if (specialOpeningHour == null)
             {
                 return NotFound();
@@ -60,7 +60,7 @@ namespace barber_api.Controllers
         {
             try
             {
-                await _service.DeleteSpecialOpeningHourAsync(date.ToUniversalTime());
+                await _service.DeleteSpecialOpeningHourAsync(date);
                 return NoContent();
             }
             catch (DbUpdateConcurrencyException)
