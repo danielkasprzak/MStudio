@@ -2,12 +2,15 @@ import { useQuery } from '@tanstack/react-query';
 import { queryClient, fetchAvailableSlots } from '../../../utils/http';
 import store from '../../../store/index';
 import { useAppSelector } from '../../../store/hooks';
-import { formatDateShortMonth } from '../../../utils/utils';
+import { formatDateShortMonth, formatDateOnlyDay } from '../../../utils/utils';
+import { useState } from 'react';
 
 type AvailabilityModel = string;
 
 export default () => {
     const totalDuration = useAppSelector((state) => state.cart.totalDuration);
+    const [activeDate, setActiveDate] = useState<string | null>(null);
+
 
     const { data = [], error } = useQuery<AvailabilityModel[]>({
         queryKey: ['availableSlots', totalDuration],
@@ -31,19 +34,28 @@ export default () => {
                 <h1 className="font-cormorant text-xl font-medium uppercase pb-8">REZERWACJA WIZYTY</h1>
 
 
-                <ul>
-                    {Object.entries(groupedSlots).map(([date, slots]) => (
-                        <li key={date}>
-                            <h2 className="font-bold text-lg">{formatDateShortMonth(date)}</h2>
-                            <ul className='flex flex-row'>
-                                {slots.map((slot) => (
-                                    <li key={slot}
-                                    className='m-2 p-4 border border-stone-300'>{new Date(slot).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</li>
-                                ))}
-                            </ul>
+                <ul className="flex flex-row">
+                    {Object.entries(groupedSlots).map(([date]) => (
+                        <li
+                            key={date}
+                            className="m-2 p-4 border-b border-stone-300 flex flex-col justify-center items-center"
+                            onClick={() => setActiveDate(date)}
+                        >
+                            <div className='text-charcoal uppercase font-bold text-xl tracking-wider font-lato'>{formatDateOnlyDay(date)}</div>
+                            <div className='text-charcoal uppercase font-bold text-xs tracking-wider font-lato'>{formatDateShortMonth(date)}</div>
                         </li>
                     ))}
                 </ul>
+
+                {activeDate && (
+                    <div className="flex flex-row">
+                        {groupedSlots[activeDate].map((slot) => (
+                            <div key={slot} className='m-2 p-2 border border-stone-300 text-charcoal uppercase font-bold text-xs tracking-wider font-lato'>
+                                {new Date(slot).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            </div>
+                        ))}
+                    </div>
+                )}
 
             </div>
         </div>

@@ -20,5 +20,10 @@ export const formatDate = (dateString: string) => {
 
 export const formatDateShortMonth = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('pl-PL', { month: 'short', day: 'numeric' });
+    return date.toLocaleDateString('pl-PL', { month: 'short' });
+};
+
+export const formatDateOnlyDay = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pl-PL', {  day: 'numeric' });
 };
