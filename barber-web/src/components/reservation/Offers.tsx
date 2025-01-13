@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchOffers } from '../../utils/http';
+import { fetchOffers, queryClient } from '../../utils/http';
 
 import Offer from "./Offer"
 
@@ -12,12 +12,11 @@ interface OfferModel {
 }
 
 export default () => {
-    const { data = [], error, isLoading } = useQuery<OfferModel[]>({
+    const { data = [], error } = useQuery<OfferModel[]>({
         queryKey: ['offers'],
         queryFn: fetchOffers
     });
 
-    if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error loading offers</div>;
 
     return (
@@ -29,4 +28,11 @@ export default () => {
             </ul>
         </div>
     )
+}
+
+export function loader() {
+    return queryClient.fetchQuery({
+        queryKey: ['offers'],
+        queryFn: fetchOffers
+    });
 }

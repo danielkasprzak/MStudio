@@ -6,7 +6,7 @@ import { lazy } from 'react';
 import Error from './components/Error';
 import { protectedLoader, adminLoader } from './utils/http';
 import MyReservations from './components/reservation/MyReservations';
-import Offers from './components/reservation/Offers';
+import Offers, { loader as offersLoader } from './components/reservation/Offers';
 import OffersManage, { loader as offersManageLoader } from './components/admin/offers/Offers';
 import OfferEdit, { loader as offersEditLoader, action as offersEditAction } from './components/admin/offers/OfferEdit';
 import OfferNew, { action as offersNewAction } from './components/admin/offers/OfferNew';
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
   { index: true, element: <Landing />, errorElement: <Error /> },
   { path: 'rezerwacja', element: <Reservation />, errorElement: <Error />, loader: protectedLoader,
     children: [
-      { index: true, element: <Offers /> },
+      { index: true, element: <Offers />, loader: offersLoader },
       { path: 'moje-rezerwacje', element: <MyReservations /> }
     ]
   },
