@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
-import { queryClient, fetchSpecialOpeningHours } from '../../../utils/http';
-import { Link, Outlet } from 'react-router-dom';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { queryClient, fetchSpecialOpeningHours, deleteSpecialOpeningHour } from '../../../utils/http';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 import Title from '../Title';
 import SmallButton from '../SmallButton';
@@ -15,12 +15,26 @@ interface SpecialOpeningHoursModel {
 }
 
 export default () => {
+    const navigate = useNavigate();
+    
     const { data = [], error } = useQuery<SpecialOpeningHoursModel[]>({
         queryKey: ['specialOpeningHours'],
         queryFn: fetchSpecialOpeningHours
     });
 
     if (error) return <div>Error loading offers</div>;
+
+    const { mutate, isPending } = useMutation({
+        mutationFn: deleteSpecialOpeningHour,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['offers'] });
+            navigate('/admin/speciale-opening-hours');
+        }
+    });
+    
+    function handleDeleteClick(date: string) {
+        mutate({ date });
+    }    
 
     return (
         <div className='flex flex-row justify-center'>
@@ -37,11 +51,12 @@ export default () => {
                         {data.map((date) => (
                             <div className='flex flex-row'>
                                 <SpecialOpeningHour key={date.date} date={date.date} endDate={date.endDate} isOpen={date.isOpen} openHour={date.openHour} closeHour={date.closeHour} />
-
+                                
                                 <div className='flex flex-row'>
                                     <SmallButton>
                                         <Link to={`${date.date}`}>Edytuj</Link>
                                     </SmallButton>
+                                    {isPending ? <div>Usuwanie...</div> : <SmallButton onClick={() => handleDeleteClick(date.date)}>Usuń</SmallButton>}
                                 </div>
                             </div>
                         ))}

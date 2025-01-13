@@ -1,6 +1,7 @@
 using barber_api.Models;
 using barber_api.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace barber_api.Controllers
 {
@@ -25,7 +26,7 @@ namespace barber_api.Controllers
         [HttpGet("{date}")]
         public async Task<IActionResult> GetSpecialOpeningHourByDate(DateTime date)
         {
-            var specialOpeningHour = await _service.GetSpecialOpeningHourByDateAsync(date);
+            var specialOpeningHour = await _service.GetSpecialOpeningHourByDateAsync(date.ToUniversalTime());
             if (specialOpeningHour == null)
             {
                 return NotFound();
@@ -43,20 +44,29 @@ namespace barber_api.Controllers
         [HttpPut("{date}")]
         public async Task<IActionResult> UpdateSpecialOpeningHour(DateTime date, SpecialOpeningHour specialOpeningHour)
         {
-            if (date != specialOpeningHour.Date)
-            {
-                return BadRequest();
+            try { 
+            
+                await _service.UpdateSpecialOpeningHourAsync(date, specialOpeningHour);
+                return NoContent();
             }
-
-            await _service.UpdateSpecialOpeningHourAsync(specialOpeningHour);
-            return NoContent();
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound("The record you attempted to edit was not found. The record may have been deleted or modified by another user.");
+            }
         }
 
         [HttpDelete("{date}")]
         public async Task<IActionResult> DeleteSpecialOpeningHour(DateTime date)
         {
-            await _service.DeleteSpecialOpeningHourAsync(date);
-            return NoContent();
+            try
+            {
+                await _service.DeleteSpecialOpeningHourAsync(date.ToUniversalTime());
+                return NoContent();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound("The record you attempted to delete was not found. The record may have been deleted or modified by another user.");
+            }
         }
     }
 }

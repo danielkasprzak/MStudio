@@ -57,7 +57,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     
     const updatedSpecialOpeningHour: SpecialOpeningHourModel = {
         date: formData.get('date') as string,
-        endDate: formData.get('date') as string || null,
+        endDate: formData.get('endDate') as string || null,
         isOpen: formData.get('isOpen') === 'true',
         openHour: formData.get('openHour') as string,
         closeHour: formData.get('closeHour') as string

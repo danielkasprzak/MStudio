@@ -19,41 +19,54 @@ namespace barber_api.Services
 
         public async Task<SpecialOpeningHour?> GetSpecialOpeningHourByDateAsync(DateTime date)
         {
-            var utcDate = date.ToUniversalTime();
+            var utcDate = DateTime.SpecifyKind(date.Date.AddHours(12), DateTimeKind.Utc);
             return await _context.SpecialOpeningHours.FindAsync(utcDate);
         }
 
         public async Task AddSpecialOpeningHourAsync(SpecialOpeningHour specialOpeningHour)
         {
-            specialOpeningHour.Date = specialOpeningHour.Date.ToUniversalTime();
+            Console.Write("BEZ TIMEZONE - ", specialOpeningHour.Date.ToString());
+
+            specialOpeningHour.Date = DateTime.SpecifyKind(specialOpeningHour.Date, DateTimeKind.Utc);
             if (specialOpeningHour.EndDate.HasValue)
             {
-                specialOpeningHour.EndDate = specialOpeningHour.EndDate.Value.ToUniversalTime();
+                specialOpeningHour.EndDate = DateTime.SpecifyKind(specialOpeningHour.EndDate.Value, DateTimeKind.Utc);
             }
+
+            Console.Write("Z TIMEZONE - ", specialOpeningHour.Date.ToString());
+
+            //specialOpeningHour.Date = DateTime.SpecifyKind(specialOpeningHour.Date.Date.AddHours(12), DateTimeKind.Utc);
+            //if (specialOpeningHour.EndDate.HasValue)
+            //{
+            //    specialOpeningHour.EndDate = DateTime.SpecifyKind(specialOpeningHour.EndDate.Value.Date.AddHours(12), DateTimeKind.Utc);
+            //}
             await _context.SpecialOpeningHours.AddAsync(specialOpeningHour);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateSpecialOpeningHourAsync(SpecialOpeningHour specialOpeningHour)
+        public async Task UpdateSpecialOpeningHourAsync(DateTime originalDate, SpecialOpeningHour specialOpeningHour)
         {
-            specialOpeningHour.Date = specialOpeningHour.Date.ToUniversalTime();
+            var utcOriginalDate = DateTime.SpecifyKind(originalDate.Date.AddHours(12), DateTimeKind.Utc);
+            specialOpeningHour.Date = DateTime.SpecifyKind(specialOpeningHour.Date.Date.AddHours(12), DateTimeKind.Utc);
             if (specialOpeningHour.EndDate.HasValue)
             {
-                specialOpeningHour.EndDate = specialOpeningHour.EndDate.Value.ToUniversalTime();
-            }
-            var existingEntity = await _context.SpecialOpeningHours.FindAsync(specialOpeningHour.Date);
-            if (existingEntity != null)
-            {
-                _context.Entry(existingEntity).State = EntityState.Detached;
+                specialOpeningHour.EndDate = DateTime.SpecifyKind(specialOpeningHour.EndDate.Value.Date.AddHours(12), DateTimeKind.Utc);
             }
 
+            var existingEntity = await _context.SpecialOpeningHours.FindAsync(utcOriginalDate);
+            if (existingEntity == null)
+            {
+                throw new DbUpdateConcurrencyException("The record you attempted to edit was not found. The record may have been deleted or modified by another user.");
+            }
+
+            _context.Entry(existingEntity).State = EntityState.Detached;
             _context.SpecialOpeningHours.Update(specialOpeningHour);
             await _context.SaveChangesAsync();
         }
 
         public async Task DeleteSpecialOpeningHourAsync(DateTime date)
         {
-            var utcDate = date.ToUniversalTime();
+            var utcDate = DateTime.SpecifyKind(date.Date.AddHours(12), DateTimeKind.Utc);
             var specialOpeningHour = await _context.SpecialOpeningHours.FindAsync(utcDate);
             if (specialOpeningHour != null)
             {
@@ -63,4 +76,5 @@ namespace barber_api.Services
         }
     }
 }
+
 

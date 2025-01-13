@@ -165,3 +165,8 @@ export async function updateSpecialOpeningHour({ date, updatedSpecialHour }: Upd
     const { data } = await axiosInstance.put(`https://localhost:7190/specialopeninghours/${date}`, updatedSpecialHour);
     return data;
 }
+
+export async function deleteSpecialOpeningHour({ date }: { date: string }) {
+    const { data } = await axiosInstance.delete(`https://localhost:7190/specialopeninghours/${date}`);
+    return data;
+}
