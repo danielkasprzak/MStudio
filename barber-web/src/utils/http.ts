@@ -220,6 +220,6 @@ export async function bookNewReservationAsAdmin(newReservation: Reservation) {
 }
 
 export async function cancelReservation({ id }: { id: string }) {
-    const { data } = await axiosInstance.post(`https://localhost:7190/reservation/cancel/${id}`);
+    const { data } = await axiosInstance.put(`https://localhost:7190/reservation/cancel/${id}`);
     return data;
 }
