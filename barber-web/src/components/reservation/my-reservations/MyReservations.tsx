@@ -60,10 +60,10 @@ export default () => {
             <Title>Moje rezerwacje</Title>
 
             <div className='w-full flex flex-row justify-center items-center py-8'>
-                <FlatButton margin='2' onClick={() => setFilter('active')} isActive={filter === 'active'}>Aktywne</FlatButton>
-                <FlatButton margin='2' onClick={() => setFilter('cancelled')} isActive={filter === 'cancelled'}>Odwołane</FlatButton>
-                <FlatButton margin='2' onClick={() => setFilter('past')} isActive={filter === 'past'}>Historia</FlatButton>
-                <FlatButton margin='2' onClick={() => setFilter('all')} isActive={filter === 'all'}>Wszystkie</FlatButton>
+                <FlatButton margin='2' disabled={false} onClick={() => setFilter('active')} isActive={filter === 'active'}>Aktywne</FlatButton>
+                <FlatButton margin='2' disabled={false} onClick={() => setFilter('cancelled')} isActive={filter === 'cancelled'}>Odwołane</FlatButton>
+                <FlatButton margin='2' disabled={false} onClick={() => setFilter('past')} isActive={filter === 'past'}>Historia</FlatButton>
+                <FlatButton margin='2' disabled={false} onClick={() => setFilter('all')} isActive={filter === 'all'}>Wszystkie</FlatButton>
             </div>
 
             <ul className='w-full h-fit'>
