@@ -190,6 +190,7 @@ interface Reservation {
     duration: number;
     reservationDateTime: string;
     phone: string;
+    price: number;
 }
 
 export async function bookNewReservation(newReservation: Reservation) {
