@@ -5,7 +5,7 @@ import { lazy } from 'react';
 
 import { protectedLoader, adminLoader } from './utils/http';
 import MyReservations, { loader as myReservationsLoader } from './components/reservation/my-reservations/MyReservations';
-import Offers, { loader as offersLoader } from './components/reservation/Offers';
+import Offers, { loader as offersLoader } from './components/reservation/offers/Offers';
 import OffersManage, { loader as offersManageLoader } from './components/admin/offers/Offers';
 import OfferEdit, { loader as offersEditLoader, action as offersEditAction } from './components/admin/offers/OfferEdit';
 import OfferNew, { action as offersNewAction } from './components/admin/offers/OfferNew';

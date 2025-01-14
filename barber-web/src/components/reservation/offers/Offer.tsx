@@ -1,7 +1,7 @@
-import { basketActions } from "../../store/basket-slice";
-import { useAppDispatch } from "../../store/hooks";
+import { basketActions } from "../../../store/basket-slice";
+import { useAppDispatch } from "../../../store/hooks";
 
-import TextButton from "../TextButton";
+import TextButton from "../../TextButton";
 
 interface Props {
     id: number;
@@ -19,7 +19,7 @@ export default ({ id, label, description, price, time } : Props) => {
     }
 
     return (
-        <li className="mb-4 w-full font-lato border border-stone-300 text-charcoal flex flex-row justify-between py-4 px-6">
+        <li className="mt-4 w-full font-lato border border-stone-300 text-charcoal flex flex-row justify-between py-4 px-6">
             <div className="flex flex-col justify-center leading-4">
                 <h1 className="uppercase font-extrabold text-xs">{label}</h1>
                 {description && <p className="font-normal text-xs text-stone-500">{description}</p>}

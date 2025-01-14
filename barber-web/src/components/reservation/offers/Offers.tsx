@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchOffers, queryClient } from '../../utils/http';
+import { fetchOffers, queryClient } from '../../../utils/http';
 
 import Offer from "./Offer"
+import Title from '../../Title';
 
 interface OfferModel {
     id: number;
@@ -20,8 +21,10 @@ export default () => {
     if (error) return <div>Error loading offers</div>;
 
     return (
-        <div className="h-auto w-auto">
-            <ul className='w-[46rem] h-fit bg-white border border-stone-300 px-8 pt-8 pb-4'>
+        <div className="h-auto w-[46rem] bg-white border border-stone-300 p-8">
+            <Title>Oferta</Title>
+
+            <ul className='w-full h-fit'>
                 {data.map((offer) => (
                     <Offer key={offer.id} id={offer.id} label={offer.label} price={offer.price} time={offer.duration} description={offer.description} />
                 ))}
