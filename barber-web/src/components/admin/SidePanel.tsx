@@ -28,7 +28,7 @@ export default () => {
                 <Title padding='16'>MSTUDIO</Title>
 
                 <SmallButton>Panel</SmallButton>
-                <SmallButton>Rezerwacje</SmallButton>
+                <SmallButton><Link to={`rezerwacje`}>Rezerwacje</Link></SmallButton>
                 <SmallButton><Link to={`oferty`}>Oferta</Link></SmallButton>
                 <SmallButton><Link to={`godziny-otwarcia`}>Harmonogram</Link></SmallButton>
                 <SmallButton><Link to={`specjalne-godziny-otwarcia`}>Specjalne</Link></SmallButton>

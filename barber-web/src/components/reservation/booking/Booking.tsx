@@ -60,7 +60,7 @@ export default () => {
 
         const newReservation: ReservationModel = {
             reservationId: generateReservationId(),
-            email: "email@mail.com", // TODO: get from auth
+            email: "email@mail.com",
             services: JSON.stringify(services),
             duration: totalDuration,
             reservationDateTime: activeSlot,
