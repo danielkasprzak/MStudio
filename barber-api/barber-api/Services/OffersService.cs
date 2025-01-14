@@ -22,6 +22,11 @@ namespace barber_api.Services
             return await _context.Offers.FindAsync(id);
         }
 
+        public async Task<IEnumerable<Offer>> GetOffersByIdsAsync(IEnumerable<int> offerIds)
+        {
+            return await _context.Offers.Where(o => offerIds.Contains(o.Id)).ToListAsync();
+        }
+
         public async Task AddOfferAsync(Offer offer)
         {
             _context.Offers.Add(offer);

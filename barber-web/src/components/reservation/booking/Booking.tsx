@@ -18,12 +18,14 @@ interface ReservationModel {
     duration: number;
     reservationDateTime: string;
     phone: string;
+    price: number;
 }
 
 export default () => {
     useDocumentTitle("MStudio - rezerwacja");
 
     const totalDuration = useAppSelector((state) => state.cart.totalDuration);
+    const totalPrice = useAppSelector((state) => state.cart.totalPrice);
     const services = useAppSelector((state) => state.cart.items);
     const [activeDate, setActiveDate] = useState<string | null>(null);
     const [activeSlot, setActiveSlot] = useState<string | null>(null);
@@ -56,7 +58,10 @@ export default () => {
     });
     
     function handleBooking() {
-        if (!activeDate || !activeSlot || !totalDuration || totalDuration <= 0 || !services) return;
+        if (!activeDate || !activeSlot || 
+            !totalDuration || totalDuration <= 0 || 
+            !totalPrice || totalPrice <= 0 || 
+            !services) return;
 
         const newReservation: ReservationModel = {
             reservationId: generateReservationId(),
@@ -64,7 +69,8 @@ export default () => {
             services: JSON.stringify(services),
             duration: totalDuration,
             reservationDateTime: activeSlot,
-            phone: "123456789" // TODO: get from user
+            phone: "123456789", // TODO: get from user
+            price: totalPrice
         };
 
         mutate(newReservation);

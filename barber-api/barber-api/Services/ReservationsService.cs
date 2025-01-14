@@ -6,10 +6,12 @@ namespace barber_api.Services
     public class ReservationsService
     {
         private readonly AppDbContext _context;
+        private readonly OffersService _offersService;
 
-        public ReservationsService(AppDbContext context)
+        public ReservationsService(AppDbContext context, OffersService offersService)
         {
             _context = context;
+            _offersService = offersService;
         }
 
         public async Task<IEnumerable<Reservation>> GetReservationsAsync()
@@ -33,6 +35,11 @@ namespace barber_api.Services
 
         public async Task AddReservationAsync(Reservation reservation)
         {
+            var selectedServiceIds = reservation.Services.Split(',').Select(int.Parse);
+            var offers = await _offersService.GetOffersByIdsAsync(selectedServiceIds);
+            reservation.Duration = offers.Sum(o => o.Duration);
+            reservation.Price = offers.Sum(o => o.Price);
+
             _context.Reservations.Add(reservation);
             await _context.SaveChangesAsync();
         }

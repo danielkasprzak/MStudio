@@ -11,6 +11,6 @@ namespace barber_api.Models
         [Column(TypeName = "timestamp without time zone")]
         public DateTime ReservationDateTime { get; set; }
         public required string Phone { get; set; }
-
+        public required decimal Price { get; set; }
     }
 }

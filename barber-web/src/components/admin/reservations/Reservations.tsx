@@ -13,6 +13,7 @@ interface ReservationModel {
     duration: number;
     reservationDateTime: string;
     phone: string;
+    price: number;
 }
 
 export default () => {
@@ -37,7 +38,8 @@ export default () => {
                                 services={reservation.services}
                                 duration={reservation.duration}
                                 reservationDateTime={reservation.reservationDateTime}
-                                phone={reservation.phone} />
+                                phone={reservation.phone}
+                                price={reservation.price} />
 
                                 <div className='flex flex-row'>
                                     <SmallButton>
