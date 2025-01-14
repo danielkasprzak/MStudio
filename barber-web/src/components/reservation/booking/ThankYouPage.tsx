@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import useDocumentTitle from "../../../hooks/useDocumentTitle";
 import { useAppSelector } from "../../../store/hooks";
 
@@ -23,20 +24,17 @@ export default () => {
                         {/* <p className="font-lato text-xs font-medium py-2">Zarezerwowane usługi</p> */}
                         <ul className="font-lato text-xs font-bold border border-stone-200 p-4">
                             {services.map((service) => (
-                                <li className="font-medium" key={service.id}>{service.label}{service.quantity}{service.price}</li>
+                                <li className="font-medium" key={service.id}>{service.label} {service.quantity} x <span className="font-bold">{service.price}zł</span></li>
                             ))}
                         </ul>
                         
-                        <p className="font-lato text-xs font-medium py-2">Cena: <span className="font-bold">{totalPrice}</span></p>
+                        <p className="font-lato text-xs font-medium py-2">Cena: <span className="font-bold">{totalPrice}zł</span></p>
                     </>
                 }
 
                 <p className="font-lato text-sm font-medium py-8">Do zobaczenia wkrótce!</p>
 
-
-
-
-                <button className="w-full uppercase font-bold text-xs tracking-wider font-lato border text-charcoal border-stone-300 px-4 py-2 flex flex-row justify-center items-center">DO REZERWACJI</button>
+                <button className="w-full uppercase font-bold text-xs tracking-wider font-lato border text-charcoal border-stone-300 px-4 py-2 flex flex-row justify-center items-center"><Link to={`/rezerwacja`}>Do rezerwacji</Link></button>
             </div>
         </div>        
     );

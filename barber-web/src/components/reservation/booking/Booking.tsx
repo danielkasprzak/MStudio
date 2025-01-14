@@ -8,6 +8,7 @@ import useDocumentTitle from '../../../hooks/useDocumentTitle';
 
 import DatesSwiper from './DatesSwiper';
 import HoursSwiper from './HoursSwiper';
+import { useNavigate } from 'react-router-dom';
 
 type AvailabilityModel = string;
 
@@ -23,6 +24,9 @@ interface ReservationModel {
 
 export default () => {
     useDocumentTitle("MStudio - rezerwacja");
+
+
+    const navigate = useNavigate();
 
     const totalDuration = useAppSelector((state) => state.cart.totalDuration);
     const totalPrice = useAppSelector((state) => state.cart.totalPrice);
@@ -54,6 +58,7 @@ export default () => {
             setActiveDate(null);
             setActiveSlot(null);
             queryClient.invalidateQueries({ queryKey: ['availableSlots', totalDuration] });
+            navigate('/dziekujemy');
         }
     });
     
