@@ -212,3 +212,8 @@ export async function bookNewReservation(newReservation: Reservation) {
     const { data } = await axiosInstance.post('https://localhost:7190/reservation', newReservation);
     return data;
 }
+
+export async function bookNewReservationAsAdmin(newReservation: Reservation) {
+    const { data } = await axiosInstance.post('https://localhost:7190/reservation/admin', newReservation);
+    return data;
+}
