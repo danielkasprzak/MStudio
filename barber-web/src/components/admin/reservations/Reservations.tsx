@@ -3,7 +3,7 @@ import { queryClient, fetchReservations, cancelReservation } from '../../../util
 import { getTodayDate } from '../../../utils/utils';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 
-import Title from '../Title';
+import Title from '../../Title';
 import SmallButton from '../SmallButton';
 import Reservation from './Reservation';
 import FormInput from '../FormInput';

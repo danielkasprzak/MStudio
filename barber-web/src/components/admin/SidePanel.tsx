@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../utils/http";
 
 import SmallButton from "./SmallButton";
-import Title from "./Title";
+import Title from "../Title";
 import { useMutation } from "@tanstack/react-query";
 
 export default () => {

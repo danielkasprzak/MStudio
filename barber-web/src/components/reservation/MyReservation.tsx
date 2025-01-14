@@ -1,21 +1,43 @@
-interface OfferProps {
-    id: string;
-    title: string;
+import { formatDate } from "../../utils/utils";
+
+interface Props {
+    reservationId: string;
+    services: string;
+    duration: number;
+    reservationDateTime: string;
     price: number;
-    time: number;
-    date: string;
     isCancelled: boolean;
+    isPast: boolean;
 }
 
-export default ({ id, title, price, time, date } : OfferProps) => {
+interface Service {
+    label: string;
+    price: number;
+    quantity: number;
+}
+
+export default ({ reservationId, services, duration, reservationDateTime, price, isCancelled, isPast } : Props) => {
+    const parsedServices: Service[] = JSON.parse(services);
+
+    const firstColor = (isCancelled || isPast) ? "text-stone-500" : "text-charcoal";
+    const secondColor = (isCancelled || isPast) ? "text-stone-400" : "text-stone-500";
+
     return (
-    <li className="mb-4 w-full font-montserrat border border-neutral-800 rounded-xl text-neutral-300 flex flex-row justify-between py-4 px-6">
-        <div className="flex flex-col justify-center items-start">
-            <div className="flex flex-row justify-start items-center">
-                <h1 className="text-xl font-semibold text-white">{title}</h1>
-                <p className="text-xs pl-3">{time}min</p>
+        <li className={`${firstColor} mb-4 w-full font-lato border border-stone-300 flex flex-row justify-between py-4 px-6`}>
+            <div className="flex flex-col justify-center leading-4">
+                <h1 className="uppercase font-extrabold text-xs">{formatDate(reservationDateTime)}</h1>
+                <div className={`font-normal text-xs ${secondColor}`}>
+                    {parsedServices.map((service, index) => (
+                        <p key={index}>{service.label} <span className="px-2">{service.quantity} x {service.price}zł</span></p>
+                    ))}
+                </div>
             </div>
-        </div>
-    </li>
-    )
+            <div className="flex flex-row items-center justify-end pl-4">
+                <div className="flex flex-col justify-center leading-4 px-4">
+                    <p className="font-extrabold text-xs text-right">{price}.00zł</p>
+                    <p className={`font-normal text-xs text-right ${secondColor}`}>{duration}min</p>
+                </div>
+            </div>
+        </li>
+    );
 }

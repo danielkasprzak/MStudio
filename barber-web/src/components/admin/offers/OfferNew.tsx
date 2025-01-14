@@ -1,4 +1,4 @@
-import Title from '../Title';
+import Title from '../../Title';
 import SmallButton from '../SmallButton';
 import { ActionFunction, redirect, useNavigation, useSubmit } from 'react-router-dom';
 import { queryClient, createOffer } from '../../../utils/http';

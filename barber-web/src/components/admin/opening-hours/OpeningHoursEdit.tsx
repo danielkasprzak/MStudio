@@ -1,4 +1,4 @@
-import Title from '../Title';
+import Title from '../../Title';
 import SmallButton from '../SmallButton';
 import { ActionFunction, LoaderFunctionArgs, useParams, useSubmit, useNavigation, redirect } from 'react-router-dom';
 import { queryClient, fetchOpeningHour, updateOpeningHour } from '../../../utils/http';

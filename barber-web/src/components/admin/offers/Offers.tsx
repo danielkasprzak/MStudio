@@ -3,7 +3,7 @@ import { queryClient, fetchOffers, deleteOffer } from '../../../utils/http';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 import Offer from './Offer';
-import Title from '../Title';
+import Title from '../../Title';
 import SmallButton from '../SmallButton';
 
 interface OfferModel {

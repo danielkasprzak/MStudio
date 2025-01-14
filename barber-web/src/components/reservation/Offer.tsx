@@ -19,19 +19,18 @@ export default ({ id, label, description, price, time } : Props) => {
     }
 
     return (
-    <li className="mb-4 w-full font-lato tracking-wider border-b border-stone-300 text-charcoal flex flex-row justify-between py-4 px-6">
-        <div className="flex flex-col justify-center items-start">
-            <div className="flex flex-row justify-start items-center">
-                <h1 className="uppercase font-bold text-xs">{label}</h1>
-                <p className="uppercase font-bold text-xs pl-3">{time}min</p>
+        <li className="mb-4 w-full font-lato border border-stone-300 text-charcoal flex flex-row justify-between py-4 px-6">
+            <div className="flex flex-col justify-center leading-4">
+                <h1 className="uppercase font-extrabold text-xs">{label}</h1>
+                {description && <p className="font-normal text-xs text-stone-500">{description}</p>}
             </div>
-            {description && <p className="font-normal text-xs text-balance">{description}</p>}
-        </div>
-        <div className="flex flex-row items-center justify-end pl-4">
-            <p className="font-normal text-normal px-3 text-nowrap"><span className="font-semibold">{price}</span>zł</p>
-            
-            <TextButton onClick={() => addItemHandler(id, label, price, time)}>Umów</TextButton>
-        </div>
-    </li>
-    )
+            <div className="flex flex-row items-center justify-end pl-4">
+                <div className="flex flex-col justify-center leading-4 px-4">
+                    <p className="font-extrabold text-xs text-right">{price}.00zł</p>
+                    <p className="font-normal text-xs text-right text-stone-500">{time}min</p>
+                </div>
+                <TextButton onClick={() => addItemHandler(id, label, price, time)}>Umów</TextButton>
+            </div>
+        </li>
+    );
 }

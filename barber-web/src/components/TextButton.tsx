@@ -1,3 +1,5 @@
+import { motion } from "motion/react";
+
 interface Props {
     children?: React.ReactNode;
     onClick?: () => void;

@@ -41,6 +41,7 @@ export default ({ isActive, onHover, activeHeight, inactiveHeight }: BasketPanel
                 <p className="uppercase font-bold text-xs tracking-wider font-lato text-charcoal pb-2">Do zapłaty: 
                     <Price totalPrice={totalPrice} />zł
                 </p>
+                
                 <button className="w-full uppercase font-bold text-xs tracking-wider font-lato border text-charcoal border-stone-300 px-4 py-2 flex flex-row justify-center items-center"><Link to={`/rezerwuj`}>Zarezerwuj</Link></button>
             </div>
         </motion.div>

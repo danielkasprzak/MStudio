@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { queryClient, fetchOpeningHours } from '../../../utils/http';
 import { Link, Outlet } from 'react-router-dom';
 
-import Title from '../Title';
+import Title from '../../Title';
 import SmallButton from '../SmallButton';
 import OpeningHour from './OpeningHour';
 

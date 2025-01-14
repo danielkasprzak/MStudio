@@ -1,4 +1,4 @@
-import Title from '../Title';
+import Title from '../../Title';
 import SmallButton from '../SmallButton';
 import { ActionFunction, useSubmit, useNavigation, redirect } from 'react-router-dom';
 import { bookNewReservationAsAdmin, queryClient } from '../../../utils/http';

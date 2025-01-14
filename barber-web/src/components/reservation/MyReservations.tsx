@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchMyReservations, queryClient } from '../../utils/http';
+import MyReservation from './MyReservation';
 
 interface ReservationModel {
     reservationId: string;
@@ -20,17 +21,27 @@ export default () => {
 
     if (error) return <div>Error loading offers</div>;
 
+    const now = new Date();
+
     return (
         <div className="h-auto w-auto">
             <ul className='w-[46rem] h-fit bg-white border border-stone-300 px-8 pt-8 pb-4'>
-                {data.map((reservation) => (
-                    <li key={reservation.reservationId} className="mb-4">
-                        <h2 className="text-white font-semibold">{reservation.reservationId}</h2>
-                        <p className="text-neutral-300">Usługi: {reservation.reservationDateTime}</p>
-                        <p className="text-neutral-300">Cena: {reservation.price}zł</p>
-                        <p className="text-neutral-300">Czas: {reservation.duration} minut</p>
-                    </li>
-                ))}
+                {data.map((reservation) => {
+                    const reservationDate = new Date(reservation.reservationDateTime);
+                    const isPast = reservationDate < now;
+                    return (
+                    <MyReservation
+                        key={reservation.reservationId}
+                        reservationId={reservation.reservationId}
+                        services={reservation.services}
+                        duration={reservation.duration}
+                        reservationDateTime={reservation.reservationDateTime}
+                        price={reservation.price}
+                        isCancelled={reservation.isCancelled}
+                        isPast={isPast}
+                    />
+                    );
+                })}
             </ul>
         </div>
     )
