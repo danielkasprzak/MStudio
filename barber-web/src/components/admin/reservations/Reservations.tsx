@@ -32,7 +32,7 @@ export default () => {
 
     if (error) return <div>Error loading offers</div>;
 
-
+    const now = new Date();
 
     return (
         <div className='flex flex-row justify-center'>
@@ -44,23 +44,29 @@ export default () => {
 
                 <div className='relative w-auto p-16 pt-8 h-full text-charcoal font-lato'>
                     <ul className='h-fit w-fit'>
-                        {data.map((reservation) => (
-                            <div className='flex flex-row'>
-                                <Reservation reservationId={reservation.reservationId}
-                                email={reservation.email}
-                                services={reservation.services}
-                                duration={reservation.duration}
-                                reservationDateTime={reservation.reservationDateTime}
-                                phone={reservation.phone}
-                                price={reservation.price} />
-
-                                <div className='flex flex-row'>
-                                    <SmallButton>
-                                        <Link to={`${reservation.reservationId}`}>Edytuj</Link>
-                                    </SmallButton>
+                        {data.map((reservation) => {
+                            const reservationDate = new Date(reservation.reservationDateTime);
+                            const isPast = reservationDate < now;
+                            return (
+                                <div className="flex flex-row" key={reservation.reservationId}>
+                                    <Reservation
+                                        isPast={isPast}
+                                        reservationId={reservation.reservationId}
+                                        email={reservation.email}
+                                        services={reservation.services}
+                                        duration={reservation.duration}
+                                        reservationDateTime={reservation.reservationDateTime}
+                                        phone={reservation.phone}
+                                        price={reservation.price}
+                                    />
+                                    <div className='flex flex-row'>
+                                        <SmallButton>
+                                            <Link to={`${reservation.reservationId}`}>Edytuj</Link>
+                                        </SmallButton>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </ul>
                 </div>
             </div>

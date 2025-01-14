@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { formatDate } from "../../../utils/utils";
 
 interface Props {
+    isPast: boolean;
     reservationId: string;
     email: string;
     services: string;
@@ -19,7 +20,7 @@ interface Service {
     quantity: number;
 }
 
-export default ({ reservationId, email, services, duration, reservationDateTime, phone, price } : Props) => {
+export default ({ isPast, reservationId, email, services, duration, reservationDateTime, phone, price } : Props) => {
     let parsedServices: Service[] = [];
     
     try {
@@ -38,7 +39,7 @@ export default ({ reservationId, email, services, duration, reservationDateTime,
                 <p className="font-bold text-xs tracking-wider text-stone-500">{ phone }</p>
             </div>
             <div className="flex flex-row items-center py-4">
-                <p className="font-extrabold text-xl tracking-wider pr-2">{ formatDate(reservationDateTime) }</p>
+                <p className={`font-extrabold text-xl tracking-wider pr-2 ${isPast && 'text-stone-500'}`}>{ formatDate(reservationDateTime) }</p>
 
                 <div className="font-bold text-xs tracking-wider px-2">
                     {parsedServices.map(service => (
