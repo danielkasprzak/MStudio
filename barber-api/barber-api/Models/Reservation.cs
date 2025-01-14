@@ -12,5 +12,6 @@ namespace barber_api.Models
         public DateTime ReservationDateTime { get; set; }
         public required string Phone { get; set; }
         public required decimal Price { get; set; }
+        public required bool IsCancelled { get; set; }
     }
 }

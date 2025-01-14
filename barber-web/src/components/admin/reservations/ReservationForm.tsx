@@ -50,7 +50,7 @@ export default ({ children, inputData, onSubmit }: Props) => {
 
     return (
         <form onSubmit={handleSubmit} className='font-lato flex flex-col'>
-            <FormInput name='reservationDateTime' defaultVal={reservationDateTime} required onChange={(e) => setReservationDateTime(e.target.value)} type='datetime-local' placeholder='Reservation Date and Time'/> : <h1 className='font-cormorant text-charcoal font-medium text-md text-center'>{formatDate(reservationDateTime)}</h1>
+            <FormInput name='reservationDateTime' defaultVal={reservationDateTime} required onChange={(e) => setReservationDateTime(e.target.value)} type='datetime-local' placeholder='Reservation Date and Time'/>
             <FormInput name='email' defaultVal={email} required onChange={(e) => setEmail(e.target.value)} type='email' placeholder='Email'/>
             <FormInput name='services' defaultVal={services} required onChange={(e) => setServices(e.target.value)} type='text' placeholder='Services'/>
             <FormInput name='duration' defaultVal={duration} required onChange={(e) => setDuration(e.target.value)} type='number' placeholder='Duration'/>

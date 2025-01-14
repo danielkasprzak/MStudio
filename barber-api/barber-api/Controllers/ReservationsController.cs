@@ -159,6 +159,29 @@ namespace barber_api.Controllers
             }
         }
 
+        // PUT: /reservation/cancel/{id}
+        [HttpPut("cancel/{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Cancel(string id)
+        {
+            var existingReservation = await _reservationService.GetReservationByIdAsync(id);
+            if (existingReservation == null)
+            {
+                return NotFound("Reservation not found.");
+            }
+
+            try
+            {
+                await _reservationService.CancelReservationAsync(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error cancelling reservation");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         // DELETE: /reservation/{id}
         [HttpDelete("{id}")]
         [Authorize]

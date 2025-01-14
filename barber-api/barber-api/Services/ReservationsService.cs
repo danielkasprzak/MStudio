@@ -120,6 +120,16 @@ namespace barber_api.Services
                 .Where(r => r.Email == email)
                 .ToListAsync();
         }
+
+        public async Task CancelReservationAsync(string reservationId)
+        {
+            var reservation = await _context.Reservations.FindAsync(reservationId);
+            if (reservation != null)
+            {
+                reservation.IsCancelled = true;
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }
 
