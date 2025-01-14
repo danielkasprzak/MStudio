@@ -89,7 +89,7 @@ namespace barber_api.Services
                     var startTime = date.Add(openingHour.OpenHour);
                     var endTime = date.Add(openingHour.CloseHour);
 
-                    for (var time = startTime; time < endTime; time = time.AddMinutes(30))
+                    for (var time = startTime; time <= endTime.AddMinutes(-duration); time = time.AddMinutes(30))
                     {
                         if (!reservations.Any(r => r.ReservationDateTime < time.AddMinutes(duration) && r.ReservationDateTime.AddMinutes(r.Duration) > time))
                         {
