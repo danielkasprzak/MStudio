@@ -1,5 +1,5 @@
 import { useAppSelector } from '../../../store/hooks';
-import SelectedOffer from '../SelectedOffer';
+import SelectedOffer from './SelectedOffer';
 
 interface Props {
     isActive: boolean;

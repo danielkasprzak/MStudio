@@ -1,5 +1,5 @@
-import { basketActions } from "../../store/basket-slice";
-import { useAppDispatch } from "../../store/hooks";
+import { basketActions } from "../../../store/basket-slice";
+import { useAppDispatch } from "../../../store/hooks";
 
 interface SelectedOfferProps {
     id: number;
