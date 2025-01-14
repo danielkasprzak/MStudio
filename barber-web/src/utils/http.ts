@@ -184,7 +184,9 @@ interface ReservationsFetch {
 }
 
 export async function fetchReservations({ startDate, endDate }: ReservationsFetch) {
-    const { data } = await axiosInstance.get(`https://localhost:7190/reservation?startDate=${startDate}&endDate=${endDate}`);
+    const startDateTime = `${startDate}T00:00:00`;
+    const endDateTime = `${endDate}T23:59:59`;
+    const { data } = await axiosInstance.get(`https://localhost:7190/reservation?startDate=${startDateTime}&endDate=${endDateTime}`);
     return data;
 };
 
