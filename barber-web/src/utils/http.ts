@@ -193,6 +193,11 @@ export async function fetchReservations({ startDate, endDate }: ReservationsFetc
     return data;
 };
 
+export async function fetchMyReservations() {
+    const { data } = await axiosInstance.get('https://localhost:7190/reservation/my');
+    return data;
+};
+
 interface Reservation {
     reservationId: string;
     email: string;

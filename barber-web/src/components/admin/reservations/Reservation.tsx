@@ -49,8 +49,6 @@ export default ({ reservationId, email, services, duration, reservationDateTime,
                 <p className="font-bold text-xs tracking-wider px-2">{ duration }MIN</p>
                 <p className="font-extrabold text-sm tracking-wider px-2">{ price }PLN</p>
             </div>
-            
-
         </li>
     )
 }

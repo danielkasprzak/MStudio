@@ -40,6 +40,21 @@ namespace barber_api.Controllers
             return Ok(reservations);
         }
 
+        // GET: /reservation/my
+        [HttpGet("my")]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<Reservation>>> GetByEmail()
+        {
+            var email = _authorizationService.GetEmailFromToken();
+            if (string.IsNullOrEmpty(email))
+            {
+                return Unauthorized("User is not authenticated.");
+            }
+
+            var reservations = await _reservationService.GetReservationsByEmailAsync(email);
+            return Ok(reservations);
+        }
+
         // GET: /reservation/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<Reservation>> GetById(string id)

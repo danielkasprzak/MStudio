@@ -113,6 +113,13 @@ namespace barber_api.Services
 
             return availableTimeSlots;
         }
+
+        public async Task<IEnumerable<Reservation>> GetReservationsByEmailAsync(string email)
+        {
+            return await _context.Reservations
+                .Where(r => r.Email == email)
+                .ToListAsync();
+        }
     }
 }
 
