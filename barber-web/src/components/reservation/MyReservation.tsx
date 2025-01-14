@@ -4,6 +4,7 @@ interface OfferProps {
     price: number;
     time: number;
     date: string;
+    isCancelled: boolean;
 }
 
 export default ({ id, title, price, time, date } : OfferProps) => {

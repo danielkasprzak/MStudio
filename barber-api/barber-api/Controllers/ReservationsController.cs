@@ -23,6 +23,7 @@ namespace barber_api.Controllers
 
         // GET: /reservation/available
         [HttpGet("available")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<DateTime>>> GetAvailableTimeSlots([FromQuery] int duration)
         {
             var startDate = DateTime.Now;
@@ -34,6 +35,7 @@ namespace barber_api.Controllers
 
         // GET: /reservation
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<IEnumerable<Reservation>>> Get([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
         {
             var reservations = await _reservationService.GetReservationsAsync(startDate, endDate);
@@ -57,6 +59,7 @@ namespace barber_api.Controllers
 
         // GET: /reservation/{id}
         [HttpGet("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<Reservation>> GetById(string id)
         {
             var reservation = await _reservationService.GetReservationByIdAsync(id);
@@ -105,7 +108,7 @@ namespace barber_api.Controllers
 
         // POST: /reservation/admin
         [HttpPost("admin")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<Reservation>> AddByAdmin([FromBody] Reservation reservation)
         {
             if (reservation == null)
@@ -133,7 +136,7 @@ namespace barber_api.Controllers
 
         // PUT: /reservation/{id}
         [HttpPut("{id}")]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Update(string id, [FromBody] Reservation reservation)
         {
             if (reservation == null || id != reservation.ReservationId)
@@ -161,7 +164,7 @@ namespace barber_api.Controllers
 
         // PUT: /reservation/cancel/{id}
         [HttpPut("cancel/{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Cancel(string id)
         {
             var existingReservation = await _reservationService.GetReservationByIdAsync(id);
@@ -178,29 +181,6 @@ namespace barber_api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error cancelling reservation");
-                return StatusCode(500, "Internal server error");
-            }
-        }
-
-        // DELETE: /reservation/{id}
-        [HttpDelete("{id}")]
-        [Authorize]
-        public async Task<IActionResult> Delete(string id)
-        {
-            var existingReservation = await _reservationService.GetReservationByIdAsync(id);
-            if (existingReservation == null)
-            {
-                return NotFound("Reservation not found.");
-            }
-
-            try
-            {
-                await _reservationService.DeleteReservationAsync(id);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error deleting reservation");
                 return StatusCode(500, "Internal server error");
             }
         }

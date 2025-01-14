@@ -9,6 +9,7 @@ interface ReservationModel {
     reservationDateTime: string;
     phone: string;
     price: number;
+    isCancelled: boolean;
 }
 
 export default () => {

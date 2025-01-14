@@ -3,7 +3,7 @@ import useDocumentTitle from "../../../hooks/useDocumentTitle";
 import { useAppSelector } from "../../../store/hooks";
 
 export default () => {
-    useDocumentTitle("MStudio - rezerwacja");
+    useDocumentTitle("MStudio - dziękujemy");
 
     const totalPrice = useAppSelector((state) => state.cart.totalPrice);
     const services = useAppSelector((state) => state.cart.items);
@@ -28,7 +28,7 @@ export default () => {
                             ))}
                         </ul>
                         
-                        <p className="font-lato text-xs font-medium py-2">Cena: <span className="font-bold">{totalPrice}zł</span></p>
+                        <p className="font-lato text-xs font-medium py-2">Całkowity koszt rezerwacji: <span className="font-bold">{totalPrice}zł</span></p>
                     </>
                 }
 

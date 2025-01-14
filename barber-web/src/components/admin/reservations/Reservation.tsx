@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { formatDate } from "../../../utils/utils";
 
 interface Props {
@@ -10,6 +9,7 @@ interface Props {
     reservationDateTime: string;
     phone: string;
     price: number;
+    isCancelled: boolean;
 }
 
 interface Service {
@@ -20,7 +20,7 @@ interface Service {
     quantity: number;
 }
 
-export default ({ isPast, reservationId, email, services, duration, reservationDateTime, phone, price } : Props) => {
+export default ({ isPast, reservationId, email, services, duration, reservationDateTime, phone, price, isCancelled } : Props) => {
     let parsedServices: Service[] = [];
     
     try {
@@ -33,6 +33,7 @@ export default ({ isPast, reservationId, email, services, duration, reservationD
     return (
         <li className="border-b border-stone-300 py-2 px-4 m-4 w-full h-auto flex flex-col justify-center text-charcoal">
             <h1 className="font-extrabold text-xs font-lato uppercase">Rezerwacja</h1>
+            {isCancelled && <p className="font-bold text-xs tracking-wider text-stone-500">ANULOWANA</p>}
             <div className="flex flex-row items-center">
                 <p className="font-extrabold text-sm tracking-wider text-stone-400">{ reservationId }</p>
                 <p className="px-2 font-bold text-xs tracking-wider text-stone-500"> { email } </p>

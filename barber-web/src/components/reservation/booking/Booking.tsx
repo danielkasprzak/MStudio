@@ -20,6 +20,7 @@ interface ReservationModel {
     reservationDateTime: string;
     phone: string;
     price: number;
+    isCancelled: boolean;
 }
 
 export default () => {
@@ -75,7 +76,8 @@ export default () => {
             duration: totalDuration,
             reservationDateTime: activeSlot,
             phone: "123456789", // TODO: get from user
-            price: totalPrice
+            price: totalPrice,
+            isCancelled: false
         };
 
         mutate(newReservation);

@@ -13,6 +13,7 @@ interface NewReservation {
     reservationDateTime: string;
     phone: string;
     price: number;
+    isCancelled: boolean;
 }
 
 export default () => {
@@ -60,6 +61,7 @@ export const action: ActionFunction = async ({ request }) => {
         reservationDateTime: formData.get('reservationDateTime') as string,
         phone: formData.get('phone') as string,
         price: Number(formData.get('price')),
+        isCancelled: false
     };
 
     await bookNewReservationAsAdmin(newReservation);  

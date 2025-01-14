@@ -1,5 +1,6 @@
 using barber_api.Models;
 using barber_api.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,6 +36,7 @@ namespace barber_api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> AddSpecialOpeningHour(SpecialOpeningHour specialOpeningHour)
         {
             await _service.AddSpecialOpeningHourAsync(specialOpeningHour);
@@ -42,6 +44,7 @@ namespace barber_api.Controllers
         }
 
         [HttpPut("{date}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateSpecialOpeningHour(DateTime date, SpecialOpeningHour specialOpeningHour)
         {
             try { 
@@ -56,6 +59,7 @@ namespace barber_api.Controllers
         }
 
         [HttpDelete("{date}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteSpecialOpeningHour(DateTime date)
         {
             try

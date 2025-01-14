@@ -206,6 +206,7 @@ interface Reservation {
     reservationDateTime: string;
     phone: string;
     price: number;
+    isCancelled: boolean;
 }
 
 export async function bookNewReservation(newReservation: Reservation) {
@@ -215,5 +216,10 @@ export async function bookNewReservation(newReservation: Reservation) {
 
 export async function bookNewReservationAsAdmin(newReservation: Reservation) {
     const { data } = await axiosInstance.post('https://localhost:7190/reservation/admin', newReservation);
+    return data;
+}
+
+export async function cancelReservation({ id }: { id: string }) {
+    const { data } = await axiosInstance.post(`https://localhost:7190/reservation/cancel/${id}`);
     return data;
 }

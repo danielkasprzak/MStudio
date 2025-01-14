@@ -1,7 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
-import { queryClient, fetchReservations } from '../../../utils/http';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { queryClient, fetchReservations, cancelReservation } from '../../../utils/http';
 import { getTodayDate } from '../../../utils/utils';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 import Title from '../Title';
 import SmallButton from '../SmallButton';
@@ -17,13 +17,14 @@ interface ReservationModel {
     reservationDateTime: string;
     phone: string;
     price: number;
+    isCancelled: boolean;
 }
 
 export default () => {
+    const navigate = useNavigate();
+
     const [startDate, setStartDate] = useState(getTodayDate());
     const [endDate, setEndDate] = useState(getTodayDate());
-
-
 
     const { data = [], error } = useQuery<ReservationModel[]>({
         queryKey: ['fetchedReservations', { startDate, endDate }],
@@ -31,6 +32,18 @@ export default () => {
     });
 
     if (error) return <div>Error loading offers</div>;
+
+    const { mutate, isPending } = useMutation({
+        mutationFn: cancelReservation,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['fetchedReservations'] });
+            // navigate('/admin/specjalne-godziny-otwarcia');
+        }
+    });
+    
+    function handleCancelClick(id: string) {
+        mutate({ id });
+    }    
 
     const now = new Date();
 
@@ -63,14 +76,13 @@ export default () => {
                                         reservationDateTime={reservation.reservationDateTime}
                                         phone={reservation.phone}
                                         price={reservation.price}
+                                        isCancelled={reservation.isCancelled}
                                     />
                                     <div className='flex flex-row'>
                                         <SmallButton>
                                             <Link to={`${reservation.reservationId}`}>Edytuj</Link>
                                         </SmallButton>
-                                        <SmallButton>
-                                            <Link to={`${reservation.reservationId}`}>Anuluj</Link>
-                                        </SmallButton>
+                                        {isPending ? <div>Trwa anulowanie...</div> : <SmallButton onClick={() => handleCancelClick(reservation.reservationId)}>Anuluj</SmallButton>}
                                     </div>
                                 </div>
                             );
