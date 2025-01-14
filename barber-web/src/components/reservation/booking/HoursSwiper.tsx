@@ -15,7 +15,7 @@ export default ({ onSlotSelect, slots }: Props) => {
     const swiperRef = useRef<SwiperType>();
 
     return (
-        <div className="flex flex-row justify-center">
+        <div className="py-4 flex flex-row items-center">
             <button onClick={() => swiperRef.current?.slidePrev()} className="z-10 p-2 text-charcoal">
                 <ChevronLeft size={32} strokeWidth={0.5} />
             </button>
@@ -23,15 +23,15 @@ export default ({ onSlotSelect, slots }: Props) => {
             <div className="w-[20rem]">
                 <Swiper
                     onBeforeInit={(swiper) => swiperRef.current = swiper}                         
-                    slidesPerView={5}
-                    spaceBetween={1}
+                    slidesPerView={4}
+                    spaceBetween={4}
                 >
                     {slots.map((slot) => (
-                        <SwiperSlide key={slot} className="!m-2">
+                        <SwiperSlide key={slot}>
                             <motion.button
                                 whileHover={{ backgroundColor: "#f5f5f4" }}
                                 onClick={() => onSlotSelect(slot)}
-                                className="m-1 p-2 w-full border border-stone-300 text-charcoal uppercase font-bold text-xs tracking-wider font-lato"
+                                className="m-1 py-2 px-4 border border-stone-300 text-charcoal uppercase font-bold text-xs tracking-wider font-lato"
                             >
                                 {new Date(slot).toLocaleTimeString([], { 
                                     hour: '2-digit', 
