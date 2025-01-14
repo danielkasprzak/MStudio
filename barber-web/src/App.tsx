@@ -3,7 +3,6 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from './utils/http';
 import { lazy } from 'react';
 
-import Error from './components/Error';
 import { protectedLoader, adminLoader } from './utils/http';
 import MyReservations, { loader as myReservationsLoader } from './components/reservation/MyReservations';
 import Offers, { loader as offersLoader } from './components/reservation/Offers';
@@ -18,12 +17,13 @@ import SpecialOpeningHourEdit, { loader as specialOpeningHourEditLoader, action 
 import Booking, { loader as bookingLoader } from './components/reservation/booking/Booking';
 import Reservations, { loader as reservationsLoader } from './components/admin/reservations/Reservations';
 import ReservationNew, { action as reservationNewAction } from './components/admin/reservations/ReservationNew';
-import ThankYouPage from './components/reservation/booking/ThankYouPage';
 
 const Landing = lazy(() => import('./components/landing/Landing'));
 const Login = lazy(() => import('./components/auth/Login'));
 const Admin = lazy(() => import('./components/admin/Admin'));
 const Reservation = lazy(() => import('./components/reservation/Reservation'));
+const ThankYouPage = lazy(() => import('./components/reservation/booking/ThankYouPage'));
+const Error = lazy(() => import('./components/Error'));
 
 const router = createBrowserRouter([
   { index: true, element: <Landing />, errorElement: <Error /> },
