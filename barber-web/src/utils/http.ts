@@ -187,6 +187,9 @@ export async function fetchReservations({ startDate, endDate }: ReservationsFetc
     const startDateTime = `${startDate}T00:00:00`;
     const endDateTime = `${endDate}T23:59:59`;
     const { data } = await axiosInstance.get(`https://localhost:7190/reservation?startDate=${startDateTime}&endDate=${endDateTime}`);
+    
+    data.sort((a: Reservation, b: Reservation) => new Date(a.reservationDateTime).getTime() - new Date(b.reservationDateTime).getTime());
+    
     return data;
 };
 
