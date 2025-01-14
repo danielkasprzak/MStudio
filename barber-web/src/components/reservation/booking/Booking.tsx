@@ -8,6 +8,7 @@ import useDocumentTitle from '../../../hooks/useDocumentTitle';
 import { motion } from 'motion/react';
 
 import DatesSwiper from './DatesSwiper';
+import HoursSwiper from './HoursSwiper';
 
 type AvailabilityModel = string;
 
@@ -16,6 +17,7 @@ export default () => {
 
     const totalDuration = useAppSelector((state) => state.cart.totalDuration);
     const [activeDate, setActiveDate] = useState<string | null>(null);
+    const [activeSlot, setActiveSlot] = useState<string | null>(null);
 
     const { data = [], error } = useQuery<AvailabilityModel[]>({
         queryKey: ['availableSlots', totalDuration],
@@ -39,6 +41,10 @@ export default () => {
         setActiveDate((prevDate) => prevDate === newDate ? null : newDate);
     }
 
+    function handleActiveSlot(newSlot: string) {
+        setActiveSlot((prevSlot) => prevSlot === newSlot ? null : newSlot);
+    }
+
     return (
         <div className='w-screen h-screen bg-stone-100 flex justify-center items-center'>
             <div className='p-16 bg-white border border-stone-300 text-charcoal flex flex-col justify-center items-center'>
@@ -47,13 +53,7 @@ export default () => {
                 <DatesSwiper setActiveDate={handleActiveDate} dates={dates} />
 
                 {activeDate && (
-                    <ul className="flex flex-row p-8">
-                        {groupedSlots[activeDate].map((slot) => (
-                            <motion.li key={slot} whileHover={{ backgroundColor: "#f5f5f4", cursor: "pointer" }} className='m-1 p-2 border border-stone-300 text-charcoal uppercase font-bold text-xs tracking-wider font-lato'>
-                                {new Date(slot).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                            </motion.li>
-                        ))}
-                    </ul>
+                    <HoursSwiper onSlotSelect={handleActiveSlot} slots={groupedSlots[activeDate]} />
                 )}
             </div>
         </div>

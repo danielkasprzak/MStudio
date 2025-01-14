@@ -2,16 +2,18 @@ import { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Swiper as SwiperType } from 'swiper';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion } from 'motion/react';
+
 import { formatDateOnlyDay, formatDateShortMonth } from '../../../utils/utils';
 
 import 'swiper/swiper-bundle.css';
 
 interface Props {
-    setActiveDate: (date: string) => void;
-    dates: string[];
+    onSlotSelect: (slot: string) => void;
+    slots: string[];
 }
 
-export default ({ setActiveDate, dates }: Props) => {
+export default ({ onSlotSelect, slots }: Props) => {
     const swiperRef = useRef<SwiperType>();
 
     return (
@@ -22,23 +24,22 @@ export default ({ setActiveDate, dates }: Props) => {
 
             <div className="w-[20rem]">
                 <Swiper
-                    onBeforeInit={(swiper) => swiperRef.current = swiper}                          
+                    onBeforeInit={(swiper) => swiperRef.current = swiper}                         
                     slidesPerView={5}
                     spaceBetween={1}
                 >
-                    {dates.map((date) => (
-                        <SwiperSlide key={date} className="!m-2">
-                            <button 
-                                onClick={() => setActiveDate(date)}
-                                className={`p-4 border-b border-stone-300 flex flex-col items-center justify-center`}
+                    {slots.map((slot) => (
+                        <SwiperSlide key={slot} className="!m-2">
+                            <motion.button
+                                whileHover={{ backgroundColor: "#f5f5f4" }}
+                                onClick={() => onSlotSelect(slot)}
+                                className="m-1 p-2 w-full border border-stone-300 text-charcoal uppercase font-bold text-xs tracking-wider font-lato"
                             >
-                                <div className='uppercase font-bold text-lg tracking-wider font-lato'>
-                                    {formatDateOnlyDay(date)}
-                                </div>
-                                <div className='uppercase font-bold text-xs tracking-wider font-lato'>
-                                    {formatDateShortMonth(date)}
-                                </div>
-                            </button>
+                                {new Date(slot).toLocaleTimeString([], { 
+                                    hour: '2-digit', 
+                                    minute: '2-digit' 
+                                })}
+                            </motion.button>
                         </SwiperSlide>
                     ))}
                 </Swiper>
