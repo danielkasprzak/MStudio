@@ -232,6 +232,20 @@ public class AuthService
             context.Response.Cookies.Append("MSRTOKEN", "", expiredCookieOptions);
         }
     }
+
+    public string GetEmailFromToken()
+    {
+        var token = _httpContextAccessor.HttpContext.Request.Cookies["MSTOKEN"];
+        if (string.IsNullOrEmpty(token))
+        {
+            return null;
+        }
+
+        var handler = new JwtSecurityTokenHandler();
+        var jwtToken = handler.ReadJwtToken(token);
+        var emailClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Email);
+        return emailClaim?.Value;
+    }
 }
 
 public class GoogleTokenResponse

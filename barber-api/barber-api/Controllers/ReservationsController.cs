@@ -10,11 +10,13 @@ namespace barber_api.Controllers
     public class ReservationsController : Controller
     {
         private readonly ReservationsService _reservationService;
+        private readonly AuthService _authorizationService;
         private readonly ILogger<ReservationsController> _logger;
 
-        public ReservationsController(ReservationsService reservationService, ILogger<ReservationsController> logger)
+        public ReservationsController(ReservationsService reservationService, AuthService authorizationService, ILogger<ReservationsController> logger)
         {
             _reservationService = reservationService;
+            _authorizationService = authorizationService;
             _logger = logger;
         }
 
@@ -59,6 +61,14 @@ namespace barber_api.Controllers
             {
                 return BadRequest("Invalid reservation data.");
             }
+
+            var email = _authorizationService.GetEmailFromToken();
+            if (string.IsNullOrEmpty(email))
+            {
+                return Unauthorized("User is not authenticated.");
+            }
+
+            reservation.Email = email;
 
             var isAvailable = await _reservationService.IsTimeSlotAvailableAsync(reservation.ReservationDateTime, reservation.Duration);
             if (!isAvailable)

@@ -46,8 +46,6 @@ export default () => {
 
     const dates = Object.keys(groupedSlots);
 
-
-
     const { mutate, isPending } = useMutation({
         mutationFn: bookNewReservation,
         onSuccess: () => {
@@ -62,7 +60,7 @@ export default () => {
 
         const newReservation: ReservationModel = {
             reservationId: generateReservationId(),
-            email: "przykladowymail@mail.com", // TODO: get from auth
+            email: "email@mail.com", // TODO: get from auth
             services: JSON.stringify(services),
             duration: totalDuration,
             reservationDateTime: activeSlot,
