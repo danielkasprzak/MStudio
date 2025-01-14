@@ -20,7 +20,7 @@ export default () => {
     }
 
     return (
-        <div className='sticky right-0 top-16 w-fit h-full bg-white m-16 ml-8 text-charcoal p-8'>
+        <div className='sticky right-0 top-16 w-fit h-full bg-white m-16 ml-8 text-charcoal p-8 border border-stone-300'>
             <Title padding='8'>Dodaj ofertę</Title>
 
             <OfferForm inputData={{ label: '', price: 0, duration: 0, description: '' }} onSubmit={handleSubmit}>

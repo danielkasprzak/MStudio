@@ -46,7 +46,7 @@ const router = createBrowserRouter([
       { path: 'oferty', element: <OffersManage />,
         loader: offersManageLoader,
         children: [
-          { path: 'nowa', element: <OfferNew />, action: offersNewAction },
+          { path: 'dodaj', element: <OfferNew />, action: offersNewAction },
           { path: ':id', element: <OfferEdit />, loader: offersEditLoader, action: offersEditAction }
         ]
       },

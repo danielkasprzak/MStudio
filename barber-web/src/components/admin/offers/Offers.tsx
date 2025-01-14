@@ -38,8 +38,13 @@ export default () => {
 
     return (
         <div className='flex flex-row justify-center'>
-            <div className='relative w-fit h-full bg-white m-16 mr-8 text-charcoal font-lato p-8'>
-                <Title padding='8'>Oferta</Title>
+            <div className='relative w-fit h-full bg-white m-16 mr-8 text-charcoal font-lato p-8 border border-stone-300'>
+                <div className='flex flex-row'>
+                    <Title padding='8'>Oferta</Title>
+                    <SmallButton>
+                        <Link to={`dodaj`}>Dodaj</Link>
+                    </SmallButton>
+                </div>
             
                 <div className='relative w-auto p-16 pt-8 h-full text-charcoal font-lato'>
                     <ul className='h-fit w-fit'>
@@ -54,7 +59,6 @@ export default () => {
                                 </div>
                             </div>
                         ))}
-                        <SmallButton><Link to={`nowa`}>Dodaj</Link></SmallButton>
                     </ul>
                 </div>
             </div>
