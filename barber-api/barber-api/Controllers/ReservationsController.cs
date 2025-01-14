@@ -103,6 +103,34 @@ namespace barber_api.Controllers
             }
         }
 
+        // POST: /reservation/admin
+        [HttpPost("admin")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<Reservation>> AddByAdmin([FromBody] Reservation reservation)
+        {
+            if (reservation == null)
+            {
+                return BadRequest("Invalid reservation data.");
+            }
+
+            var isAvailable = await _reservationService.IsTimeSlotAvailableAsync(reservation.ReservationDateTime, reservation.Duration);
+            if (!isAvailable)
+            {
+                return Conflict("The time slot is not available.");
+            }
+
+            try
+            {
+                await _reservationService.AddReservationAsync(reservation);
+                return CreatedAtAction(nameof(GetById), new { id = reservation.ReservationId }, reservation);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error adding reservation");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         // PUT: /reservation/{id}
         [HttpPut("{id}")]
         [Authorize]
