@@ -182,3 +182,17 @@ export async function fetchReservations() {
     const { data } = await axiosInstance.get('https://localhost:7190/reservation');
     return data;
 };
+
+interface Reservation {
+    reservationId: string;
+    email: string;
+    services: string;
+    duration: number;
+    reservationDateTime: string;
+    phone: string;
+}
+
+export async function bookNewReservation(newReservation: Reservation) {
+    const { data } = await axiosInstance.post('https://localhost:7190/reservation', newReservation);
+    return data;
+}

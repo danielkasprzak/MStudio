@@ -33,3 +33,11 @@ export const formatDateWeekday = (dateString: string) => {
     const weekday = date.toLocaleDateString('pl-PL', { weekday: 'short' });
     return weekday.endsWith('.') ? weekday.slice(0, -1) : weekday;
 };
+
+export const generateReservationId = () => {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    return Array.from(
+        { length: 8 }, 
+        () => chars.charAt(Math.floor(Math.random() * chars.length))
+    ).join('');
+};

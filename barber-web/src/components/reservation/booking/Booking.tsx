@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { queryClient, fetchAvailableSlots } from '../../../utils/http';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { generateReservationId } from '../../../utils/utils';
+import { queryClient, fetchAvailableSlots, bookNewReservation } from '../../../utils/http';
 import store from '../../../store/index';
 import { useAppSelector } from '../../../store/hooks';
 import useDocumentTitle from '../../../hooks/useDocumentTitle';
@@ -10,10 +11,20 @@ import HoursSwiper from './HoursSwiper';
 
 type AvailabilityModel = string;
 
+interface ReservationModel {
+    reservationId: string;
+    email: string;
+    services: string;
+    duration: number;
+    reservationDateTime: string;
+    phone: string;
+}
+
 export default () => {
     useDocumentTitle("MStudio - rezerwacja");
 
     const totalDuration = useAppSelector((state) => state.cart.totalDuration);
+    const services = useAppSelector((state) => state.cart.items);
     const [activeDate, setActiveDate] = useState<string | null>(null);
     const [activeSlot, setActiveSlot] = useState<string | null>(null);
 
@@ -35,12 +46,38 @@ export default () => {
 
     const dates = Object.keys(groupedSlots);
 
+
+
+    const { mutate, isPending } = useMutation({
+        mutationFn: bookNewReservation,
+        onSuccess: () => {
+            setActiveDate(null);
+            setActiveSlot(null);
+            queryClient.invalidateQueries({ queryKey: ['availableSlots', totalDuration] });
+        }
+    });
+    
+    function handleBooking() {
+        if (!activeDate || !activeSlot || !totalDuration || totalDuration <= 0 || !services) return;
+
+        const newReservation: ReservationModel = {
+            reservationId: generateReservationId(),
+            email: "przykladowymail@mail.com", // TODO: get from auth
+            services: JSON.stringify(services),
+            duration: totalDuration,
+            reservationDateTime: activeSlot,
+            phone: "123456789" // TODO: get from user
+        };
+
+        mutate(newReservation);
+    }    
+
     function handleActiveDate(newDate: string) {
-        setActiveDate((prevDate) => prevDate === newDate ? null : newDate);
+        setActiveDate(newDate);
     }
 
     function handleActiveSlot(newSlot: string) {
-        setActiveSlot((prevSlot) => prevSlot === newSlot ? null : newSlot);
+        setActiveSlot(newSlot);
     }
 
     return (
@@ -53,6 +90,10 @@ export default () => {
                 {activeDate && (
                     <HoursSwiper onSlotSelect={handleActiveSlot} slots={groupedSlots[activeDate]} />
                 )}
+
+                {activeDate} {activeSlot}
+
+                {isPending ? <div>Rezerwowanie...</div> : <button onClick={handleBooking} className="w-full uppercase font-bold text-xs tracking-wider font-lato border text-charcoal border-stone-300 px-4 py-2 flex flex-row justify-center items-center">Zarezerwuj</button>}
             </div>
         </div>
     )
