@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { queryClient, fetchAvailableSlots } from '../../../utils/http';
 import store from '../../../store/index';
@@ -7,10 +7,11 @@ import { formatDateShortMonth, formatDateOnlyDay } from '../../../utils/utils';
 import useDocumentTitle from '../../../hooks/useDocumentTitle';
 import { motion } from 'motion/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper as SwiperType } from 'swiper';
 import { Navigation } from 'swiper/modules';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-import 'swiper/swiper.min.css'
-import 'swiper/modules/navigation/navigation.min.css';
+import 'swiper/swiper-bundle.css';
 
 type AvailabilityModel = string;
 
@@ -36,40 +37,58 @@ export default () => {
         return acc;
     }, {} as Record<string, string[]>);
 
+    const swiperRef = useRef<SwiperType>();
+
     const dates = Object.keys(groupedSlots);
 
     return (
         <div className='w-screen h-screen bg-stone-100 flex justify-center items-center'>
-            <div className='p-16 bg-white border border-stone-300 text-charcoal flex flex-row justify-center items-center'>
+            <div className='p-16 bg-white border border-stone-300 text-charcoal flex flex-col justify-center items-center'>
                 <h1 className="font-cormorant text-xl font-medium uppercase pb-8">REZERWACJA WIZYTY</h1>
-                <div className="w-60">
-                    <Swiper
-                        modules={[Navigation]}
-                        navigation
-                        slidesPerView={5}
-                        spaceBetween={8}
-                        className="!px-2"
-                    >
-                        {dates.map((date) => (
-                            <SwiperSlide key={date} className="!w-[112px]">
-                                <button 
-                                    onClick={() => setActiveDate(date)}
-                                    className={`
-                                        p-3 border-b border-stone-300
-                                        flex flex-col items-center justify-center
-                                        transition-colors duration-200`}
-                                >
-                                    <div className='uppercase font-bold text-lg tracking-wider font-lato'>
-                                        {formatDateOnlyDay(date)}
-                                    </div>
-                                    <div className='uppercase font-bold text-xs tracking-wider font-lato'>
-                                        {formatDateShortMonth(date)}
-                                    </div>
-                                </button>
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
+
+                <div className="flex flex-row justify-center">
+                    <button onClick={() => swiperRef.current?.slidePrev()} className="z-10 p-2 text-charcoal">
+                        <ChevronLeft size={32} strokeWidth={0.5} />
+                    </button>
+
+                    <div className="w-[20rem]">
+                        <Swiper
+                            modules={[Navigation]}
+                            onBeforeInit={(swiper) => swiperRef.current = swiper}
+                            navigation={{
+                                prevEl: '.swiper-button-prev',
+                                nextEl: '.swiper-button-next'
+                            }}                            
+                            slidesPerView={5}
+                            spaceBetween={1}
+                        >
+                            {dates.map((date) => (
+                                <SwiperSlide key={date} className="!m-2">
+                                    <button 
+                                        onClick={() => setActiveDate(date)}
+                                        className={`
+                                            p-3 border-b border-stone-300
+                                            flex flex-col items-center justify-center
+                                            `}
+                                    >
+                                        <div className='uppercase font-bold text-lg tracking-wider font-lato'>
+                                            {formatDateOnlyDay(date)}
+                                        </div>
+                                        <div className='uppercase font-bold text-xs tracking-wider font-lato'>
+                                            {formatDateShortMonth(date)}
+                                        </div>
+                                    </button>
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                    </div>
+
+                    <button onClick={() => swiperRef.current?.slideNext()} className="z-10 p-2 text-charcoal">
+                        <ChevronRight size={32} strokeWidth={0.5} />
+                    </button>
+
                 </div>
+
 
                 {activeDate && (
                     <ul className="flex flex-row p-8">
