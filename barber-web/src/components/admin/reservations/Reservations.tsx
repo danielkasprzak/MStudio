@@ -37,7 +37,12 @@ export default () => {
     return (
         <div className='flex flex-row justify-center'>
             <div className='relative w-fit h-full border border-stone-300 bg-white m-16 mr-8 text-charcoal font-lato p-8'>
-                <Title padding='8'>Rezerwacje</Title>
+                <div className='flex flex-row'>
+                    <Title padding='8'>Rezerwacje</Title>
+                    <SmallButton>
+                        <Link to={`dodaj`}>Dodaj</Link>
+                    </SmallButton>
+                </div>
             
                 <FormInput name='startDate' defaultVal={startDate} required onChange={(e) => setStartDate(e.target.value)} type='date' placeholder='Data rozpoczęcia'/>
                 <FormInput name='endDate' defaultVal={endDate} required onChange={(e) => setEndDate(e.target.value)} type='date' placeholder='Data zakończenia'/>
@@ -62,6 +67,9 @@ export default () => {
                                     <div className='flex flex-row'>
                                         <SmallButton>
                                             <Link to={`${reservation.reservationId}`}>Edytuj</Link>
+                                        </SmallButton>
+                                        <SmallButton>
+                                            <Link to={`${reservation.reservationId}`}>Anuluj</Link>
                                         </SmallButton>
                                     </div>
                                 </div>
