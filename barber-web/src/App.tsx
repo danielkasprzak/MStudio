@@ -17,6 +17,7 @@ import SpecialOpeningHourNew, { action as specialOpeningHourNewAction } from './
 import SpecialOpeningHourEdit, { loader as specialOpeningHourEditLoader, action as specialOpeningHourEditAction } from './components/admin/special-opening-hours/SpecialOpeningHourEdit';
 import Booking, { loader as bookingLoader } from './components/reservation/booking/Booking';
 import Reservations, { loader as reservationsLoader } from './components/admin/reservations/Reservations';
+import ThankYouPage from './components/reservation/booking/ThankYouPage';
 
 const Landing = lazy(() => import('./components/landing/Landing'));
 const Login = lazy(() => import('./components/auth/Login'));
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
     ]
   },
   { path: 'rezerwuj', element: <Booking />, loader: bookingLoader },
+  { path: 'dziekujemy', element: <ThankYouPage />},
   { path: 'admin', element: <Admin />, errorElement: <Error />, loader: adminLoader,
     children: [
       { path: 'rezerwacje', element: <Reservations />, loader: reservationsLoader },
