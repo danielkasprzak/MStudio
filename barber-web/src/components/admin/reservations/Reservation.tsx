@@ -30,21 +30,24 @@ export default ({ reservationId, email, services, duration, reservationDateTime,
     }
 
     return (
-        <li className="border-b border-stone-300 p-8 m-4 w-full h-auto flex flex-col justify-center text-charcoal">
-            <p className="font-black text-xs tracking-wider text-stone-400">{ reservationId }<span className="font-bold"> { email } </span></p>
-            <div className="flex flex-row">
-                <p className="font-bold text-xs tracking-wider p-4">{ formatDate(reservationDateTime) }</p>
+        <li className="border-b border-stone-300 py-2 px-4 m-4 w-full h-auto flex flex-col justify-center text-charcoal">
+            <h1 className="font-extrabold text-xs font-lato uppercase">Rezerwacja</h1>
+            <div className="flex flex-row items-center">
+                <p className="font-extrabold text-sm tracking-wider text-stone-400">{ reservationId }</p>
+                <p className="px-2 font-bold text-xs tracking-wider text-stone-500"> { email } </p>
+                <p className="font-bold text-xs tracking-wider text-stone-500">{ phone }</p>
+            </div>
+            <div className="flex flex-row items-center py-4">
+                <p className="font-extrabold text-xl tracking-wider pr-2">{ formatDate(reservationDateTime) }</p>
 
-                <div className="font-bold text-xs tracking-wider p-4">
+                <div className="font-bold text-xs tracking-wider px-2">
                     {parsedServices.map(service => (
                         <div key={service.id}>{service.label}</div>
                     ))}
                 </div>
 
-                <p className="font-bold text-xs tracking-wider p-4">{ duration }MIN</p>
-                <p className="font-bold text-xs tracking-wider p-4">{ price }PLN</p>
-                <p className="font-bold text-xs tracking-wider p-4">{ phone }</p>
-
+                <p className="font-bold text-xs tracking-wider px-2">{ duration }MIN</p>
+                <p className="font-extrabold text-sm tracking-wider px-2">{ price }PLN</p>
             </div>
             
 

@@ -178,8 +178,13 @@ export async function fetchAvailableSlots(duration: number) {
     return data;
 };
 
-export async function fetchReservations() {
-    const { data } = await axiosInstance.get('https://localhost:7190/reservation');
+interface ReservationsFetch {
+    startDate: string;
+    endDate: string;
+}
+
+export async function fetchReservations({ startDate, endDate }: ReservationsFetch) {
+    const { data } = await axiosInstance.get(`https://localhost:7190/reservation?startDate=${startDate}&endDate=${endDate}`);
     return data;
 };
 

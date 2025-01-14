@@ -12,9 +12,21 @@ namespace barber_api.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<Reservation>> GetReservationsAsync()
+        public async Task<IEnumerable<Reservation>> GetReservationsAsync(DateTime? startDate = null, DateTime? endDate = null)
         {
-            return await _context.Reservations.ToListAsync();
+            var query = _context.Reservations.AsQueryable();
+
+            if (startDate.HasValue)
+            {
+                query = query.Where(r => r.ReservationDateTime >= startDate.Value);
+            }
+
+            if (endDate.HasValue)
+            {
+                query = query.Where(r => r.ReservationDateTime <= endDate.Value);
+            }
+
+            return await query.ToListAsync();
         }
 
         public async Task<Reservation> GetReservationByIdAsync(string reservationId)

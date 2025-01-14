@@ -23,7 +23,7 @@ export default () => {
     }    
 
     return (
-        <div className='sticky top-0 h-screen bg-white w-auto flex flex-col justify-between text-charcoal'>
+        <div className='sticky top-0 h-screen bg-white border-r border-stone-300 w-auto flex flex-col justify-between text-charcoal'>
             <div className="flex flex-col">
                 <Title padding='16'>MSTUDIO</Title>
 

@@ -34,9 +34,9 @@ namespace barber_api.Controllers
 
         // GET: /reservation
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Reservation>>> Get()
+        public async Task<ActionResult<IEnumerable<Reservation>>> Get([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
         {
-            var reservations = await _reservationService.GetReservationsAsync();
+            var reservations = await _reservationService.GetReservationsAsync(startDate, endDate);
             return Ok(reservations);
         }
 

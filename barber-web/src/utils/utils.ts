@@ -41,3 +41,8 @@ export const generateReservationId = () => {
         () => chars.charAt(Math.floor(Math.random() * chars.length))
     ).join('');
 };
+
+export const getTodayDate = () => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+};
