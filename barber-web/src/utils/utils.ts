@@ -27,3 +27,9 @@ export const formatDateOnlyDay = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('pl-PL', {  day: 'numeric' });
 };
+
+export const formatDateWeekday = (dateString: string) => {
+    const date = new Date(dateString);
+    const weekday = date.toLocaleDateString('pl-PL', { weekday: 'short' });
+    return weekday.endsWith('.') ? weekday.slice(0, -1) : weekday;
+};

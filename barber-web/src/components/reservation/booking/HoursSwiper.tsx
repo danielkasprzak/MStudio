@@ -4,8 +4,6 @@ import { Swiper as SwiperType } from 'swiper';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'motion/react';
 
-import { formatDateOnlyDay, formatDateShortMonth } from '../../../utils/utils';
-
 import 'swiper/swiper-bundle.css';
 
 interface Props {

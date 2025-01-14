@@ -3,9 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { queryClient, fetchAvailableSlots } from '../../../utils/http';
 import store from '../../../store/index';
 import { useAppSelector } from '../../../store/hooks';
-
 import useDocumentTitle from '../../../hooks/useDocumentTitle';
-import { motion } from 'motion/react';
 
 import DatesSwiper from './DatesSwiper';
 import HoursSwiper from './HoursSwiper';

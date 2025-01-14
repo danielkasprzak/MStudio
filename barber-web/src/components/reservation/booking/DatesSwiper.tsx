@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Swiper as SwiperType } from 'swiper';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { formatDateOnlyDay, formatDateShortMonth } from '../../../utils/utils';
+import { formatDateOnlyDay, formatDateShortMonth, formatDateWeekday } from '../../../utils/utils';
 
 import 'swiper/swiper-bundle.css';
 
@@ -24,19 +24,19 @@ export default ({ setActiveDate, dates }: Props) => {
                 <Swiper
                     onBeforeInit={(swiper) => swiperRef.current = swiper}                          
                     slidesPerView={5}
-                    spaceBetween={1}
+                    spaceBetween={4}
                 >
                     {dates.map((date) => (
-                        <SwiperSlide key={date} className="!m-2">
+                        <SwiperSlide key={date} className="!mx-6">
                             <button 
                                 onClick={() => setActiveDate(date)}
-                                className={`p-4 border-b border-stone-300 flex flex-col items-center justify-center`}
+                                className={`p-4 h-min border-b border-stone-300 flex flex-col items-center justify-center`}
                             >
-                                <div className='uppercase font-bold text-lg tracking-wider font-lato'>
-                                    {formatDateOnlyDay(date)}
+                                <div className='uppercase font-bold text-xs tracking-wider font-lato text-charcoal'>
+                                    {formatDateWeekday(date)}
                                 </div>
-                                <div className='uppercase font-bold text-xs tracking-wider font-lato'>
-                                    {formatDateShortMonth(date)}
+                                <div className='px-1 uppercase font-bold text-xs tracking-wider font-lato text-charcoal'>
+                                    {formatDateOnlyDay(date)}{formatDateShortMonth(date)}
                                 </div>
                             </button>
                         </SwiperSlide>
