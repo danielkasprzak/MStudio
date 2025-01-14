@@ -23,7 +23,7 @@ export default ({ reservationId, services, duration, reservationDateTime, price,
     const secondColor = (isCancelled || isPast) ? "text-stone-400" : "text-stone-500";
 
     return (
-        <li className={`${firstColor} mb-4 w-full font-lato border border-stone-300 flex flex-row justify-between py-4 px-6`}>
+        <li className={`${firstColor} mt-4 w-full font-lato border border-stone-300 flex flex-row justify-between py-4 px-6`}>
             <div className="flex flex-col justify-center leading-4">
                 <div className="flex flex-row items-center">
                     <h1 className="uppercase font-extrabold text-xs">{formatDate(reservationDateTime)}</h1>
