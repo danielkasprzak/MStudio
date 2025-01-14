@@ -25,7 +25,10 @@ export default ({ reservationId, services, duration, reservationDateTime, price,
     return (
         <li className={`${firstColor} mb-4 w-full font-lato border border-stone-300 flex flex-row justify-between py-4 px-6`}>
             <div className="flex flex-col justify-center leading-4">
-                <h1 className="uppercase font-extrabold text-xs">{formatDate(reservationDateTime)}</h1>
+                <div className="flex flex-row items-center">
+                    <h1 className="uppercase font-extrabold text-xs">{formatDate(reservationDateTime)}</h1>
+                    <p className="uppercase font-medium text-xs text-stone-400 px-2">{reservationId}</p>
+                </div>
                 <div className={`font-normal text-xs ${secondColor}`}>
                     {parsedServices.map((service, index) => (
                         <p key={index}>{service.label} <span className="px-2">{service.quantity} x {service.price}zł</span></p>
