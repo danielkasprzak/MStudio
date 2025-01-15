@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import FormInput from '../FormInput';
 import { generateReservationId } from '../../../utils/utils';
+import FormLabel from '../FormLabel';
 
 interface Props {
     children: React.ReactNode;
@@ -50,12 +51,23 @@ export default ({ children, inputData, onSubmit }: Props) => {
 
     return (
         <form onSubmit={handleSubmit} className='font-lato flex flex-col'>
-            <FormInput name='reservationDateTime' defaultVal={reservationDateTime} required onChange={(e) => setReservationDateTime(e.target.value)} type='datetime-local' placeholder='Reservation Date and Time'/>
-            <FormInput name='email' defaultVal={email} required onChange={(e) => setEmail(e.target.value)} type='email' placeholder='Email'/>
-            <FormInput name='services' defaultVal={services} required onChange={(e) => setServices(e.target.value)} type='text' placeholder='Services'/>
-            <FormInput name='duration' defaultVal={duration} required onChange={(e) => setDuration(e.target.value)} type='number' placeholder='Duration'/>
-            <FormInput name='phone' defaultVal={phone} required onChange={(e) => setPhone(e.target.value)} type='tel' placeholder='Phone'/>
-            <FormInput name='price' defaultVal={price} required onChange={(e) => setPrice(e.target.value)} type='number' placeholder='Price'/>
+            <FormLabel htmlFor='reservationDateTime'>Data i godzina rezerwacji:</FormLabel>
+            <FormInput name='reservationDateTime' id="reservationDateTime" defaultVal={reservationDateTime} required onChange={(e) => setReservationDateTime(e.target.value)} type='datetime-local' />
+            
+            <FormLabel htmlFor='email'>Email:</FormLabel>
+            <FormInput name='email' id="email" defaultVal={email} required onChange={(e) => setEmail(e.target.value)} type='email' placeholder='Email'/>
+            
+            <FormLabel htmlFor='services'>Services:</FormLabel>
+            <FormInput name='services' id="services" defaultVal={services} required onChange={(e) => setServices(e.target.value)} type='text' placeholder='Services'/>
+            
+            <FormLabel htmlFor='duration'>Całkowity czas trwania:</FormLabel>
+            <FormInput name='duration' id="duration" defaultVal={duration} required onChange={(e) => setDuration(e.target.value)} type='number' placeholder='Czas trwania'/>
+            
+            <FormLabel htmlFor='phone'>Telefon:</FormLabel>
+            <FormInput name='phone' id="phone" defaultVal={phone} required onChange={(e) => setPhone(e.target.value)} type='tel' placeholder='Telefon'/>
+            
+            <FormLabel htmlFor='price'>Cena całkowita:</FormLabel>
+            <FormInput name='price' id="price" defaultVal={price} required onChange={(e) => setPrice(e.target.value)} type='number' placeholder='Cena całkowita'/>
 
             {children}
         </form>
