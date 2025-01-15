@@ -1,9 +1,9 @@
-import { NavLink } from "react-router-dom";
-import { fetchUserInfo } from "../../utils/http";
+import { NavLink, useNavigate } from "react-router-dom";
+import { fetchUserInfo, logout } from "../../utils/http";
 import { motion } from "motion/react";
 
 import NavButton from "./NavButton";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import FlatButton from "../FlatButton";
 
@@ -14,13 +14,14 @@ interface UserInfo {
 }
 
 export default () => {
+    const navigate = useNavigate();
+    const [isContextVisible, setIsContextVisible] = useState(false);
+    const contextRef = useRef<HTMLDivElement>(null);
+
     const { data = [], error } = useQuery<UserInfo>({
         queryKey: ['userInfo'],
         queryFn: fetchUserInfo
     });
-
-    const [isContextVisible, setIsContextVisible] = useState(false);
-    const contextRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -34,13 +35,26 @@ export default () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
-
+    
+    const { mutate, isPending } = useMutation({
+        mutationFn: logout,
+        onSuccess: () => {
+            navigate('/login');
+        },
+        onError: (error) => {
+            console.error("Logout failed:", error);
+        }
+    });
 
     if (error) return <div>Error loading offers</div>;
 
     const handleImageClick = () => {
         setIsContextVisible((prev) => !prev);
     };
+    
+    function handleLogout() {
+        mutate();
+    }
 
     return (
         <div className='w-[46rem] h-auto py-4 flex flex-row items-center justify-between relative overflow-hidden z-40'>
@@ -64,7 +78,7 @@ export default () => {
                                 transition={{ duration: 0.2, ease: "easeInOut" }}
                             >
                                 <p className="font-lato text-xs font-medium text-charcoal pb-2">{data.email}</p>
-                                <FlatButton disabled={false} isActive={false}>Wyloguj</FlatButton>
+                                {isPending ? <div className="font-lato text-xs uppercase font-bold text-charcoal">Wylogowuje...</div> : <FlatButton onClick={handleLogout} disabled={false} isActive={false}>Wyloguj</FlatButton>}
                             </motion.div>
                         )}
                     </>
