@@ -10,9 +10,9 @@ export default ({ isActive }: Props) => {
 
 
     return (
-        <ul className="flex flex-col justify-center text-charcoal uppercase font-bold text-xs tracking-wider font-lato">
+        <ul className="flex flex-col justify-center">
             {basketItems.length === 0 ? (
-                <li>Brak</li>
+                <li className='text-charcoal uppercase font-bold text-xs tracking-wider font-lato'>Nic tu nie ma...</li>
                 ) : isActive ? (
                     basketItems.map((item) => (
                         <SelectedOffer 

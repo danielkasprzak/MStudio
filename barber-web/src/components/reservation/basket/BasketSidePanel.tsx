@@ -39,7 +39,7 @@ export default ({ isActive, onHover, activeHeight, inactiveHeight }: BasketPanel
             <Cart isActive={isActive} />
 
             <div className="flex flex-col justify-center pt-2">
-                <p className="uppercase font-bold text-xs tracking-wider font-lato text-charcoal pb-2">Do zapłaty: 
+                <p className="uppercase font-bold text-xs tracking-wider font-lato text-charcoal pb-2">Koszt rezerwacji: 
                     <Price totalPrice={totalPrice} />zł
                 </p>
 
