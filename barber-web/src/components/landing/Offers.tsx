@@ -7,6 +7,7 @@ import Button from './Button';
 
 import tempImg from '../../assets/about_img.jpg';
 import tempImg2 from '../../assets/bg_img.jpg';
+import OfferImage from './OfferImage';
 
 interface Props {
     imgRef: React.RefObject<HTMLElement>;
@@ -23,7 +24,7 @@ export default ({imgRef}:Props) => {
 
 
 
-    const { scrollYProgress } = useScroll({
+    const { scrollYProgress: offersScroll } = useScroll({
         target: sectionRef,
         offset: ["start end", "end start"]
     });
@@ -32,7 +33,7 @@ export default ({imgRef}:Props) => {
         target: imgRef,
     });
 
-    const y = useTransform(scrollYProgress, [0, 1], ["-20%", "10%"]);
+    const y = useTransform(offersScroll, [0, 1], ["-20%", "10%"]);
     const imageTranslateY = useTransform(globalScroll, [0.35, 0.5], ["-100vh", "0vh"]);
 
     const imageControls = useAnimation();
@@ -91,30 +92,11 @@ export default ({imgRef}:Props) => {
                                 clipPath: 'inset(20% 30% 20% 30%)'
                             }}
                         >
-                            <motion.div
-                                className='absolute w-full h-full inset-0 z-50'
-                                style={{
-                                    height: useTransform(scrollYProgress, [0.65, 0.75], ["100%", "0%"])
-                                }}
-                            >
-                                <motion.img 
-                                    src={tempImg}
-                                    alt={services[0].title}
-                                    className='object-cover h-full w-full max-w-full align-middle overflow-clip'
-                                />
-                            </motion.div>
-                            <motion.div
-                                className='absolute w-full h-full inset-0'
-                                style={{
-                                    height: useTransform(scrollYProgress, [0.85, 0.95], ["100%", "0%"])
-                                }}
-                            >
-                                <motion.img 
-                                    src={tempImg2}
-                                    alt={services[1].title}
-                                    className='object-cover h-full w-full max-w-full align-middle overflow-clip'
-                                />
-                            </motion.div>
+                            
+                            <OfferImage image={tempImg2} alt="Oferta 2" scrollYProgress={offersScroll} scrollFrom={0.5} scrollTo={0.55} />
+                            <OfferImage image={tempImg} alt="Oferta 1" scrollYProgress={offersScroll} scrollFrom={0.4} scrollTo={0.45} />
+                        
+                        
                         </motion.div>
                     </div>
                 </div>
