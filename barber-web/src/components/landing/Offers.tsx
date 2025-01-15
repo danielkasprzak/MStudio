@@ -1,36 +1,39 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useAnimation, useScroll, useTransform } from 'motion/react';
-import HeadParagraph from './Paragraph';
 
 import bgImg from '../../assets/bg_img.jpg';
 import Paragraph from './Paragraph';
 import Button from './Button';
 
 import tempImg from '../../assets/about_img.jpg';
+import tempImg2 from '../../assets/bg_img.jpg';
 
 interface Props {
     imgRef: React.RefObject<HTMLElement>;
 }
 
+const services = [
+    { image: tempImg, title: "strzyżenie męskie" },
+    { image: tempImg2, title: "strzyżenie damskie" },
+];
+
 export default ({imgRef}:Props) => {
     const sectionRef = useRef(null);
+
+
+
+
     const { scrollYProgress } = useScroll({
         target: sectionRef,
         offset: ["start end", "end start"]
     });
-
     
     const { scrollYProgress: globalScroll } = useScroll({
         target: imgRef,
     });
 
     const y = useTransform(scrollYProgress, [0, 1], ["-20%", "10%"]);
-
-    const imageTranslateY = useTransform(
-        globalScroll,
-        [0.45, 0.5],  // Sync with SecondVideo (0.6) and NavBar end (0.85)
-        [ "-100vh", "0vh"]  // Start offscreen, move to final position
-    );
+    const imageTranslateY = useTransform(globalScroll, [0.35, 0.5], ["-100vh", "0vh"]);
 
     const imageControls = useAnimation();
 
@@ -73,24 +76,46 @@ export default ({imgRef}:Props) => {
                     <div className='w-1/2 h-full flex flex-col justify-center items-center'>
                         <div className='flex flex-col justify-center'>
                             <h2 className='font-lato text-white font-bold text-xs tracking-wider uppercase z-20'>Oferta</h2>
-                            <Paragraph textColor="#FFFFFF">strzyżenie męskie</Paragraph>
+                            <Paragraph textColor="#FFFFFF"></Paragraph>
                             <Button>Zarezerwuj wizytę</Button>
                         </div>
                     </div>
                     <div className='w-1/2 h-full relative'>
-                        <motion.img
-                            src={tempImg}
-                            alt='temp'
-                            className='sticky top-0 w-full h-screen object-cover z-50'
-                            initial={{ opacity: 0 }}
+                        <motion.div
+                            className='sticky top-0 w-full h-screen flex flex-col justify-start items-stretch z-50 overflow-hidden'
+                            initial={{ opacity: 0, translateY: '-100vh' }}
                             animate={imageControls}
                             transition={{ duration: 0.3 }}
                             style={{ 
                                 translateY: imageTranslateY,
-                                clipPath: 'inset(20% 30% 20% 30%)',
-                                transform: 'translateY(-100vh)'
+                                clipPath: 'inset(20% 30% 20% 30%)'
                             }}
-                        />
+                        >
+                            <motion.div
+                                className='absolute w-full h-full inset-0 z-50'
+                                style={{
+                                    height: useTransform(scrollYProgress, [0.65, 0.75], ["100%", "0%"])
+                                }}
+                            >
+                                <motion.img 
+                                    src={tempImg}
+                                    alt={services[0].title}
+                                    className='object-cover h-full w-full max-w-full align-middle overflow-clip'
+                                />
+                            </motion.div>
+                            <motion.div
+                                className='absolute w-full h-full inset-0'
+                                style={{
+                                    height: useTransform(scrollYProgress, [0.85, 0.95], ["100%", "0%"])
+                                }}
+                            >
+                                <motion.img 
+                                    src={tempImg2}
+                                    alt={services[1].title}
+                                    className='object-cover h-full w-full max-w-full align-middle overflow-clip'
+                                />
+                            </motion.div>
+                        </motion.div>
                     </div>
                 </div>
         </div>

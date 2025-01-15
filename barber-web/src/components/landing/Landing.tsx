@@ -3,7 +3,7 @@ import { cancelFrame, frame } from 'motion';
 import { useEffect, useRef } from 'react';
 
 import Hero from './Hero';
-import Section from './Section';
+import Offers from './Offers';
 import Footer from './Footer';
 import NavBar from './NavBar';
 import UnderFooter from './UnderFooter';
@@ -43,7 +43,7 @@ export default () => {
         <ReactLenis options={{ autoRaf: false, smoothWheel: true }} ref={lenisRef} root>
             <div className='bg-white w-full h-full' ref={imgRef}>
                 <Hero heroRef={heroRef}/>
-                <Section imgRef={imgRef} />
+                <Offers imgRef={imgRef} />
                 
                 <Footer/>
                 <UnderFooter/>

@@ -22,7 +22,6 @@ export default ({ heroRef }: Props) => {
 
     const videoOverlay = useAnimation();
     const controls = useAnimation();
-    const sloganAnimation = useAnimation();
 
     useEffect(() => {
         const unsubscribe = scrollYProgress.on('change', (latest) => {
@@ -54,20 +53,6 @@ export default ({ heroRef }: Props) => {
 
         return () => unsubscribe();
     }, [scrollYProgress, videoOverlay]);
-
-    useEffect(() => {
-        const unsubscribe = scrollYProgress.on('change', (latest) => {
-            if (latest >= 0.95) {
-                sloganAnimation.start({ y: '-200%', transition: { duration: 0.5 } });
-            } else if (latest >= 0.9) {
-                sloganAnimation.start({ y: '-100%', transition: { duration: 0.5 } });
-            } else {
-                sloganAnimation.start({ y: '0%', transition: { duration: 0.5 } });
-            }
-        });
-
-        return () => unsubscribe();
-    }, [scrollYProgress, sloganAnimation]);
 
     return (  
         <section ref={heroRef} className="relative h-[300vh]">
