@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import FormInput from '../FormInput';
 import { formatDate } from '../../../utils/utils';
+import FormLabel from '../FormLabel';
 
 interface Props {
     children: React.ReactNode;
@@ -47,12 +48,27 @@ export default ({ children, isNew, inputData, onSubmit }: Props) => {
 
     return (
         <form onSubmit={handleSubmit} className='font-lato flex flex-col'>
-            {isNew ? <FormInput name='date' defaultVal={date} required onChange={(e) => setDate(e.target.value)} type='date' placeholder='Date'/> : <h1 className='font-cormorant text-charcoal font-medium text-md text-center'>{formatDate(date)}</h1>}
+            {isNew ? (
+            <>
+                <FormLabel htmlFor='date'>Data rozpoczęcia:</FormLabel>
+                <FormInput name='date' id='date' defaultVal={date} required onChange={(e) => setDate(e.target.value)} type='date' placeholder='Date'/>
+            </>
+            ) : (
+
+            <h1 className='font-lato text-charcoal font-bold text-sm text-center pb-6'>{formatDate(date)}</h1>
+            )}
             
-            <FormInput name='endDate' defaultVal={endDate} onChange={(e) => setEndDate(e.target.value)} type='date' placeholder='End Date'/>
-            <FormInput name='isOpen' defaultVal={isOpen} onChange={(e) => setIsOpen(e.target.checked)} type='checkbox'/>
-            <FormInput name='openHour' defaultVal={openHour} required onChange={(e) => setOpenHour(e.target.value)} type='time' placeholder='Open Hour'/>
-            <FormInput name='closeHour' defaultVal={closeHour} required onChange={(e) => setCloseHour(e.target.value)} type='time' placeholder='Close Hour'/>
+            <FormLabel htmlFor='endDate'>Data końcowa:</FormLabel>
+            <FormInput name='endDate' id='endDate' defaultVal={endDate} onChange={(e) => setEndDate(e.target.value)} type='date' placeholder='End Date'/>
+            
+            <FormLabel htmlFor='isOpen'>Otwarte?:</FormLabel>
+            <FormInput name='isOpen' id='isOpen' defaultVal={isOpen} onChange={(e) => setIsOpen(e.target.checked)} type='checkbox'/>
+            
+            <FormLabel htmlFor='openHour'>Godzina otwarcia:</FormLabel>
+            <FormInput name='openHour' id='openHour' defaultVal={openHour} required onChange={(e) => setOpenHour(e.target.value)} type='time' placeholder='Open Hour'/>
+            
+            <FormLabel htmlFor='closeHour'>Godzina zamknięcia:</FormLabel>
+            <FormInput name='closeHour' id='closeHour' defaultVal={closeHour} required onChange={(e) => setCloseHour(e.target.value)} type='time' placeholder='Close Hour'/>
 
             {children}
         </form>
