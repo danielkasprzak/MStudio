@@ -58,20 +58,19 @@ export default () => {
 
     return (
         <div className='w-[46rem] h-auto py-4 flex flex-row items-center justify-between relative overflow-hidden z-40'>
-            <div className="flex flex-row items-center">
+            <div onClick={handleImageClick} className="flex flex-row items-center hover:cursor-pointer">
             {Array.isArray(data) ? null : (
                     <>
                         <img
                             src={data.picture}
                             alt={data.name}
-                            className="w-12 h-auto rounded-full mr-4 cursor-pointer"
-                            onClick={handleImageClick}
+                            className="w-12 h-auto rounded-full mr-4"
                         />
                         <p className="font-medium font-cormorant text-xl text-charcoal">{data.name}</p>
                         {isContextVisible && (
                             <motion.div
-                            ref={contextRef}
-                                className="z-50 absolute top-0 left-0 bg-white border border-stone-300 p-4 flex flex-col justify-center"
+                                ref={contextRef}
+                                className="z-50 absolute top-0 left-16 bg-white border border-stone-300 p-4 flex flex-col justify-center"
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
