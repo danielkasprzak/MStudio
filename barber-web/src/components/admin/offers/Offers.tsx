@@ -5,6 +5,7 @@ import { Link, Outlet, useNavigate } from 'react-router-dom';
 import Offer from './Offer';
 import Title from '../../Title';
 import SmallButton from '../SmallButton';
+import TextButton from '../../TextButton';
 
 interface OfferModel {
     id: number;
@@ -39,23 +40,25 @@ export default () => {
     return (
         <div className='flex flex-row justify-center'>
             <div className='relative w-fit h-full bg-white m-16 mr-8 text-charcoal font-lato p-8 border border-stone-300'>
-                <div className='flex flex-row'>
+                <div className='flex flex-row items-center'>
                     <Title padding='8'>Oferta</Title>
-                    <SmallButton>
-                        <Link to={`dodaj`}>Dodaj</Link>
-                    </SmallButton>
+                    <Link to='dodaj'>
+                        <TextButton>Dodaj</TextButton>
+                    </Link>     
                 </div>
             
-                <div className='relative w-auto p-16 pt-8 h-full text-charcoal font-lato'>
+                <div className='relative w-auto p-12 pt-8 h-full text-charcoal font-lato'>
                     <ul className='h-fit w-fit'>
                         {data.map((offer) => (
-                            <div className='flex flex-row'>
+                            <div className='flex flex-row items-center'>
                                 <Offer key={offer.id} label={offer.label} price={offer.price} time={offer.duration} description={offer.description} />
-                                <div className='flex flex-row'>
-                                    <SmallButton>
-                                        <Link to={`${offer.id}`}>Edytuj</Link>
-                                    </SmallButton>
-                                    {isPending ? <div>Usuwanie...</div> : <SmallButton onClick={() => handleDeleteClick(offer.id)}>Usuń</SmallButton>}
+                                <div className='flex flex-row items-center'>
+                                    <Link to={`${offer.id}`}>
+                                        <TextButton>Edytuj</TextButton>
+                                    </Link>                
+                           
+                                    {isPending ? <div className='font-lato text-xs uppercase font-bold text-charcoal'>Usuwanie...</div> : 
+                                    <TextButton onClick={() => handleDeleteClick(offer.id)}>Usuń</TextButton>}
                                 </div>
                             </div>
                         ))}

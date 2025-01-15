@@ -12,13 +12,6 @@ interface Props {
     inactiveHeight: string;
 }
 
-interface OpeningHoursModel {
-    dayOfWeek: string;
-    isOpen: boolean;
-    openHour: string;
-    closeHour: string;
-}
-
 export default ({ isActive, onHover, activeHeight, inactiveHeight }: Props) => {
 
     return (
