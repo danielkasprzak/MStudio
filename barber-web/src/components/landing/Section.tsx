@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform, useAnimation } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'motion/react';
 import HeadParagraph from './Paragraph';
 
 import bgImg from '../../assets/bg_img.jpg';

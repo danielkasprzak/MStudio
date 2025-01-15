@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { useAppSelector } from '../../../store/hooks';
 import { basketActions } from "../../../store/basket-slice";
 import { useAppDispatch } from "../../../store/hooks";

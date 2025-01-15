@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { queryClient, fetchReservations, cancelReservation } from '../../../utils/http';
 import { getTodayDate } from '../../../utils/utils';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 import Title from '../../Title';
 import Reservation from './Reservation';

@@ -1,4 +1,4 @@
-import { AnimationControls, motion } from 'framer-motion';
+import { AnimationControls, motion } from 'motion/react';
 
 interface Props { 
     sloganAnimation: AnimationControls;

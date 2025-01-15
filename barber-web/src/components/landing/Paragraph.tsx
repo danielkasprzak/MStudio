@@ -1,4 +1,4 @@
-import { motion, MotionValue } from 'framer-motion';
+import { motion, MotionValue } from 'motion/react';
 
 interface Props {
     children?: React.ReactNode;

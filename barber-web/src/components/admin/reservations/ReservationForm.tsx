@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import FormInput from '../FormInput';
-import { formatDate, generateReservationId } from '../../../utils/utils';
+import { generateReservationId } from '../../../utils/utils';
 
 interface Props {
     children: React.ReactNode;
