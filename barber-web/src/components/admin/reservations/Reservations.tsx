@@ -79,13 +79,9 @@ export default () => {
                                         phone={reservation.phone}
                                         price={reservation.price}
                                         isCancelled={reservation.isCancelled}
+                                        isPending={isPending}
+                                        cancelClick={handleCancelClick}
                                     />
-                                    <div className='flex flex-row'>
-                                        <TextButton>
-                                            <Link to={`${reservation.reservationId}`}>Edytuj</Link>
-                                        </TextButton>
-                                        {isPending ? <div>Trwa anulowanie...</div> : <TextButton onClick={() => handleCancelClick(reservation.reservationId)}>Anuluj</TextButton>}
-                                    </div>
                                 </div>
                             );
                         })}
