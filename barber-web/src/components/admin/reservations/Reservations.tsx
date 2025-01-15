@@ -21,10 +21,9 @@ interface ReservationModel {
 }
 
 export default () => {
-    const navigate = useNavigate();
-
     const [startDate, setStartDate] = useState(getTodayDate());
     const [endDate, setEndDate] = useState(getTodayDate());
+    const [filter, setFilter] = useState<'active' | 'cancelled' | 'past' | 'all'>('active');
 
     const { data = [], error } = useQuery<ReservationModel[]>({
         queryKey: ['fetchedReservations', { startDate, endDate }],
@@ -37,7 +36,6 @@ export default () => {
         mutationFn: cancelReservation,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['fetchedReservations'] });
-            // navigate('/admin/specjalne-godziny-otwarcia');
         }
     });
     
@@ -46,6 +44,32 @@ export default () => {
     }    
 
     const now = new Date();
+
+    const filteredData = data.filter((reservation) => {
+        const reservationDate = new Date(reservation.reservationDateTime);
+        const isPast = reservationDate < now;
+
+        if (filter === 'active') {
+            return !reservation.isCancelled && !isPast;
+        } else if (filter === 'cancelled') {
+            return reservation.isCancelled;
+        } else if (filter === 'past') {
+            return isPast && !reservation.isCancelled;
+        } else {
+            return true;
+        }
+    });
+
+    const sortedData = filteredData.sort((a, b) => {
+        const dateA = new Date(a.reservationDateTime).getTime();
+        const dateB = new Date(b.reservationDateTime).getTime();
+        const isPastA = new Date(a.reservationDateTime) < now;
+        const isPastB = new Date(b.reservationDateTime) < now;
+
+        if (!a.isCancelled && !isPastA && (b.isCancelled || isPastB)) return -1;
+        if ((a.isCancelled || isPastA) && !b.isCancelled && !isPastB) return 1;
+        return dateA - dateB;
+    });
 
     return (
         <div className='flex flex-row justify-center'>
@@ -64,7 +88,7 @@ export default () => {
 
                 <div className='relative w-auto p-16 pt-8 h-full text-charcoal font-lato'>
                     <ul className='h-fit w-fit'>
-                        {data.map((reservation) => {
+                        {sortedData.map((reservation) => {
                             const reservationDate = new Date(reservation.reservationDateTime);
                             const isPast = reservationDate < now;
                             return (
