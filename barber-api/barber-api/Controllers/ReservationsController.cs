@@ -57,6 +57,20 @@ namespace barber_api.Controllers
             return Ok(reservations);
         }
 
+        // GET: /reservation/userinfo
+        [HttpGet("userinfo")]
+        [Authorize]
+        public ActionResult GetUserInfo()
+        {
+            var (email, name, picture) = _authorizationService.GetUserInfoFromToken();
+            if (string.IsNullOrEmpty(email))
+            {
+                return Unauthorized("User is not authenticated.");
+            }
+
+            return Ok(new { email, name, picture });
+        }
+
         // GET: /reservation/{id}
         [HttpGet("{id}")]
         [Authorize(Roles = "admin")]

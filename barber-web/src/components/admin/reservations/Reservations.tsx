@@ -112,8 +112,8 @@ export default () => {
                 </div>
             
                 <div className='flex flex-row items-center justify-center'>
-                    <FormInput name='startDate' defaultVal={startDate} required onChange={(e) => setStartDate(e.target.value)} type='date' placeholder='Data rozpoczęcia'/>
-                    <FormInput name='endDate' defaultVal={endDate} required onChange={(e) => setEndDate(e.target.value)} type='date' placeholder='Data zakończenia'/>
+                    <FormInput name='startDate' id='startDate' defaultVal={startDate} required onChange={(e) => setStartDate(e.target.value)} type='date' placeholder='Data rozpoczęcia'/>
+                    <FormInput name='endDate' id='endDate' defaultVal={endDate} required onChange={(e) => setEndDate(e.target.value)} type='date' placeholder='Data zakończenia'/>
                 </div>
 
                 <div className='relative w-auto p-16 pt-8 h-full text-charcoal font-lato'>

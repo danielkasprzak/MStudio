@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Xml.Linq;
 
 public class AuthService
 {
@@ -37,7 +38,9 @@ public class AuthService
         {
             new Claim(JwtRegisteredClaimNames.Sub, payload.Subject),
             new Claim(JwtRegisteredClaimNames.Email, payload.Email),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new Claim("name", payload.Name),
+            new Claim("picture", payload.Picture)
         };
 
         var adminEmails = _configuration.GetSection("AdminEmails").Get<List<string>>();
@@ -151,12 +154,17 @@ public class AuthService
         var handler = new JwtSecurityTokenHandler();
         var jwtToken = handler.ReadJwtToken(newAccessToken);
         var email = jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Email)?.Value;
+        var name = jwtToken.Claims.FirstOrDefault(c => c.Type == "name")?.Value;
+        var picture = jwtToken.Claims.FirstOrDefault(c => c.Type == "picture")?.Value;
 
         var claims = new List<Claim>
         {
             new Claim(JwtRegisteredClaimNames.Sub, jwtToken.Subject),
             new Claim(JwtRegisteredClaimNames.Email, email),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new Claim("name", name),
+            new Claim("picture", picture)
+
         };
 
         var adminEmails = _configuration.GetSection("AdminEmails").Get<List<string>>();
@@ -231,6 +239,22 @@ public class AuthService
             context.Response.Cookies.Append("MSTOKEN", "", expiredCookieOptions);
             context.Response.Cookies.Append("MSRTOKEN", "", expiredCookieOptions);
         }
+    }
+
+    public (string Email, string Name, string Picture) GetUserInfoFromToken()
+    {
+        var token = _httpContextAccessor.HttpContext.Request.Cookies["MSTOKEN"];
+        if (string.IsNullOrEmpty(token))
+        {
+            return (null, null, null);
+        }
+
+        var handler = new JwtSecurityTokenHandler();
+        var jwtToken = handler.ReadJwtToken(token);
+        var emailClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Email);
+        var nameClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "name");
+        var pictureClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "picture");
+        return (emailClaim?.Value, nameClaim?.Value, pictureClaim?.Value);
     }
 
     public string GetEmailFromToken()
