@@ -34,7 +34,7 @@ export default ({ isActive }: Props) => {
                             time={basketItems[0].time} 
                             quantity={basketItems[0].quantity}
                         />
-                        {basketItems.length > 1 && <li>...więcej</li>}
+                        {basketItems.length > 1 && <li className='text-charcoal font-bold text-xs tracking-wider font-lato pt-2'>...więcej</li>}
                     </>
                 )}
         </ul>
