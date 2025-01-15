@@ -21,7 +21,7 @@ export default () => {
     if (error) return <div>Error loading offers</div>;
 
     return (
-        <div className="h-auto w-[46rem] bg-white border border-stone-300 p-8">
+        <div className="h-auto w-[46rem] bg-white border border-stone-300 p-8 z-30">
             <Title>Oferta</Title>
 
             <ul className='w-full h-fit'>

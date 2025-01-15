@@ -59,7 +59,7 @@ export default () => {
         <div className="h-auto w-[46rem] bg-white border border-stone-300 p-8">
             <Title>Moje rezerwacje</Title>
 
-            <div className='w-full flex flex-row justify-center items-center py-8'>
+            <div className='w-full flex flex-row justify-center items-center py-8 z-30'>
                 <FlatButton margin='2' disabled={false} onClick={() => setFilter('active')} isActive={filter === 'active'}>Aktywne</FlatButton>
                 <FlatButton margin='2' disabled={false} onClick={() => setFilter('cancelled')} isActive={filter === 'cancelled'}>Odwołane</FlatButton>
                 <FlatButton margin='2' disabled={false} onClick={() => setFilter('past')} isActive={filter === 'past'}>Historia</FlatButton>
