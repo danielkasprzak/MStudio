@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useAppSelector } from '../../../store/hooks';
 import { basketActions } from "../../../store/basket-slice";
 import { useAppDispatch } from "../../../store/hooks";
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import Title from '../../Title';
 import Price from './Price';

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Basket from "./basket/BasketSidePanel"
-import Info from "./InfoSidePanel"
+import Info from "./info/InfoSidePanel"
 
 export default () => {
     const [activeSidePanel, setActiveSidePanel] = useState<number | null>(1);
