@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 
-interface PriceProps {
+interface Props {
     totalPrice: number;
 }
 
-export default ({ totalPrice }: PriceProps) => {
+export default ({ totalPrice }: Props) => {
     const count = useMotionValue(0);
     const rounded = useTransform(count, Math.round);
 

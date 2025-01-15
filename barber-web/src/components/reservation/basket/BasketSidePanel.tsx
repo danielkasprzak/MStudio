@@ -9,14 +9,14 @@ import Price from './Price';
 import Cart from './Cart';
 import FlatButton from '../../FlatButton';
 
-interface BasketPanelProps {
+interface Props {
   isActive: boolean;
   onHover: () => void;
   activeHeight: string;
   inactiveHeight: string;
 }
 
-export default ({ isActive, onHover, activeHeight, inactiveHeight }: BasketPanelProps) => {
+export default ({ isActive, onHover, activeHeight, inactiveHeight }: Props) => {
     const totalPrice = useAppSelector((state) => state.cart.totalPrice);
     const dispatch = useAppDispatch();
 
