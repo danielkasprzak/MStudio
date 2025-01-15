@@ -4,7 +4,7 @@ import HeroVideo from '../../assets/hero_vid.mp4';
 import SecondVideo from '../../assets/second_vid.mp4';
 import Video from './Video';
 import Introduction from './Introduction';
-import Slogan from './Slogan';
+import About from './About';
 
 interface Props {
     heroRef: React.RefObject<HTMLElement>;
@@ -70,7 +70,7 @@ export default ({ heroRef }: Props) => {
     }, [scrollYProgress, sloganAnimation]);
 
     return (  
-        <section ref={heroRef} className="relative h-[460vh]">
+        <section ref={heroRef} className="relative h-[300vh]">
             <motion.div className='h-screen sticky top-0' animate={controls}>
                 <div className="absolute h-[200vh] inset-0 flex flex-col" >
                     <div className="relative w-screen h-screen flex items-center justify-center">
@@ -78,7 +78,7 @@ export default ({ heroRef }: Props) => {
                         <Video source={HeroVideo} zClass='-z-40' />
                     </div>
                     <motion.div className="relative w-screen h-screen" animate={videoOverlay}>
-                        {/* <Slogan sloganAnimation={sloganAnimation} /> */}
+                        <About />
                         <Video source={SecondVideo} zClass='-z-20' />
                     </motion.div>
                 </div>

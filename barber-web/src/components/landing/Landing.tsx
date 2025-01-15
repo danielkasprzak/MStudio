@@ -11,6 +11,7 @@ import UnderFooter from './UnderFooter';
 export default () => {
     const lenisRef = useRef<LenisRef | null>(null);
     const heroRef = useRef(null);
+    const imgRef = useRef(null);   
 
     useEffect(() => {
         function update(data: { timestamp: number }) {
@@ -40,10 +41,9 @@ export default () => {
     
     return (
         <ReactLenis options={{ autoRaf: false, smoothWheel: true }} ref={lenisRef} root>
-            <div className='bg-white'>
+            <div className='bg-white w-full h-full' ref={imgRef}>
                 <Hero heroRef={heroRef}/>
-                <Section/>
-                <Section/>
+                <Section imgRef={imgRef} />
                 
                 <Footer/>
                 <UnderFooter/>
