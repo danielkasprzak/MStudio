@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import FormInput from '../FormInput';
 import { dayTranslations } from '../../../utils/utils';
+import FormLabel from '../FormLabel';
 
 interface Props {
     children: React.ReactNode;
@@ -41,11 +42,16 @@ export default ({ children, inputData, onSubmit }: Props) => {
 
     return (
         <form onSubmit={handleSubmit} className='font-lato flex flex-col'>
-            <h1 className='font-cormorant text-charcoal font-medium text-md text-center'>{dayTranslations[inputData.dayOfWeek]}</h1>
+            <h1 className='font-lato text-charcoal font-bold text-sm text-center py-2 mb-6 border border-stone-300'>{dayTranslations[inputData.dayOfWeek]}</h1>
 
-            <FormInput name='isOpen' defaultVal={isOpen} onChange={(e) => setIsOpen(e.target.checked)} type='checkbox'/>
-            <FormInput name='openHour' defaultVal={openHour} required onChange={(e) => setOpenHour(e.target.value)} type='time' placeholder='Open Hour'/>
-            <FormInput name='closeHour' defaultVal={closeHour} required onChange={(e) => setCloseHour(e.target.value)} type='time' placeholder='Close Hour'/>
+            <FormLabel htmlFor='isOpen'>Otwarte?:</FormLabel>
+            <FormInput id='isOpen' name='isOpen' defaultVal={isOpen} onChange={(e) => setIsOpen(e.target.checked)} type='checkbox'/>
+
+            <FormLabel htmlFor='openHour'>Godzina otwarcia:</FormLabel>
+            <FormInput id='openHour' name='openHour' defaultVal={openHour} required onChange={(e) => setOpenHour(e.target.value)} type='time' placeholder='Open Hour'/>
+
+            <FormLabel htmlFor='closeHour'>Godzina zamknięcia:</FormLabel>
+            <FormInput id='closeHour' name='closeHour' defaultVal={closeHour} required onChange={(e) => setCloseHour(e.target.value)} type='time' placeholder='Close Hour'/>
 
             {children}
         </form>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import FormInput from '../FormInput';
+import FormLabel from '../FormLabel';
 
 interface Props {
     children: React.ReactNode;
@@ -37,11 +38,18 @@ export default ({ children, inputData, onSubmit }: Props) => {
 
     return (
         <form onSubmit={handleSubmit} className='font-lato flex flex-col'>
-            <FormInput name='label' defaultVal={label} required onChange={(e) => setLabel(e.target.value)} type='text' placeholder='Tytuł'/>
-            <FormInput name='description' defaultVal={description} onChange={(e) => setDescription(e.target.value)} type='text' placeholder='Opis'/>
-            <FormInput name='duration' defaultVal={duration} required onChange={(e) => setDuration(Number(e.target.value))} type='number' placeholder='Czas trwania'/>
-            <FormInput name='price' defaultVal={price} required onChange={(e) => setPrice(Number(e.target.value))} type='number' placeholder='Cena'/>
-
+            <FormLabel htmlFor='label'>Tytuł:</FormLabel>
+            <FormInput id='label' name='label' defaultVal={label} required onChange={(e) => setLabel(e.target.value)} type='text' placeholder='Tytuł'/>
+            
+            <FormLabel htmlFor='description'>Opis:</FormLabel>
+            <FormInput id='description' name='description' defaultVal={description} onChange={(e) => setDescription(e.target.value)} type='text' placeholder='Opis'/>
+            
+            <FormLabel htmlFor='duration'>Czas trwania:</FormLabel>
+            <FormInput id='duration' name='duration' defaultVal={duration} required onChange={(e) => setDuration(Number(e.target.value))} type='number' placeholder='Czas trwania'/>
+            
+            <FormLabel htmlFor='price'>Cena:</FormLabel>
+            <FormInput id='price' name='price' defaultVal={price} required onChange={(e) => setPrice(Number(e.target.value))} type='number' placeholder='Cena'/>
+            
             {children}
         </form>
     );

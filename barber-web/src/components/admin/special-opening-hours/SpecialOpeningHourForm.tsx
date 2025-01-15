@@ -55,7 +55,7 @@ export default ({ children, isNew, inputData, onSubmit }: Props) => {
             </>
             ) : (
 
-            <h1 className='font-lato text-charcoal font-bold text-sm text-center pb-6'>{formatDate(date)}</h1>
+            <h1 className='font-lato text-charcoal font-bold text-sm text-center py-2 mb-6 border border-stone-300'>{formatDate(date)}</h1>
             )}
             
             <FormLabel htmlFor='endDate'>Data końcowa:</FormLabel>
