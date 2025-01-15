@@ -2,7 +2,7 @@ import { Plus, Trash2 } from "lucide-react";
 import { basketActions } from "../../../store/basket-slice";
 import { useAppDispatch } from "../../../store/hooks";
 
-interface SelectedOfferProps {
+interface Props {
     id: number;
     label: string;
     price: number;
@@ -10,7 +10,7 @@ interface SelectedOfferProps {
     quantity: number;
 }
 
-export default ({ id, label, price, time, quantity } : SelectedOfferProps) => {
+export default ({ id, label, price, time, quantity } : Props) => {
     const dispatch = useAppDispatch();
 
     const removeItemHandler = (id: number) => {
