@@ -1,6 +1,6 @@
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 
-import SidePanel from "./SidePanel"
+import SidePanel from "./SidePanel";
 import MainPanel from "./MainPanel";
 
 export default () => {

@@ -198,6 +198,11 @@ export async function fetchMyReservations() {
     return data;
 };
 
+export async function fetchUserInfo() {
+    const { data } = await axiosInstance.get('https://localhost:7190/reservation/userinfo');
+    return data;
+}
+
 interface Reservation {
     reservationId: string;
     email: string;
