@@ -8,6 +8,7 @@ import Reservation from './Reservation';
 import FormInput from '../FormInput';
 import { useState } from 'react';
 import TextButton from '../../TextButton';
+import FlatButton from '../../FlatButton';
 
 interface ReservationModel {
     reservationId: string;
@@ -79,6 +80,35 @@ export default () => {
                     <TextButton>
                         <Link to={`dodaj`}>Dodaj</Link>
                     </TextButton>
+                </div>
+
+                <div className='w-full flex flex-row justify-center items-center py-4'>
+                    <FlatButton margin='2' disabled={false} onClick={() => setFilter('active')} isActive={filter === 'active'}>Aktywne</FlatButton>
+                    <FlatButton margin='2' disabled={false} onClick={() => setFilter('cancelled')} isActive={filter === 'cancelled'}>Odwołane</FlatButton>
+                    <FlatButton margin='2' disabled={false} onClick={() => setFilter('past')} isActive={filter === 'past'}>Historia</FlatButton>
+                    <FlatButton margin='2' disabled={false} onClick={() => setFilter('all')} isActive={filter === 'all'}>Wszystkie</FlatButton>
+                </div>  
+
+                <div className='w-full flex flex-row justify-center items-center py-4'>
+                    <FlatButton margin='2' disabled={false} onClick={() => {
+                        const today = getTodayDate();
+                        setStartDate(today);
+                        setEndDate(today);
+                    }} isActive={startDate === getTodayDate() && endDate === getTodayDate()}>Dzisiaj</FlatButton>
+                    <FlatButton margin='2' disabled={false} onClick={() => {
+                        const today = new Date();
+                        const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
+                        const endOfWeek = new Date(today.setDate(today.getDate() - today.getDay() + 6));
+                        setStartDate(startOfWeek.toISOString().split('T')[0]);
+                        setEndDate(endOfWeek.toISOString().split('T')[0]);
+                    }} isActive={startDate === new Date(new Date().setDate(new Date().getDate() - new Date().getDay())).toISOString().split('T')[0] && endDate === new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + 6)).toISOString().split('T')[0]}>Ten Tydzień</FlatButton>
+                    <FlatButton margin='2' disabled={false} onClick={() => {
+                        const today = new Date();
+                        const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+                        const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+                        setStartDate(startOfMonth.toISOString().split('T')[0]);
+                        setEndDate(endOfMonth.toISOString().split('T')[0]);
+                    }} isActive={startDate === new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0] && endDate === new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).toISOString().split('T')[0]}>Ten Miesiąc</FlatButton>
                 </div>
             
                 <div className='flex flex-row items-center justify-center'>
