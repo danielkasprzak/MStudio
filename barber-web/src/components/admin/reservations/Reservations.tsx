@@ -4,10 +4,10 @@ import { getTodayDate } from '../../../utils/utils';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 import Title from '../../Title';
-import SmallButton from '../SmallButton';
 import Reservation from './Reservation';
 import FormInput from '../FormInput';
 import { useState } from 'react';
+import TextButton from '../../TextButton';
 
 interface ReservationModel {
     reservationId: string;
@@ -52,9 +52,9 @@ export default () => {
             <div className='relative w-fit h-full border border-stone-300 bg-white m-16 mr-8 text-charcoal font-lato p-8'>
                 <div className='flex flex-row'>
                     <Title padding='8'>Rezerwacje</Title>
-                    <SmallButton>
+                    <TextButton>
                         <Link to={`dodaj`}>Dodaj</Link>
-                    </SmallButton>
+                    </TextButton>
                 </div>
             
                 <div className='flex flex-row items-center justify-center'>
@@ -81,10 +81,10 @@ export default () => {
                                         isCancelled={reservation.isCancelled}
                                     />
                                     <div className='flex flex-row'>
-                                        <SmallButton>
+                                        <TextButton>
                                             <Link to={`${reservation.reservationId}`}>Edytuj</Link>
-                                        </SmallButton>
-                                        {isPending ? <div>Trwa anulowanie...</div> : <SmallButton onClick={() => handleCancelClick(reservation.reservationId)}>Anuluj</SmallButton>}
+                                        </TextButton>
+                                        {isPending ? <div>Trwa anulowanie...</div> : <TextButton onClick={() => handleCancelClick(reservation.reservationId)}>Anuluj</TextButton>}
                                     </div>
                                 </div>
                             );

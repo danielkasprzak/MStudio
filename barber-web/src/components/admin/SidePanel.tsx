@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../utils/http";
 
-import SmallButton from "./SmallButton";
 import Title from "../Title";
 import { useMutation } from "@tanstack/react-query";
+import TextButton from "../TextButton";
 
 export default () => {
     const navigate = useNavigate();
@@ -27,15 +27,15 @@ export default () => {
             <div className="flex flex-col">
                 <Title padding='16'>MSTUDIO</Title>
 
-                <SmallButton>Panel</SmallButton>
-                <SmallButton><Link to={`rezerwacje`}>Rezerwacje</Link></SmallButton>
-                <SmallButton><Link to={`oferty`}>Oferta</Link></SmallButton>
-                <SmallButton><Link to={`godziny-otwarcia`}>Harmonogram</Link></SmallButton>
-                <SmallButton><Link to={`specjalne-godziny-otwarcia`}>Specjalne</Link></SmallButton>
+                <TextButton>Panel</TextButton>
+                <TextButton><Link to={`rezerwacje`}>Rezerwacje</Link></TextButton>
+                <TextButton><Link to={`oferty`}>Oferta</Link></TextButton>
+                <TextButton><Link to={`godziny-otwarcia`}>Harmonogram</Link></TextButton>
+                <TextButton><Link to={`specjalne-godziny-otwarcia`}>Specjalne</Link></TextButton>
             </div>
             <div className="flex flex-col pb-8">
-                <SmallButton>Powrót</SmallButton>
-                {isPending ? <div>Wylogowuje...</div> : <SmallButton onClick={handleLogout}>Wyloguj się</SmallButton>}
+                <TextButton>Powrót</TextButton>
+                {isPending ? <div>Wylogowuje...</div> : <TextButton onClick={handleLogout}>Wyloguj się</TextButton>}
             </div>
         </div>
     )

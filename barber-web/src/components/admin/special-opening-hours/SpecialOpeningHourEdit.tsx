@@ -1,10 +1,10 @@
 import Title from '../../Title';
-import SmallButton from '../SmallButton';
 import { ActionFunction, LoaderFunctionArgs, useParams, useSubmit, useNavigation, redirect } from 'react-router-dom';
 import { queryClient, fetchSpecialOpeningHour, updateSpecialOpeningHour } from '../../../utils/http';
 import { useQuery } from '@tanstack/react-query';
 
 import SpecialOpeningHourForm from './SpecialOpeningHourForm';
+import TextButton from '../../TextButton';
 
 interface SpecialOpeningHourModel {
     date: string;
@@ -32,13 +32,13 @@ export default () => {
     }
 
     return (
-        <div className='sticky right-0 top-16 w-fit h-full bg-white m-16 ml-8 text-charcoal p-8'>
+        <div className='sticky right-0 top-16 w-fit h-full bg-white border border-stone-300 m-16 ml-8 text-charcoal p-8'>
             <Title padding='8'>Edytuj godziny</Title>
 
             {data && <SpecialOpeningHourForm inputData={data} onSubmit={handleSubmit}>
                 {state === 'submitting' ? (<div>Wysyłanie...</div> 
                 ) : (
-                    <SmallButton type='submit'>Zapisz</SmallButton>
+                    <TextButton type='submit'>Zapisz</TextButton>
                 )}
             </SpecialOpeningHourForm>}
         </div>

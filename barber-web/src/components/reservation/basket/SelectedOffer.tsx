@@ -26,7 +26,7 @@ export default ({ id, label, price, time, quantity } : Props) => {
             <div className="flex flex-row items-center">
                 <button onClick={() => removeItemHandler(id)} ><Trash2 color="#353535" size={20} strokeWidth={1.25} /></button>
                 <div className="flex flex-col justify-center px-4">
-                    <h1 className="uppercase font-bold text-xs">{label}</h1>
+                    <h1 className="uppercase font-bold text-xs text-charcoal">{label}</h1>
                     <p className="font-normal text-xs text-stone-500">{quantity > 1 && <span>{quantity} x</span>} {price}zł</p>
                 </div>
             </div>

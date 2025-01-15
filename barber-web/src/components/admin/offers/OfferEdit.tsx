@@ -1,9 +1,9 @@
 import Title from '../../Title';
-import SmallButton from '../SmallButton';
 import { ActionFunction, LoaderFunctionArgs, useParams, useSubmit, useNavigation, redirect } from 'react-router-dom';
 import { queryClient, fetchOffer, updateOffer } from '../../../utils/http';
 import { useQuery } from '@tanstack/react-query';
 import OfferForm from './OfferForm';
+import TextButton from '../../TextButton';
 
 interface OfferModel {
     id: number;
@@ -37,7 +37,7 @@ export default () => {
             {data && <OfferForm inputData={data} onSubmit={handleSubmit}>
                 {state === 'submitting' ? (<div>Wysyłanie...</div> 
                 ) : (
-                    <SmallButton type='submit'>Zapisz</SmallButton>
+                    <TextButton type='submit'>Zapisz</TextButton>
                 )}
             </OfferForm>}
         </div>

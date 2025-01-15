@@ -1,9 +1,9 @@
 import Title from '../../Title';
-import SmallButton from '../SmallButton';
 import { ActionFunction, useSubmit, useNavigation, redirect } from 'react-router-dom';
 import { bookNewReservationAsAdmin, queryClient } from '../../../utils/http';
 
 import ReservationForm from './ReservationForm';
+import TextButton from '../../TextButton';
 
 interface NewReservation {
     reservationId: string;
@@ -43,7 +43,7 @@ export default () => {
                 {state === 'submitting' ? (
                     <div>Wysyłanie...</div> 
                 ) : (
-                    <SmallButton type='submit'>Zapisz</SmallButton>
+                    <TextButton type='submit'>Zapisz</TextButton>
                 )}
             </ReservationForm>
         </div>

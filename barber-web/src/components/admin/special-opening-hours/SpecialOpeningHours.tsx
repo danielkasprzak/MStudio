@@ -3,8 +3,8 @@ import { queryClient, fetchSpecialOpeningHours, deleteSpecialOpeningHour } from 
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 import Title from '../../Title';
-import SmallButton from '../SmallButton';
 import SpecialOpeningHour from './SpecialOpeningHour';
+import TextButton from '../../TextButton';
 
 interface SpecialOpeningHoursModel {
     date: string;
@@ -38,12 +38,12 @@ export default () => {
 
     return (
         <div className='flex flex-row justify-center'>
-            <div className='relative w-fit h-full bg-white m-16 mr-8 text-charcoal font-lato p-8'>
-                <div className='flex flex-row'>
+            <div className='relative w-fit h-full bg-white border border-stone-300 m-16 mr-8 text-charcoal font-lato p-8'>
+                <div className='flex flex-row items-center'>
                     <Title padding='8'>Specjalny harmonogram otwarcia</Title>
-                    <SmallButton>
-                        <Link to={`dodaj`}>Dodaj</Link>
-                    </SmallButton>
+                    <Link to="dodaj">
+                        <TextButton>Dodaj</TextButton>
+                    </Link>                    
                 </div>
 
                 <div className='relative w-auto p-16 pt-8 h-full text-charcoal font-lato'>
@@ -52,11 +52,11 @@ export default () => {
                             <div className='flex flex-row'>
                                 <SpecialOpeningHour key={date.date} date={date.date} endDate={date.endDate} isOpen={date.isOpen} openHour={date.openHour} closeHour={date.closeHour} />
                                 
-                                <div className='flex flex-row'>
-                                    <SmallButton>
-                                        <Link to={`${date.date}`}>Edytuj</Link>
-                                    </SmallButton>
-                                    {isPending ? <div>Usuwanie...</div> : <SmallButton onClick={() => handleDeleteClick(date.date)}>Usuń</SmallButton>}
+                                <div className='flex flex-row items-center'>
+                                    <Link to={`${date.date}`}>
+                                        <TextButton>Edytuj</TextButton>
+                                    </Link>   
+                                    {isPending ? <div>Usuwanie...</div> : <TextButton onClick={() => handleDeleteClick(date.date)}>Usuń</TextButton>}
                                 </div>
                             </div>
                         ))}

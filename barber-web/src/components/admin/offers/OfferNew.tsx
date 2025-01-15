@@ -1,8 +1,8 @@
 import Title from '../../Title';
-import SmallButton from '../SmallButton';
 import { ActionFunction, redirect, useNavigation, useSubmit } from 'react-router-dom';
 import { queryClient, createOffer } from '../../../utils/http';
 import OfferForm from './OfferForm';
+import TextButton from '../../TextButton';
 
 interface NewOffer {
     label: string;
@@ -26,7 +26,7 @@ export default () => {
             <OfferForm inputData={{ label: '', price: 0, duration: 0, description: '' }} onSubmit={handleSubmit}>
                 {state === 'submitting' ? (<div>Wysyłanie...</div> 
                 ) : (
-                    <SmallButton type='submit'>Dodaj</SmallButton>
+                    <TextButton type='submit'>Dodaj</TextButton>
                 )}
             </OfferForm>
 

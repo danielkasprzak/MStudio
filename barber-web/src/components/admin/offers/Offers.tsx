@@ -4,7 +4,6 @@ import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 import Offer from './Offer';
 import Title from '../../Title';
-import SmallButton from '../SmallButton';
 import TextButton from '../../TextButton';
 
 interface OfferModel {

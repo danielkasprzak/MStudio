@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchOpeningHours } from '../../../utils/http';
-import { dayTranslations } from "../../../utils/utils";
+import { dayTranslations, WEEK_ORDER } from "../../../utils/utils";
 import { motion } from 'motion/react';
 
 interface OpeningHoursModel {
@@ -9,8 +9,6 @@ interface OpeningHoursModel {
     openHour: string;
     closeHour: string;
 }
-
-const WEEK_ORDER = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 export default () => { 
     const { data = [], error, isLoading } = useQuery<OpeningHoursModel[]>({

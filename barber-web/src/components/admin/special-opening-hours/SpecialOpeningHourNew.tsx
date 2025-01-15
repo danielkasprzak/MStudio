@@ -1,9 +1,9 @@
 import Title from '../../Title';
-import SmallButton from '../SmallButton';
 import { ActionFunction, useSubmit, useNavigation, redirect } from 'react-router-dom';
 import { createSpecialOpeningHour, queryClient } from '../../../utils/http';
 
 import SpecialOpeningHourForm from './SpecialOpeningHourForm';
+import TextButton from '../../TextButton';
 
 interface NewSpecialOpeningHour {
     date: string;
@@ -22,13 +22,13 @@ export default () => {
     }
 
     return (
-        <div className='sticky right-0 top-16 w-fit h-full bg-white m-16 ml-8 text-charcoal p-8'>
+        <div className='sticky right-0 top-16 w-fit h-full bg-white border border-stone-300 m-16 ml-8 text-charcoal p-8'>
             <Title padding='8'>Edytuj godziny</Title>
 
             <SpecialOpeningHourForm isNew inputData={{ date: '', endDate: null, isOpen: false, openHour: '', closeHour: '' }} onSubmit={handleSubmit}>
                 {state === 'submitting' ? (<div>Wysyłanie...</div> 
                 ) : (
-                    <SmallButton type='submit'>Zapisz</SmallButton>
+                    <TextButton type='submit'>Zapisz</TextButton>
                 )}
             </SpecialOpeningHourForm>
         </div>
