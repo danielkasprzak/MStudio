@@ -17,7 +17,7 @@ namespace barber_api.Services
             return await _context.Offers.ToListAsync();
         }
 
-        public async Task<Offer> GetOfferByIdAsync(int id)
+        public async Task<Offer?> GetOfferByIdAsync(int id)
         {
             return await _context.Offers.FindAsync(id);
         }

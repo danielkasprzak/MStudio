@@ -43,7 +43,7 @@ public class AuthService
             new Claim("picture", payload.Picture)
         };
 
-        var adminEmails = _configuration.GetSection("AdminEmails").Get<List<string>>();
+        var adminEmails = _configuration.GetSection("AdminEmails").Get<List<string>>() ?? new List<string>();
         if (adminEmails.Contains(payload.Email))
         {
             claims.Add(new Claim(ClaimTypes.Role, "admin"));
@@ -80,7 +80,7 @@ public class AuthService
             Expires = DateTime.Now.AddMinutes(30)
         };
 
-        _httpContextAccessor.HttpContext.Response.Cookies.Append("MSTOKEN", token, cookieOptions);
+        _httpContextAccessor.HttpContext?.Response.Cookies.Append("MSTOKEN", token, cookieOptions);
     }
 
     private void SetRefreshTokenCookie(string refreshToken)
@@ -93,7 +93,7 @@ public class AuthService
             Expires = DateTime.Now.AddDays(14)
         };
 
-        _httpContextAccessor.HttpContext.Response.Cookies.Append("MSRTOKEN", refreshToken, cookieOptions);
+        _httpContextAccessor.HttpContext?.Response.Cookies.Append("MSRTOKEN", refreshToken, cookieOptions);
     }
 
     private async Task<GoogleTokenResponse> ExchangeAuthorizationCodeForIdTokenAsync(string authorizationCode)
@@ -101,14 +101,19 @@ public class AuthService
         var clientId = _configuration["Authentication:Google:ClientId"];
         var clientSecret = _configuration["Authentication:Google:ClientSecret"];
 
+        if (string.IsNullOrEmpty(clientSecret) || string.IsNullOrEmpty(clientId))
+        {
+            throw new InvalidOperationException("Client secret is not configured.");
+        }
+
         var requestBody = new Dictionary<string, string>
-    {
-        { "code", authorizationCode },
-        { "client_id", clientId },
-        { "client_secret", clientSecret },
-        { "redirect_uri", "postmessage" },
-        { "grant_type", "authorization_code" }
-    };
+        {
+            { "code", authorizationCode },
+            { "client_id", clientId },
+            { "client_secret", clientSecret },
+            { "redirect_uri", "postmessage" },
+            { "grant_type", "authorization_code" }
+        };
 
         var requestContent = new FormUrlEncodedContent(requestBody);
 
@@ -122,7 +127,7 @@ public class AuthService
         }
 
         var tokenResponse = JsonSerializer.Deserialize<GoogleTokenResponse>(responseContent);
-        return tokenResponse;
+        return tokenResponse ?? throw new InvalidOperationException("Token response is null"); ;
     }
 
     public async Task<string> RefreshAccessTokenAsync(string refreshToken)
@@ -130,13 +135,18 @@ public class AuthService
         var clientId = _configuration["Authentication:Google:ClientId"];
         var clientSecret = _configuration["Authentication:Google:ClientSecret"];
 
+        if (string.IsNullOrEmpty(clientSecret) || string.IsNullOrEmpty(clientId))
+        {
+            throw new InvalidOperationException("Client secret is not configured.");
+        }
+
         var requestBody = new Dictionary<string, string>
-    {
-        { "refresh_token", refreshToken },
-        { "client_id", clientId },
-        { "client_secret", clientSecret },
-        { "grant_type", "refresh_token" }
-    };
+        {
+            { "refresh_token", refreshToken },
+            { "client_id", clientId },
+            { "client_secret", clientSecret },
+            { "grant_type", "refresh_token" }
+        };
 
         var requestContent = new FormUrlEncodedContent(requestBody);
 
@@ -149,7 +159,7 @@ public class AuthService
         }
 
         var tokenResponse = JsonSerializer.Deserialize<GoogleTokenResponse>(responseContent);
-        var newAccessToken = tokenResponse.IdToken;
+        var newAccessToken = tokenResponse?.IdToken ?? throw new InvalidOperationException("IdToken is null");
 
         var handler = new JwtSecurityTokenHandler();
         var jwtToken = handler.ReadJwtToken(newAccessToken);
@@ -160,14 +170,14 @@ public class AuthService
         var claims = new List<Claim>
         {
             new Claim(JwtRegisteredClaimNames.Sub, jwtToken.Subject),
-            new Claim(JwtRegisteredClaimNames.Email, email),
+            new Claim(JwtRegisteredClaimNames.Email, email ?? string.Empty),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim("name", name),
-            new Claim("picture", picture)
+            new Claim("name", name ?? string.Empty),
+            new Claim("picture", picture ?? string.Empty)
 
         };
 
-        var adminEmails = _configuration.GetSection("AdminEmails").Get<List<string>>();
+        var adminEmails = _configuration.GetSection("AdminEmails").Get<List<string>>() ?? new List<string>();
         if (adminEmails.Contains(email))
         {
             claims.Add(new Claim(ClaimTypes.Role, "admin"));
@@ -192,10 +202,10 @@ public class AuthService
 
     public List<string> CheckAuth()
     {
-        var user = _httpContextAccessor.HttpContext.User;
-        if (user == null || !user.Identity.IsAuthenticated)
+        var user = _httpContextAccessor.HttpContext?.User;
+        if (user == null || user.Identity == null || !user.Identity.IsAuthenticated)
         {
-            var refreshToken = _httpContextAccessor.HttpContext.Request.Cookies["MSRTOKEN"];
+            var refreshToken = _httpContextAccessor.HttpContext?.Request.Cookies["MSRTOKEN"];
             if (!string.IsNullOrEmpty(refreshToken))
             {
                 try
@@ -205,22 +215,26 @@ public class AuthService
                     var token = handler.ReadJwtToken(newAccessToken);
                     var claims = token.Claims;
                     var identity = new ClaimsIdentity(claims, "jwt");
-                    _httpContextAccessor.HttpContext.User = new ClaimsPrincipal(identity);
-                    user = _httpContextAccessor.HttpContext.User;
+                    if (_httpContextAccessor.HttpContext != null)
+                    {
+                        _httpContextAccessor.HttpContext.User = new ClaimsPrincipal(identity);
+                        user = _httpContextAccessor.HttpContext?.User;
+                    }
+
                 }
                 catch
                 {
-                    return null;
+                    return new List<string>();
                 }
             }
             else
             {
-                return null;
+                return new List<string>();
             }
         }
 
-        var roles = user.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList();
-        return roles;
+        var roles = user?.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList();
+        return roles ?? new List<string>();
     }
 
     public void ClearAuthCookies()
@@ -241,9 +255,9 @@ public class AuthService
         }
     }
 
-    public (string Email, string Name, string Picture) GetUserInfoFromToken()
+    public (string? Email, string? Name, string? Picture) GetUserInfoFromToken()
     {
-        var token = _httpContextAccessor.HttpContext.Request.Cookies["MSTOKEN"];
+        var token = _httpContextAccessor.HttpContext?.Request.Cookies["MSTOKEN"];
         if (string.IsNullOrEmpty(token))
         {
             return (null, null, null);
@@ -257,9 +271,9 @@ public class AuthService
         return (emailClaim?.Value, nameClaim?.Value, pictureClaim?.Value);
     }
 
-    public string GetEmailFromToken()
+    public string? GetEmailFromToken()
     {
-        var token = _httpContextAccessor.HttpContext.Request.Cookies["MSTOKEN"];
+        var token = _httpContextAccessor.HttpContext?.Request.Cookies["MSTOKEN"];
         if (string.IsNullOrEmpty(token))
         {
             return null;

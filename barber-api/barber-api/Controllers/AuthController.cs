@@ -33,7 +33,7 @@ public class AuthController : ControllerBase
             var newAccessToken = await _authService.RefreshAccessTokenAsync(refreshToken);
             return Ok(new { accessToken = newAccessToken });
         }
-        catch (Exception ex)
+        catch
         {
             return StatusCode(500, "Internal server error");
         }
@@ -43,7 +43,7 @@ public class AuthController : ControllerBase
     public IActionResult CheckAuth()
     {
         var roles = _authService.CheckAuth();
-        if (roles == null)
+        if (roles == null || roles.Count == 0)
         {
             return Unauthorized();
         }

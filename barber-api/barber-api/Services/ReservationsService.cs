@@ -29,7 +29,7 @@ namespace barber_api.Services
             return await query.ToListAsync();
         }
 
-        public async Task<Reservation> GetReservationByIdAsync(string reservationId)
+        public async Task<Reservation?> GetReservationByIdAsync(string reservationId)
         {
             return await _context.Reservations.FindAsync(reservationId);
         }
@@ -79,7 +79,7 @@ namespace barber_api.Services
             {
                 var dayOfWeek = date.DayOfWeek.ToString();
                 var specialOpeningHour = specialOpeningHours.FirstOrDefault(soh => soh.Date <= DateOnly.FromDateTime(date) && (soh.EndDate == null || soh.EndDate.Value >= DateOnly.FromDateTime(date)));
-                OpeningHour openingHour = null;
+                OpeningHour? openingHour = null;
 
                 if (specialOpeningHour != null)
                 {
