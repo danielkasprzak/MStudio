@@ -38,10 +38,18 @@ namespace barber_api.Services
                 .AverageAsync(r => r.Price);
         }
 
+        public async Task<(decimal totalPayments, decimal averagePayment)> GetPaymentsStatistics(DateTime startDate, DateTime endDate)
+        {
+            var totalPayments = await GetTotalPayments(startDate, endDate);
+            var averagePayment = await GetAveragePayment(startDate, endDate);
+            return (totalPayments, averagePayment);
+        }
+
         public async Task<IQueryable<Offer>> GetMostPopularOffers(DateTime startDate, DateTime endDate)
         {
             var popularOffers = _context.Reservations
                 .Where(r => r.ReservationDateTime >= startDate && r.ReservationDateTime <= endDate)
+                .AsEnumerable() // Switch to client-side evaluation
                 .SelectMany(r => JsonConvert.DeserializeObject<List<ReservedOffer>>(r.Services))
                 .GroupBy(o => o.Id)
                 .OrderByDescending(g => g.Count())

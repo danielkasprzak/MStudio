@@ -188,6 +188,8 @@ export async function fetchReservations({ startDate, endDate }: ReservationsFetc
     const endDateTime = `${endDate}T23:59:59`;
     const { data } = await axiosInstance.get(`https://localhost:7190/reservation?startDate=${startDateTime}&endDate=${endDateTime}`);
     
+    console.log(startDateTime);
+
     data.sort((a: Reservation, b: Reservation) => new Date(a.reservationDateTime).getTime() - new Date(b.reservationDateTime).getTime());
     
     return data;
@@ -228,3 +230,19 @@ export async function cancelReservation({ id }: { id: string }) {
     const { data } = await axiosInstance.put(`https://localhost:7190/reservation/cancel/${id}`);
     return data;
 }
+
+// STATISTICS
+
+export async function fetchReservationsStatistics({ startDate, endDate }: ReservationsFetch) {
+    const startDateTime = `${startDate}T00:00:00`;
+    const endDateTime = `${endDate}T23:59:59`;
+    const { data } = await axiosInstance.get(`https://localhost:7190/statistics/reservations?startDate=${startDateTime}&endDate=${endDateTime}`);
+    return data;
+};
+
+export async function fetchFinancialStatistics({ startDate, endDate }: ReservationsFetch) {
+    const startDateTime = `${startDate}T00:00:00`;
+    const endDateTime = `${endDate}T23:59:59`;
+    const { data } = await axiosInstance.get(`https://localhost:7190/statistics/financial?startDate=${startDateTime}&endDate=${endDateTime}`);
+    return data;
+};

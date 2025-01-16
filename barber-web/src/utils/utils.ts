@@ -56,3 +56,30 @@ export const getTodayDate = () => {
     const today = new Date();
     return today.toISOString().split('T')[0];
 };
+
+export const getDateRange = (period: string) => {
+    const now = new Date();
+    let startDate = new Date();
+
+    switch (period) {
+        case '1D':
+            startDate.setDate(now.getDate() - 1);
+            break;
+        case '1T':
+            startDate.setMonth(now.getMonth() - 1);
+            break;
+        case '1M':
+            startDate.setMonth(now.getMonth() - 1);
+            break;
+        case '1R':
+            startDate.setFullYear(now.getFullYear() - 1);
+            break;
+        default:
+            startDate = new Date(0);
+    }
+
+    return {
+        startDate: startDate.toISOString().split('T')[0],
+        endDate: now.toISOString().split('T')[0]
+    };
+};

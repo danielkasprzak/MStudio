@@ -27,7 +27,9 @@ export default () => {
             <div className="flex flex-col items-center">
                 <Title padding='16'>MSTUDIO</Title>
 
-                <TextButton>Panel</TextButton>
+                <Link to='/admin'>
+                    <TextButton>Panel</TextButton>
+                </Link>
                 <Link to='rezerwacje'>
                     <TextButton>Rezerwacje</TextButton>
                 </Link>

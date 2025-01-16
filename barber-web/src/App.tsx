@@ -20,6 +20,7 @@ import Reservations, { loader as reservationsLoader } from './components/admin/r
 import ReservationNew, { action as reservationNewAction } from './components/admin/reservations/ReservationNew';
 import { loader as traditionalReservationLoader } from './components/reservation/Traditional';
 import { TransitionedReservation, TransitionedLanding, TransitionedLogin, TransitionedAdmin, TransitionedThankYouPage, TransitionedBooking, TransitionedTraditional } from './components/Lazy';
+import Dashboard from './components/admin/dashboard/Dashboard';
 
 const Error = lazy(() => import('./components/Error'));
 
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
   { path: 'dziekujemy', element: <TransitionedThankYouPage />},
   { path: 'admin', element: <TransitionedAdmin />, errorElement: <Error />, loader: adminLoader,
     children: [
+      { index: true, element: <Dashboard /> },
       { path: 'rezerwacje', element: <Reservations />, loader: reservationsLoader,
         children: [
           { path: 'dodaj', element: <ReservationNew />, action: reservationNewAction },

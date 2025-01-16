@@ -25,18 +25,11 @@ namespace barber_api.Controllers
             return Ok(new { totalReservations });
         }
 
-        [HttpGet("payments")]
-        public async Task<IActionResult> GetTotalPayments([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
-        {
-            var totalPayments = await _statisticsService.GetTotalPayments(startDate, endDate);
-            return Ok(new { totalPayments });
-        }
-
-        [HttpGet("average-payment")]
+        [HttpGet("financial")]
         public async Task<IActionResult> GetAveragePayment([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
         {
-            var averagePayment = await _statisticsService.GetAveragePayment(startDate, endDate);
-            return Ok(new { averagePayment });
+            var (totalPayments, averagePayment) = await _statisticsService.GetPaymentsStatistics(startDate, endDate);
+            return Ok(new { totalPayments, averagePayment });
         }
 
         [HttpGet("popular-services")]
