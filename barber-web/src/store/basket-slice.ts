@@ -13,12 +13,14 @@ interface Cart {
     items: Offer[];
     totalPrice: number;
     totalDuration: number;
+    reservationDateTime: string | null;
 }
 
 const initialState: Cart = {
     items: [],
     totalPrice: 0,
-    totalDuration: 0
+    totalDuration: 0,
+    reservationDateTime: null
 }
 
 const basketSlice = createSlice({
@@ -53,10 +55,19 @@ const basketSlice = createSlice({
               state.totalPrice -= existingItem.price;
             }
         },
+        setReservationDateTime: (state, action) => {
+            state.reservationDateTime = action.payload;
+        },
         clearItems(state) {
             state.items = [];
             state.totalDuration = 0;
             state.totalPrice = 0;
+        },
+        clearReservation: (state) => {
+            state.items = [];
+            state.totalDuration = 0;
+            state.totalPrice = 0;
+            state.reservationDateTime = null;
         }
     } 
 });

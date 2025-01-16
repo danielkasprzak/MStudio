@@ -38,7 +38,7 @@ namespace barber_api.Services
         public async Task<bool> IsTimeSlotAvailableAsync(DateTime dateTime, int duration)
         {
             var conflictingReservation = await _context.Reservations
-                .Where(r => r.ReservationDateTime < dateTime.AddMinutes(duration) && r.ReservationDateTime.AddMinutes(r.Duration) > dateTime)
+                .Where(r => !r.IsCancelled && r.ReservationDateTime < dateTime.AddMinutes(duration) && r.ReservationDateTime.AddMinutes(r.Duration) > dateTime)
                 .FirstOrDefaultAsync();
 
             return conflictingReservation == null;
@@ -76,6 +76,8 @@ namespace barber_api.Services
                 .Where(r => r.ReservationDateTime >= startDate && r.ReservationDateTime <= endDate && !r.IsCancelled)
                 .ToListAsync();
 
+            var now = DateTime.Now;
+
             for (var date = startDate.Date; date <= endDate.Date; date = date.AddDays(1))
             {
                 var dayOfWeek = date.DayOfWeek.ToString();
@@ -104,6 +106,11 @@ namespace barber_api.Services
 
                     for (var time = startTime; time <= endTime.AddMinutes(-duration); time = time.AddMinutes(30))
                     {
+                        if (date == now.Date && time < now)
+                        {
+                            continue;
+                        }
+
                         if (!reservations.Any(r => r.ReservationDateTime < time.AddMinutes(duration) && r.ReservationDateTime.AddMinutes(r.Duration) > time))
                         {
                             availableTimeSlots.Add(time);

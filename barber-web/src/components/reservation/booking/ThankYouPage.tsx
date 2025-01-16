@@ -1,12 +1,22 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useDocumentTitle from "../../../hooks/useDocumentTitle";
-import { useAppSelector } from "../../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { formatDate } from "../../../utils/utils";
+import { basketActions } from "../../../store/basket-slice";
 
 export default () => {
     useDocumentTitle("MStudio - dziękujemy");
 
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const totalPrice = useAppSelector((state) => state.cart.totalPrice);
+    const reservationDateTime = useAppSelector((state) => state.cart.reservationDateTime);
     const services = useAppSelector((state) => state.cart.items);
+
+    const handleEndingReservation = () => {
+        navigate('/rezerwacja');
+        dispatch(basketActions.clearReservation());
+    };
 
     return (
         <div className='w-screen h-screen bg-stone-100 flex justify-center items-center'>
@@ -16,24 +26,25 @@ export default () => {
                 <p className="font-lato text-sm font-medium max-w-80 text-justify py-8">Serdecznie dziękujemy, za dokonanie rezerwacji w naszym salonie.
                     Mamy nadzieję, że wizyta przebiegnie pomyślnie.</p>
 
-                
-
                 {(totalPrice > 0) && 
                     <>
                         <p className="font-lato text-xs font-medium uppercase py-2 text-center">Twoja rezerwacja</p>
-                        <ul className="font-lato text-xs font-bold border border-stone-200 p-4">
+                        <ul className="font-lato text-xs font-bold border border-stone-300 p-4">
                             {services.map((service) => (
                                 <li className="font-medium" key={service.id}>{service.label} {service.quantity} x <span className="font-bold">{service.price}zł</span></li>
                             ))}
                         </ul>
                         
-                        <p className="font-lato text-xs font-medium py-2">Całkowity koszt rezerwacji: <span className="font-bold">{totalPrice}zł</span></p>
+                        <div className='w-full flex flex-col justify-center'>
+                            <p className="font-lato text-xs font-medium text-left pt-4 pb-2">Całkowity koszt rezerwacji: <span className="font-bold">{totalPrice}zł</span></p>
+                            <p className="font-lato text-xs font-medium text-left pb-8">Planowana data rezerwacji: <span className="font-bold">{reservationDateTime ? formatDate(reservationDateTime) : '-'}</span></p>
+                        </div>
                     </>
                 }
 
                 <p className="font-lato text-sm font-medium py-8">Do zobaczenia wkrótce!</p>
-
-                <button className="w-full uppercase font-bold text-xs tracking-wider font-lato border text-charcoal border-stone-300 px-4 py-2 flex flex-row justify-center items-center"><Link to={`/rezerwacja`}>Do rezerwacji</Link></button>
+                
+                <button onClick={handleEndingReservation} className="w-full uppercase font-bold text-xs tracking-wider font-lato border text-charcoal border-stone-300 px-4 py-2 flex flex-row justify-center items-center">Do rezerwacji</button>
             </div>
         </div>        
     );
