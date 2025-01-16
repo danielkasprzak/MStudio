@@ -1,7 +1,8 @@
+using Microsoft.AspNetCore.Mvc;
+using barber_api.Services;
+
 namespace barber_api.Controllers
 {
-    using Microsoft.AspNetCore.Mvc;
-
     [ApiController]
     [Route("auth")]
     public class AuthController : ControllerBase

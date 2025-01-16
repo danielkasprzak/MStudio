@@ -1,3 +1,4 @@
+using barber_api.Data;
 using barber_api.Models;
 using Microsoft.EntityFrameworkCore;
 

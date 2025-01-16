@@ -1,9 +1,6 @@
 using barber_api.Models;
+using barber_api.Data;
 using Microsoft.EntityFrameworkCore;
-using Npgsql;
-using NpgsqlTypes;
-using System.Data;
-
 
 namespace barber_api.Services
 {
@@ -36,9 +33,8 @@ namespace barber_api.Services
         {
             var existingEntity = await _context.SpecialOpeningHours.FindAsync(originalDate);
             if (existingEntity == null)
-            {
                 throw new DbUpdateConcurrencyException("The record you attempted to edit was not found. The record may have been deleted or modified by another user.");
-            }
+            
 
             _context.Entry(existingEntity).State = EntityState.Detached;
             _context.SpecialOpeningHours.Update(specialOpeningHour);
