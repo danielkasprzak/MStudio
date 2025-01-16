@@ -40,7 +40,7 @@ namespace barber_api.Controllers
 
         // PUT: /openinghours/{dayOfWeek}
         [HttpPut("{dayOfWeek}")]
-        [Authorize(Roles = "admin")]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Update(string dayOfWeek, [FromBody] OpeningHour openingHour)
         {
             if (openingHour == null || dayOfWeek != openingHour.DayOfWeek)

@@ -36,7 +36,7 @@ namespace barber_api.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> AddSpecialOpeningHour(SpecialOpeningHour specialOpeningHour)
         {
             await _service.AddSpecialOpeningHourAsync(specialOpeningHour);
@@ -44,7 +44,7 @@ namespace barber_api.Controllers
         }
 
         [HttpPut("{date}")]
-        [Authorize(Roles = "admin")]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> UpdateSpecialOpeningHour(DateOnly date, SpecialOpeningHour specialOpeningHour)
         {
             try { 
@@ -59,7 +59,7 @@ namespace barber_api.Controllers
         }
 
         [HttpDelete("{date}")]
-        [Authorize(Roles = "admin")]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> DeleteSpecialOpeningHour(DateOnly date)
         {
             try
