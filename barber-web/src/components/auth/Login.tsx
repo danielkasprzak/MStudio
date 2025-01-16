@@ -1,5 +1,5 @@
 import { useGoogleLogin } from '@react-oauth/google';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import axiosInstance from '../../utils/axiosInstance';
 
@@ -21,8 +21,6 @@ export default () => {
         flow: 'auth-code'
     });
 
-    const traditionalLogin = () => { };
-
     return (
         <div className='w-screen h-screen bg-stone-100 flex justify-center items-center'>
             <div className='p-16 bg-white border border-stone-300 text-charcoal flex flex-col justify-center items-center'>
@@ -31,7 +29,9 @@ export default () => {
                     <div className='flex justify-center items-center flex-col'>
                         <Button onClick={() => googleLogin()}>Rezerwacja z Google</Button>
                         <Spacer>lub</Spacer>
-                        <Button onClick={traditionalLogin}>Rezerwacja tradycyjna</Button>
+                        <Link to='/rezerwacja-tradycyjna'>
+                            <Button>Rezerwacja tradycyjna</Button>
+                        </Link>
                     </div>
             </div>
         </div>

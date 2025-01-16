@@ -16,6 +16,7 @@ interface UserInfo {
 export default () => {
     const navigate = useNavigate();
     const [isContextVisible, setIsContextVisible] = useState(false);
+    const [imageError, setImageError] = useState(false);
     const contextRef = useRef<HTMLDivElement>(null);
 
     const { data = [], error } = useQuery<UserInfo>({
@@ -48,7 +49,11 @@ export default () => {
 
     if (error) return <div>Error loading offers</div>;
 
-    const handleImageClick = () => {
+    const handleImageError = () => {
+        setImageError(true);
+    };
+
+    const handleUserContext = () => {
         setIsContextVisible((prev) => !prev);
     };
     
@@ -57,14 +62,21 @@ export default () => {
     }
 
     return (
-        <div onClick={handleImageClick} className="flex flex-row items-center hover:cursor-pointer">
+        <div onClick={handleUserContext} className="flex flex-row items-center hover:cursor-pointer">
             {Array.isArray(data) ? null : (
                     <>
-                        <img
-                            src={data.picture}
-                            alt={data.name}
-                            className="w-10 h-auto rounded-full mr-4"
-                        />
+                        {imageError ? (
+                            <div className="w-10 h-10 bg-stone-300 rounded-full mr-4 flex items-center justify-center">
+                                <span className="text-white font-bold">{data.name.charAt(0)}</span>
+                            </div>
+                        ) : (
+                            <img
+                                src={data.picture}
+                                alt={data.name}
+                                className="w-10 h-auto rounded-full mr-4"
+                                onError={handleImageError}
+                            />
+                        )}
                         <p className="font-medium font-cormorant text-xl text-charcoal">{data.name}</p>
                         {isContextVisible && (
                             <motion.div
