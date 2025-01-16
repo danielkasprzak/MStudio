@@ -7,7 +7,7 @@ namespace barber_api.Controllers
 {
     [ApiController]
     [Route("openinghours")]
-    public class OpeningHoursController : Controller
+    public class OpeningHoursController : ControllerBase
     {
         private readonly OpeningHoursService _openingHoursService;
         private readonly ILogger<OpeningHoursController> _logger;

@@ -1,65 +1,67 @@
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-
-[ApiController]
-[Route("auth")]
-public class AuthController : ControllerBase
+namespace barber_api.Controllers
 {
-    private readonly AuthService _authService;
+    using Microsoft.AspNetCore.Mvc;
 
-    public AuthController(AuthService authService)
+    [ApiController]
+    [Route("auth")]
+    public class AuthController : ControllerBase
     {
-        _authService = authService;
-    }
+        private readonly AuthService _authService;
 
-    [HttpPost("google")]
-    public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginRequest request)
-    {
-        await _authService.AuthenticateWithGoogleAsync(request.Code);
-        return Ok(new { message = "Authenticated successfully" });
-    }
-
-    [HttpPost("refresh-token")]
-    public async Task<IActionResult> RefreshToken()
-    {
-        var refreshToken = Request.Cookies["MSRTOKEN"];
-        if (string.IsNullOrEmpty(refreshToken))
+        public AuthController(AuthService authService)
         {
-            return Unauthorized("Refresh token is missing.");
+            _authService = authService;
         }
 
-        try
+        [HttpPost("google")]
+        public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginRequest request)
         {
-            var newAccessToken = await _authService.RefreshAccessTokenAsync(refreshToken);
-            return Ok(new { accessToken = newAccessToken });
+            await _authService.AuthenticateWithGoogleAsync(request.Code);
+            return Ok(new { message = "Authenticated successfully" });
         }
-        catch
+
+        [HttpPost("refresh-token")]
+        public async Task<IActionResult> RefreshToken()
         {
-            return StatusCode(500, "Internal server error");
+            var refreshToken = Request.Cookies["MSRTOKEN"];
+            if (string.IsNullOrEmpty(refreshToken))
+            {
+                return Unauthorized("Refresh token is missing.");
+            }
+
+            try
+            {
+                var newAccessToken = await _authService.RefreshAccessTokenAsync(refreshToken);
+                return Ok(new { accessToken = newAccessToken });
+            }
+            catch
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpGet("check")]
+        public IActionResult CheckAuth()
+        {
+            var roles = _authService.CheckAuth();
+            if (roles == null || roles.Count == 0)
+            {
+                return Unauthorized();
+            }
+
+            return Ok(new { roles });
+        }
+
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            _authService.ClearAuthCookies();
+            return Ok(new { message = "Logged out successfully" });
         }
     }
 
-    [HttpGet("check")]
-    public IActionResult CheckAuth()
+    public class GoogleLoginRequest
     {
-        var roles = _authService.CheckAuth();
-        if (roles == null || roles.Count == 0)
-        {
-            return Unauthorized();
-        }
-
-        return Ok(new { roles });
+        public required string Code { get; set; }
     }
-
-    [HttpPost("logout")]
-    public IActionResult Logout()
-    {
-        _authService.ClearAuthCookies();
-        return Ok(new { message = "Logged out successfully" });
-    }
-}
-
-public class GoogleLoginRequest
-{
-    public required string Code { get; set; }
 }

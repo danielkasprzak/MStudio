@@ -7,7 +7,7 @@ namespace barber_api.Controllers
 {
     [ApiController]
     [Route("reservation")]
-    public class ReservationsController : Controller
+    public class ReservationsController : ControllerBase
     {
         private readonly ReservationsService _reservationService;
         private readonly AuthService _authorizationService;
