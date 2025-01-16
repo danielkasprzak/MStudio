@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { generateReservationId } from '../../../utils/utils';
 import { queryClient, fetchAvailableSlots, bookNewReservation } from '../../../utils/http';
@@ -25,13 +25,18 @@ interface ReservationModel {
 
 export default () => {
     useDocumentTitle("MStudio - rezerwacja");
-
-
     const navigate = useNavigate();
 
     const totalDuration = useAppSelector((state) => state.cart.totalDuration);
     const totalPrice = useAppSelector((state) => state.cart.totalPrice);
     const services = useAppSelector((state) => state.cart.items);
+
+    useEffect(() => {
+        if (!totalDuration || totalDuration <= 0) {
+            navigate('/rezerwacja');
+        }
+    }, [totalDuration, navigate]);
+
     const [activeDate, setActiveDate] = useState<string | null>(null);
     const [activeSlot, setActiveSlot] = useState<string | null>(null);
 
@@ -71,7 +76,7 @@ export default () => {
 
         const newReservation: ReservationModel = {
             reservationId: generateReservationId(),
-            email: "email@mail.com",
+            email: "email@mail.com", // TODO: pozbycie sie
             services: JSON.stringify(services),
             duration: totalDuration,
             reservationDateTime: activeSlot,
