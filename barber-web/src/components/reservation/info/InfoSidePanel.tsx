@@ -4,10 +4,12 @@ import Phone from "./Phone"
 import Title from '../../Title';
 import OpeningSchedule from './OpeningSchedule';
 import Map from './Map';
+import FlatButton from '../../FlatButton';
+import { Link } from 'react-router-dom';
 
 interface Props {
     isActive: boolean;
-    onHover: () => void;
+    onHover?: () => void;
     activeHeight: string;
     inactiveHeight: string;
 }
@@ -23,6 +25,11 @@ export default ({ isActive, onHover, activeHeight, inactiveHeight }: Props) => {
         >
             <Title>MSTUDIO</Title>
             <Phone>622 371 764</Phone>
+            {onHover === undefined && (
+                <Link to="/rezerwacja" className='w-full my-4'>
+                    <FlatButton isActive={false} disabled={false}>Rezerwacja online</FlatButton>
+                </Link>
+            )}
             <Map />
 
             <AnimatePresence>

@@ -9,9 +9,10 @@ interface Props {
     description?: string;
     price: number;
     time: number;
+    isTraditional?: boolean;
 }
 
-export default ({ id, label, description, price, time } : Props) => {
+export default ({ id, label, description, price, time, isTraditional } : Props) => {
     const dispatch = useAppDispatch();
 
     const addItemHandler = (id: number, label: string, price: number, time: number) => {
@@ -29,7 +30,7 @@ export default ({ id, label, description, price, time } : Props) => {
                     <p className="font-extrabold text-xs text-right">{price}.00zł</p>
                     <p className="font-normal text-xs text-right text-stone-500">{time}min</p>
                 </div>
-                <TextButton onClick={() => addItemHandler(id, label, price, time)}>Umów</TextButton>
+                {!isTraditional && <TextButton onClick={() => addItemHandler(id, label, price, time)}>Umów</TextButton>}
             </div>
         </li>
     );

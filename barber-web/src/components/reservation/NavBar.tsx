@@ -64,7 +64,7 @@ export default () => {
                         <img
                             src={data.picture}
                             alt={data.name}
-                            className="w-12 h-auto rounded-full mr-4"
+                            className="w-10 h-auto rounded-full mr-4"
                         />
                         <p className="font-medium font-cormorant text-xl text-charcoal">{data.name}</p>
                         {isContextVisible && (
