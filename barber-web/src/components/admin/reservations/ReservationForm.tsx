@@ -18,13 +18,6 @@ interface Props {
     onSubmit: (data: any) => void;
 }
 
-interface Offer {
-    label: string;
-    description?: string;
-    price: number;
-    time: number;
-}
-
 export default ({ children, inputData, onSubmit }: Props) => {
     const [reservationId, setReservationId] = useState(inputData.reservationId);
     const [email, setEmail] = useState(inputData.email);

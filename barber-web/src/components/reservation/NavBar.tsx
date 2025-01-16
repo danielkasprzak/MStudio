@@ -1,10 +1,10 @@
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useEffect, useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { fetchUserInfo, logout } from "../../utils/http";
 import { motion } from "motion/react";
 
 import NavButton from "./NavButton";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useEffect, useRef, useState } from "react";
 import FlatButton from "../FlatButton";
 
 interface UserInfo {

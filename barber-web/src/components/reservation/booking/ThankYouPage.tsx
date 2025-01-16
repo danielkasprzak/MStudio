@@ -21,7 +21,6 @@ export default () => {
                 {(totalPrice > 0) && 
                     <>
                         <p className="font-lato text-xs font-medium uppercase py-2 text-center">Twoja rezerwacja</p>
-                        {/* <p className="font-lato text-xs font-medium py-2">Zarezerwowane usługi</p> */}
                         <ul className="font-lato text-xs font-bold border border-stone-200 p-4">
                             {services.map((service) => (
                                 <li className="font-medium" key={service.id}>{service.label} {service.quantity} x <span className="font-bold">{service.price}zł</span></li>

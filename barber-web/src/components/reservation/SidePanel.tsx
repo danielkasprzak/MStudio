@@ -1,6 +1,7 @@
 import { useState } from "react";
-import Basket from "./basket/BasketSidePanel"
-import Info from "./info/InfoSidePanel"
+
+import Basket from "./basket/BasketSidePanel";
+import Info from "./info/InfoSidePanel";
 
 interface Props {
     isTraditional?: boolean;

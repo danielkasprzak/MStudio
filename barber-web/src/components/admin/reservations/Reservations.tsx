@@ -1,26 +1,16 @@
+import { useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { queryClient, fetchReservations, cancelReservation } from '../../../utils/http';
 import { getTodayDate } from '../../../utils/utils';
 import { Link, Outlet } from 'react-router-dom';
+import { Reservation as ReservationModel } from '../../../interfaces/reservationsInterfaces';
 
 import Title from '../../Title';
 import Reservation from './Reservation';
 import FormInput from '../FormInput';
-import { useState } from 'react';
 import TextButton from '../../TextButton';
 import FlatButton from '../../FlatButton';
 import SearchBar from '../../SearchBar';
-
-interface ReservationModel {
-    reservationId: string;
-    email: string;
-    services: string;
-    duration: number;
-    reservationDateTime: string;
-    phone: string;
-    price: number;
-    isCancelled: boolean;
-}
 
 export default () => {
     const [startDate, setStartDate] = useState(getTodayDate());

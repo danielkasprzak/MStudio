@@ -1,20 +1,10 @@
-import Title from '../../Title';
 import { ActionFunction, useSubmit, useNavigation, redirect } from 'react-router-dom';
 import { bookNewReservationAsAdmin, queryClient } from '../../../utils/http';
+import { Reservation as ReservationModel } from '../../../interfaces/reservationsInterfaces';
 
+import Title from '../../Title';
 import ReservationForm from './ReservationForm';
 import TextButton from '../../TextButton';
-
-interface NewReservation {
-    reservationId: string;
-    email: string;
-    services: string;
-    duration: number;
-    reservationDateTime: string;
-    phone: string;
-    price: number;
-    isCancelled: boolean;
-}
 
 export default () => {
     const { state } = useNavigation();
@@ -53,7 +43,7 @@ export default () => {
 export const action: ActionFunction = async ({ request }) => {
     const formData = await request.formData();
     
-    const newReservation: NewReservation = {
+    const newReservation: ReservationModel = {
         reservationId: formData.get('reservationId') as string,
         email: formData.get('email') as string,
         services: formData.get('services') as string,

@@ -1,18 +1,11 @@
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import { fetchOffers, queryClient } from "../../utils/http";
 import { useQuery } from "@tanstack/react-query";
+import { Offer as OfferModel } from "../../interfaces/offersInterfaces";
 
 import SidePanel from "./SidePanel";
 import Title from "../Title";
 import Offer from "./offers/Offer";
-
-interface OfferModel {
-    id: number;
-    label: string;
-    price: number;
-    duration: number;
-    description?: string;
-}
 
 export default () => {
     useDocumentTitle("MStudio - rezerwacja tradycyjna");

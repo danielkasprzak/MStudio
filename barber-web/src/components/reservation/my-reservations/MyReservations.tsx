@@ -1,21 +1,11 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchMyReservations, queryClient } from '../../../utils/http';
+import { Reservation as ReservationModel } from '../../../interfaces/reservationsInterfaces';
 
 import MyReservation from './MyReservation';
 import Title from '../../Title';
 import FlatButton from '../../FlatButton';
-
-interface ReservationModel {
-    reservationId: string;
-    email: string;
-    services: string;
-    duration: number;
-    reservationDateTime: string;
-    phone: string;
-    price: number;
-    isCancelled: boolean;
-}
 
 export default () => {
     const { data = [], error } = useQuery<ReservationModel[]>({

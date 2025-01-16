@@ -1,10 +1,10 @@
 import { useGoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import useDocumentTitle from "../../hooks/useDocumentTitle";
+import axiosInstance from '../../utils/axiosInstance';
 
 import Button from './Button';
 import Spacer from './Spacer';
-import axiosInstance from '../../utils/axiosInstance';
 
 export default () => {
     useDocumentTitle("MStudio - logowanie");

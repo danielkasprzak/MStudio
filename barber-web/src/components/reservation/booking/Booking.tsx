@@ -5,23 +5,13 @@ import { queryClient, fetchAvailableSlots, bookNewReservation } from '../../../u
 import store from '../../../store/index';
 import { useAppSelector } from '../../../store/hooks';
 import useDocumentTitle from '../../../hooks/useDocumentTitle';
+import { Reservation as ReservationModel } from '../../../interfaces/reservationsInterfaces';
+import { useNavigate } from 'react-router-dom';
 
 import DatesSwiper from './DatesSwiper';
 import HoursSwiper from './HoursSwiper';
-import { useNavigate } from 'react-router-dom';
 
 type AvailabilityModel = string;
-
-interface ReservationModel {
-    reservationId: string;
-    email: string;
-    services: string;
-    duration: number;
-    reservationDateTime: string;
-    phone: string;
-    price: number;
-    isCancelled: boolean;
-}
 
 export default () => {
     useDocumentTitle("MStudio - rezerwacja");

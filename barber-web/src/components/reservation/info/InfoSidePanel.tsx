@@ -1,11 +1,11 @@
 import { motion, AnimatePresence  } from 'motion/react';
+import { Link } from 'react-router-dom';
 
 import Phone from "./Phone"
 import Title from '../../Title';
 import OpeningSchedule from './OpeningSchedule';
 import Map from './Map';
 import FlatButton from '../../FlatButton';
-import { Link } from 'react-router-dom';
 
 interface Props {
     isActive: boolean;

@@ -1,4 +1,5 @@
 import { useAppSelector } from '../../../store/hooks';
+
 import SelectedOffer from './SelectedOffer';
 
 interface Props {
@@ -7,8 +8,6 @@ interface Props {
   
 export default ({ isActive }: Props) => {
     const basketItems = useAppSelector((state) => state.cart.items);
-
-
     return (
         <ul className="flex flex-col justify-center">
             {basketItems.length === 0 ? (
