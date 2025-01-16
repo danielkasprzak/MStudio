@@ -8,7 +8,7 @@ interface Props {
 
 export default ({ children, onClick, type } : Props) => {
     return (
-        <button type={type} onClick={onClick} className="font-lato font-bold uppercase text-xs tracking-wider text-charcoal border-stone-300 px-4 py-2">
+        <button type={type} onClick={onClick} className="font-lato font-bold uppercase text-xs outline-none tracking-wider text-charcoal border-stone-300 px-4 py-2">
             {children}
         </button>
     );

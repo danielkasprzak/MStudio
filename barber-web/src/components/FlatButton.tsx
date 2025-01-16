@@ -20,7 +20,7 @@ export default ({ children, onClick, type, margin, isActive, disabled } : Props)
 
     return (
         <motion.button type={type} disabled={disabled} onClick={onClick} 
-            className={`mx-${margin} ${textColor} w-full font-lato font-bold uppercase text-xs tracking-wider border border-stone-300 px-4 py-2`}
+            className={`mx-${margin} ${textColor} w-full font-lato font-bold uppercase text-xs tracking-wider outline-none border border-stone-300 px-4 py-2`}
             whileHover={{  backgroundColor: "#f5f5f4" }}
             style={{ backgroundColor: bgColor }}
         >
