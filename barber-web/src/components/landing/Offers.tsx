@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, useAnimation, useScroll, useTransform } from 'motion/react';
+import { AnimatePresence, motion, useAnimation, useScroll, useTransform } from 'motion/react';
 
 import Paragraph from './Paragraph';
 import Button from './Button';
@@ -17,8 +17,18 @@ interface Props {
     imgRef: React.RefObject<HTMLElement>;
 }
 
+const OFFERS = [
+    { name: 'stylizacja włosów', description: 'Podkreśl swój styl dzięki profesjonalnej stylizacji włosów. Oferujemy szeroką gamę rozwiązań – od codziennych fryzur, przez upięcia, aż po stylizacje na specjalne okazje, takie jak śluby czy wieczorne wyjścia.', scrollFrom: 0.85, scrollTo: 0.9 },
+    { name: 'sauna parowa', description: 'Sauna parowa to luksusowy zabieg, który wzmacnia efekty odżywczych kuracji, otwierając łuski włosów i umożliwiając wniknięcie składników aktywnych w ich głąb. Idealna dla osób z suchymi, zniszczonymi lub matowymi włosami, sauna parowa przywraca nawilżenie, miękkość i zdrowy połysk.', scrollFrom: 0.75, scrollTo: 0.8 },
+    { name: 'botoks na włosy', description: 'Botoks na włosy to prawdziwa terapia młodości. Zabieg intensywnie nawilża, wzmacnia i odbudowuje włosy od nasady aż po końcówki, eliminując oznaki zniszczenia i matowości.', scrollFrom: 0.65, scrollTo: 0.7 },
+    { name: 'keratynowe wygładzanie włosów', description: 'Odmień swoje włosy dzięki keratynowemu wygładzaniu, które dogłębnie regeneruje i ujarzmia nawet najbardziej niesforne pasma. To zabieg idealny dla osób pragnących gładkich, lśniących włosów bez codziennej walki z prostowaniem.', scrollFrom: 0.55, scrollTo: 0.6 },
+    { name: 'koloryzacja włosów', description: 'Koloryzacja włosów w naszym salonie to połączenie najnowszych trendów i najwyższej jakości produktów. Oferujemy zarówno subtelne odświeżenie koloru, jak i pełne metamorfozy. Balayage, ombré, refleksy czy jednolite kolory – każda usługa jest dopasowana do Twojej urody, stylu życia i kondycji włosów.', scrollFrom: 0.45, scrollTo: 0.5 },
+    { name: 'strzyżenie włosów', description: 'Nasze strzyżenie włosów to więcej niż zwykła usługa – to doświadczenie tworzenia fryzury, która podkreśla Twoją osobowość i potrzeby. Niezależnie od tego, czy szukasz klasycznego cięcia, modnych trendów, czy funkcjonalnej fryzury dla najmłodszych, nasz zespół doświadczonych stylistów dostosuje technikę do rodzaju włosów i oczekiwań.', scrollFrom: 0.35, scrollTo: 0.4 },
+]
+
 export default ({imgRef}:Props) => {
     const sectionRef = useRef(null);
+    const [currentOffer, setCurrentOffer] = useState(OFFERS[0]);
 
     const { scrollYProgress: offersScroll } = useScroll({
         target: sectionRef,
@@ -29,10 +39,10 @@ export default ({imgRef}:Props) => {
         target: imgRef,
     });
 
-    const y = useTransform(offersScroll, [0, 1], ["-20%", "10%"]);
     const imageTranslateY = useTransform(globalScroll, [0.35, 0.5], ["-100vh", "0vh"]);
-
+    const bgColor = useTransform(globalScroll, [0.5, 0.55], ["#FFFFFF", "#dcbca8"]);
     const imageControls = useAnimation();
+    const bgColorAnim = useAnimation();
 
     useEffect(() => {
         const unsubscribe = globalScroll.on('change', (latest) => {
@@ -46,8 +56,7 @@ export default ({imgRef}:Props) => {
                 imageControls.start({
                     clipPath: 'inset(0% 0% 0% 0%)',
                     transition: { duration: 0.3 },
-                });
-            }
+                });           }
             else {
                 imageControls.start({
                     clipPath: 'inset(20% 30% 20% 30%)',
@@ -57,23 +66,40 @@ export default ({imgRef}:Props) => {
         });
     
         return () => unsubscribe();
-    }, [globalScroll, imageControls]);
+    }, [globalScroll, imageControls, bgColorAnim]);
     
+    useEffect(() => {
+        const unsubscribe = offersScroll.on('change', (latest) => {
+            const newOffer = OFFERS.find(offer => latest >= offer.scrollFrom && latest < offer.scrollTo);
+            if (newOffer) {
+                setCurrentOffer(newOffer);
+            }
+        });
+
+        return () => unsubscribe();
+    }, [offersScroll, OFFERS]);
 
     return (  
         <section ref={sectionRef} id="oferty" className="relative h-[300vh]">
-            <div className='h-screen sticky top-0'>
-                <div className="absolute inset-0 overflow-hidden z-0">
-                    <motion.div className='absolute w-full h-[120%] bg-stone-100' style={{top: y}}>
-                        {/* <img src={bgImg} alt='bg' className='w-full h-full object-cover'/> */}
-                    </motion.div>
-                </div>
-
+            <motion.div className='h-screen sticky top-0' style={{ backgroundColor: bgColor }}>
                 <div className='absolute inset-0 flex flex-row items-center w-full h-full'>
-                    <div className='w-1/2 h-full flex flex-col justify-center items-center'>
+                    <div className='relative w-1/2 h-full flex flex-col justify-center items-center'>
                         <div className='flex flex-col justify-center'>
-                            <h2 className='font-lato text-charcoal font-bold text-xs tracking-wider uppercase z-20'>Oferta</h2>
-                            <Paragraph textColor="#353535"></Paragraph>
+                            <h2 className='font-lato text-white font-bold text-xs tracking-wider uppercase z-20'>Oferta</h2>
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={currentOffer.name}
+                                    className='flex flex-col justify-center h-32 max-w-96'
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ duration: 0.2 }}
+                                >
+                                    <Paragraph textColor="#ffffff">{currentOffer.name}</Paragraph>
+                                    <p className='font-lato font-medium text-justify text-[#f0f0f0] text-xs'>{currentOffer.description}</p>
+                                </motion.div>
+                            </AnimatePresence>
+                            
                             <Link to='/rezerwacja'>
                                 <Button>Zarezerwuj wizytę</Button>
                             </Link>                            
@@ -87,20 +113,19 @@ export default ({imgRef}:Props) => {
                             transition={{ duration: 0.3 }}
                             style={{ 
                                 translateY: imageTranslateY,
-                                clipPath: 'inset(20% 30% 20% 30%)'
                             }}
                         >
                             
-                            <OfferImage image={stylingImg} isLast alt="keratynowe wygladzanie wlosow" scrollYProgress={offersScroll} scrollFrom={0.9} scrollTo={0.95} />
-                            <OfferImage image={saunaImg} isLast={false} alt="keratynowe wygladzanie wlosow" scrollYProgress={offersScroll} scrollFrom={0.8} scrollTo={0.85} />
-                            <OfferImage image={botoxImg} isLast={false} alt="keratynowe wygladzanie wlosow" scrollYProgress={offersScroll} scrollFrom={0.7} scrollTo={0.75} />
-                            <OfferImage image={keratinImg} isLast={false} alt="keratynowe wygladzanie wlosow" scrollYProgress={offersScroll} scrollFrom={0.6} scrollTo={0.65} />
-                            <OfferImage image={colorationImg} isLast={false} alt="koloryzacja wlosow" scrollYProgress={offersScroll} scrollFrom={0.5} scrollTo={0.55} />
-                            <OfferImage image={cutImg} isLast={false} alt="strzyzenie wlosow" scrollYProgress={offersScroll} scrollFrom={0.4} scrollTo={0.45} />
+                            <OfferImage image={stylingImg} isLast alt="stylizacja wlosow" scrollYProgress={offersScroll} scrollFrom={0.85} scrollTo={0.9} />
+                            <OfferImage image={saunaImg} isLast={false} alt="sauna parowa" scrollYProgress={offersScroll} scrollFrom={0.75} scrollTo={0.8} />
+                            <OfferImage image={botoxImg} isLast={false} alt="botoks na wlosy" scrollYProgress={offersScroll} scrollFrom={0.65} scrollTo={0.7} />
+                            <OfferImage image={keratinImg} isLast={false} alt="keratynowe wygladzanie wlosow" scrollYProgress={offersScroll} scrollFrom={0.55} scrollTo={0.6} />
+                            <OfferImage image={colorationImg} isLast={false} alt="koloryzacja wlosow" scrollYProgress={offersScroll} scrollFrom={0.45} scrollTo={0.5} />
+                            <OfferImage image={cutImg} isLast={false} alt="strzyzenie wlosow" scrollYProgress={offersScroll} scrollFrom={0.35} scrollTo={0.4} />
                         </motion.div>
                     </div>
                 </div>
-        </div>
+        </motion.div>
     </section>
     );
 };

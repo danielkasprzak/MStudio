@@ -19,7 +19,7 @@ export default () => {
 
     return (
         <div className='absolute inset-0 flex flex-row items-center w-full h-full'>
-            <div className='w-full h-full flex flex-col justify-center items-center'>
+            <div className='w-full h-full relative flex flex-col justify-center items-center'>
                 <motion.div 
                     className='flex flex-col justify-center'
                     style={{ translateY, opacity }}

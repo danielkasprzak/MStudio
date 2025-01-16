@@ -41,7 +41,7 @@ export default () => {
     
     return (
         <ReactLenis options={{ autoRaf: false, smoothWheel: true }} ref={lenisRef} root>
-            <div className='bg-white w-full h-full' ref={imgRef}>
+            <div className='relative w-full h-full bg-white' ref={imgRef}>
                 <Hero heroRef={heroRef}/>
                 <Offers imgRef={imgRef} />
                 
