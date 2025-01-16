@@ -82,7 +82,7 @@ export default ({ heroRef }: Props) => {
                         <Introduction textColorFirst={textColorFirst} textColorSecond={textColorSecond} opacityTitle={opacityTitle} opacityParagraph={opacityParagraph} />
                         <Video source={HeroVideo} zClass='-z-40' videoRef={heroVideoRef} />
                     </div>
-                    <motion.div id="o-nas" className="relative w-screen h-screen" animate={videoOverlay}>
+                    <motion.div id="poznaj-nas" className="relative w-screen h-screen" animate={videoOverlay}>
                         <About />
                         <Video source={SecondVideo} zClass='-z-20' videoRef={secondVideoRef} />
                     </motion.div>
