@@ -79,6 +79,7 @@ builder.Services.AddScoped<OffersService>();
 builder.Services.AddScoped<OpeningHoursService>();
 builder.Services.AddScoped<SpecialOpeningHoursService>();
 builder.Services.AddScoped<ReservationsService>();
+builder.Services.AddScoped<StatisticsService>();
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
