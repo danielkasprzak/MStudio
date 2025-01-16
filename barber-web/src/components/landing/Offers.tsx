@@ -18,12 +18,12 @@ interface Props {
 }
 
 const OFFERS = [
-    { name: 'stylizacja włosów', description: 'Podkreśl swój styl dzięki profesjonalnej stylizacji włosów. Oferujemy szeroką gamę rozwiązań – od codziennych fryzur, przez upięcia, aż po stylizacje na specjalne okazje, takie jak śluby czy wieczorne wyjścia.', scrollFrom: 0.85, scrollTo: 0.9 },
-    { name: 'sauna parowa', description: 'Sauna parowa to luksusowy zabieg, który wzmacnia efekty odżywczych kuracji, otwierając łuski włosów i umożliwiając wniknięcie składników aktywnych w ich głąb. Idealna dla osób z suchymi, zniszczonymi lub matowymi włosami, sauna parowa przywraca nawilżenie, miękkość i zdrowy połysk.', scrollFrom: 0.75, scrollTo: 0.8 },
-    { name: 'botoks na włosy', description: 'Botoks na włosy to prawdziwa terapia młodości. Zabieg intensywnie nawilża, wzmacnia i odbudowuje włosy od nasady aż po końcówki, eliminując oznaki zniszczenia i matowości.', scrollFrom: 0.65, scrollTo: 0.7 },
-    { name: 'keratynowe wygładzanie włosów', description: 'Odmień swoje włosy dzięki keratynowemu wygładzaniu, które dogłębnie regeneruje i ujarzmia nawet najbardziej niesforne pasma. To zabieg idealny dla osób pragnących gładkich, lśniących włosów bez codziennej walki z prostowaniem.', scrollFrom: 0.55, scrollTo: 0.6 },
-    { name: 'koloryzacja włosów', description: 'Koloryzacja włosów w naszym salonie to połączenie najnowszych trendów i najwyższej jakości produktów. Oferujemy zarówno subtelne odświeżenie koloru, jak i pełne metamorfozy. Balayage, ombré, refleksy czy jednolite kolory – każda usługa jest dopasowana do Twojej urody, stylu życia i kondycji włosów.', scrollFrom: 0.45, scrollTo: 0.5 },
-    { name: 'strzyżenie włosów', description: 'Nasze strzyżenie włosów to więcej niż zwykła usługa – to doświadczenie tworzenia fryzury, która podkreśla Twoją osobowość i potrzeby. Niezależnie od tego, czy szukasz klasycznego cięcia, modnych trendów, czy funkcjonalnej fryzury dla najmłodszych, nasz zespół doświadczonych stylistów dostosuje technikę do rodzaju włosów i oczekiwań.', scrollFrom: 0.35, scrollTo: 0.4 },
+    { name: 'stylizacja włosów', description: 'Podkreśl swój styl dzięki profesjonalnej stylizacji włosów. Oferujemy szeroką gamę rozwiązań – od codziennych fryzur, przez upięcia, aż po stylizacje na specjalne okazje, takie jak śluby czy wieczorne wyjścia.', scrollFrom: 0.75, scrollTo: 0.8 },
+    { name: 'sauna parowa', description: 'Sauna parowa to luksusowy zabieg, który wzmacnia efekty odżywczych kuracji, otwierając łuski włosów i umożliwiając wniknięcie składników aktywnych w ich głąb. Idealna dla osób z suchymi, zniszczonymi lub matowymi włosami, sauna parowa przywraca nawilżenie, miękkość i zdrowy połysk.', scrollFrom: 0.65, scrollTo: 0.7 },
+    { name: 'botoks na włosy', description: 'Botoks na włosy to prawdziwa terapia młodości. Zabieg intensywnie nawilża, wzmacnia i odbudowuje włosy od nasady aż po końcówki, eliminując oznaki zniszczenia i matowości.', scrollFrom: 0.55, scrollTo: 0.6 },
+    { name: 'keratynowe wygładzanie włosów', description: 'Odmień swoje włosy dzięki keratynowemu wygładzaniu, które dogłębnie regeneruje i ujarzmia nawet najbardziej niesforne pasma. To zabieg idealny dla osób pragnących gładkich, lśniących włosów bez codziennej walki z prostowaniem.', scrollFrom: 0.45, scrollTo: 0.5 },
+    { name: 'koloryzacja włosów', description: 'Koloryzacja włosów w naszym salonie to połączenie najnowszych trendów i najwyższej jakości produktów. Oferujemy zarówno subtelne odświeżenie koloru, jak i pełne metamorfozy. Balayage, ombré, refleksy czy jednolite kolory – każda usługa jest dopasowana do Twojej urody, stylu życia i kondycji włosów.', scrollFrom: 0.35, scrollTo: 0.4 },
+    { name: 'strzyżenie włosów', description: 'Nasze strzyżenie włosów to więcej niż zwykła usługa – to doświadczenie tworzenia fryzury, która podkreśla Twoją osobowość i potrzeby. Niezależnie od tego, czy szukasz klasycznego cięcia, modnych trendów, czy funkcjonalnej fryzury dla najmłodszych, nasz zespół doświadczonych stylistów dostosuje technikę do rodzaju włosów i oczekiwań.', scrollFrom: 0.25, scrollTo: 0.3 },
 ]
 
 export default ({imgRef}:Props) => {
@@ -41,6 +41,7 @@ export default ({imgRef}:Props) => {
 
     const imageTranslateY = useTransform(globalScroll, [0.35, 0.5], ["-100vh", "0vh"]);
     const bgColor = useTransform(globalScroll, [0.5, 0.55], ["#FFFFFF", "#dcbca8"]);
+    const offersOpacity = useTransform(globalScroll, [0.5, 0.55], [0, 1]);
     const imageControls = useAnimation();
     const bgColorAnim = useAnimation();
 
@@ -75,7 +76,6 @@ export default ({imgRef}:Props) => {
                 setCurrentOffer(newOffer);
             }
         });
-
         return () => unsubscribe();
     }, [offersScroll, OFFERS]);
 
@@ -84,7 +84,7 @@ export default ({imgRef}:Props) => {
             <motion.div className='h-screen sticky top-0' style={{ backgroundColor: bgColor }}>
                 <div className='absolute inset-0 flex flex-row items-center w-full h-full'>
                     <div className='relative w-1/2 h-full flex flex-col justify-center items-center'>
-                        <div className='flex flex-col justify-center'>
+                        <motion.div className='flex flex-col justify-center' style={{ opacity: offersOpacity }}>
                             <h2 className='font-lato text-white font-bold text-xs tracking-wider uppercase z-20'>Oferta</h2>
                             <AnimatePresence mode="wait">
                                 <motion.div
@@ -103,7 +103,7 @@ export default ({imgRef}:Props) => {
                             <Link to='/rezerwacja'>
                                 <Button>Zarezerwuj wizytę</Button>
                             </Link>                            
-                        </div>
+                        </motion.div>
                     </div>
                     <div className='w-1/2 h-full relative'>
                         <motion.div
