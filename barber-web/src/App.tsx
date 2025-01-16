@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from './utils/http';
 import { lazy } from 'react';
+import { AnimatePresence } from 'motion/react';
 
 import { protectedLoader, adminLoader } from './utils/http';
 import MyReservations, { loader as myReservationsLoader } from './components/reservation/my-reservations/MyReservations';
@@ -14,31 +15,27 @@ import OpeningHoursEdit, { loader as openingHoursEditLoader, action as openingHo
 import SpecialOpeningHours, { loader as specialOpeningHoursLoader } from './components/admin/special-opening-hours/SpecialOpeningHours';
 import SpecialOpeningHourNew, { action as specialOpeningHourNewAction } from './components/admin/special-opening-hours/SpecialOpeningHourNew';
 import SpecialOpeningHourEdit, { loader as specialOpeningHourEditLoader, action as specialOpeningHourEditAction } from './components/admin/special-opening-hours/SpecialOpeningHourEdit';
-import Booking, { loader as bookingLoader } from './components/reservation/booking/Booking';
+import { loader as bookingLoader } from './components/reservation/booking/Booking';
 import Reservations, { loader as reservationsLoader } from './components/admin/reservations/Reservations';
 import ReservationNew, { action as reservationNewAction } from './components/admin/reservations/ReservationNew';
-import Traditional, { loader as traditionalReservationLoader } from './components/reservation/Traditional';
+import { loader as traditionalReservationLoader } from './components/reservation/Traditional';
+import { TransitionedReservation, TransitionedLanding, TransitionedLogin, TransitionedAdmin, TransitionedThankYouPage, TransitionedBooking, TransitionedTraditional } from './components/Lazy';
 
-const Landing = lazy(() => import('./components/landing/Landing'));
-const Login = lazy(() => import('./components/auth/Login'));
-const Admin = lazy(() => import('./components/admin/Admin'));
-const Reservation = lazy(() => import('./components/reservation/Reservation'));
-const ThankYouPage = lazy(() => import('./components/reservation/booking/ThankYouPage'));
 const Error = lazy(() => import('./components/Error'));
 
 const router = createBrowserRouter([
-  { index: true, element: <Landing />, errorElement: <Error /> },
-  { path: 'login', element: <Login />, errorElement: <Error /> },
-  { path: 'rezerwacja-tradycyjna', element: <Traditional />, errorElement: <Error />, loader: traditionalReservationLoader },
-  { path: 'rezerwacja', element: <Reservation />, errorElement: <Error />, loader: protectedLoader,
+  { index: true, element: <TransitionedLanding />, errorElement: <Error /> },
+  { path: 'login', element: <TransitionedLogin />, errorElement: <Error /> },
+  { path: 'rezerwacja-tradycyjna', element: <TransitionedTraditional />, errorElement: <Error />, loader: traditionalReservationLoader },
+  { path: 'rezerwacja', element: <TransitionedReservation />, errorElement: <Error />, loader: protectedLoader,
     children: [
       { index: true, element: <Offers />, loader: offersLoader },
       { path: 'moje-rezerwacje', element: <MyReservations />, loader: myReservationsLoader }
     ]
   },
-  { path: 'rezerwuj', element: <Booking />, loader: bookingLoader },
-  { path: 'dziekujemy', element: <ThankYouPage />},
-  { path: 'admin', element: <Admin />, errorElement: <Error />, loader: adminLoader,
+  { path: 'rezerwuj', element: <TransitionedBooking />, loader: bookingLoader },
+  { path: 'dziekujemy', element: <TransitionedThankYouPage />},
+  { path: 'admin', element: <TransitionedAdmin />, errorElement: <Error />, loader: adminLoader,
     children: [
       { path: 'rezerwacje', element: <Reservations />, loader: reservationsLoader,
         children: [
@@ -68,7 +65,13 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <QueryClientProvider client={queryClient}><RouterProvider router={router} /></QueryClientProvider>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AnimatePresence mode="wait">
+        <RouterProvider router={router} />
+      </AnimatePresence>
+    </QueryClientProvider>
+  );
 }
 
 export default App
