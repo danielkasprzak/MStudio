@@ -23,8 +23,6 @@ namespace barber_api.Services
 
         public async Task AuthenticateWithGoogleAsync(string code)
         {
-            Console.WriteLine($"Received code: {code}");
-
             var tokenResponse = await ExchangeAuthorizationCodeForIdTokenAsync(code);
 
             var payload = await GoogleJsonWebSignature.ValidateAsync(tokenResponse.IdToken, new GoogleJsonWebSignature.ValidationSettings
@@ -63,7 +61,6 @@ namespace barber_api.Services
 
             if (!string.IsNullOrEmpty(tokenResponse.RefreshToken))
             {
-                Console.WriteLine($"Received refresh token: {tokenResponse.RefreshToken}");
                 SetRefreshTokenCookie(tokenResponse.RefreshToken);
             }
         }
@@ -105,13 +102,13 @@ namespace barber_api.Services
             }
 
             var requestBody = new Dictionary<string, string>
-        {
-            { "code", authorizationCode },
-            { "client_id", clientId },
-            { "client_secret", clientSecret },
-            { "redirect_uri", "postmessage" },
-            { "grant_type", "authorization_code" }
-        };
+            {
+                { "code", authorizationCode },
+                { "client_id", clientId },
+                { "client_secret", clientSecret },
+                { "redirect_uri", "postmessage" },
+                { "grant_type", "authorization_code" }
+            };
 
             var requestContent = new FormUrlEncodedContent(requestBody);
 
@@ -216,23 +213,22 @@ namespace barber_api.Services
                         if (_httpContextAccessor.HttpContext != null)
                         {
                             _httpContextAccessor.HttpContext.User = new ClaimsPrincipal(identity);
-                            user = _httpContextAccessor.HttpContext?.User;
+                            user = _httpContextAccessor.HttpContext.User;
                         }
-
                     }
                     catch
                     {
-                        return new List<string>();
+                        return null;
                     }
                 }
                 else
                 {
-                    return new List<string>();
+                    return null;
                 }
             }
 
             var roles = user?.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList();
-            return roles ?? new List<string>();
+            return roles ?? null;
         }
 
         public void ClearAuthCookies()

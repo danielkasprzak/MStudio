@@ -13,6 +13,8 @@ export default () => {
         if (error.status === 403) {
             title = "Dostęp zabroniony!";
             message = "Nie masz uprawnień do przeglądania tej strony";
+            window.location.href = '/login';
+            return null;
         } else {
             message = error.data.message || error.statusText;
         }

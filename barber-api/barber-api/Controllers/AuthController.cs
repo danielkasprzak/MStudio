@@ -45,7 +45,7 @@ namespace barber_api.Controllers
         public IActionResult CheckAuth()
         {
             var roles = _authService.CheckAuth();
-            if (roles == null || roles.Count == 0)
+            if (roles == null)
             {
                 return Unauthorized();
             }

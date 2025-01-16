@@ -20,7 +20,7 @@ export async function protectedLoader() {
       throw new Response('Forbidden', { status: 403 });
     }
     return auth;
-  }
+}
   
 export async function adminLoader() {
     const auth = await checkAuth();

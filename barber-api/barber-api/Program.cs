@@ -1,4 +1,5 @@
 using barber_api.Services;
+using barber_api.Data;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -100,7 +101,8 @@ app.Use(async (context, next) =>
 {
     var antiforgery = context.RequestServices.GetRequiredService<IAntiforgery>();
     var tokens = antiforgery.GetAndStoreTokens(context);
-    context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken, new CookieOptions { HttpOnly = false, Secure = true, SameSite = SameSiteMode.None });
+    if (tokens.RequestToken != null)
+        context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken, new CookieOptions { HttpOnly = false, Secure = true, SameSite = SameSiteMode.None });
     await next();
 });
 
