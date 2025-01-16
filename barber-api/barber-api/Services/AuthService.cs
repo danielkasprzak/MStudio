@@ -195,7 +195,7 @@ namespace barber_api.Services
             return newTokenString;
         }
 
-        public List<string> CheckAuth()
+        public async Task<List<string>?> CheckAuthAsync()
         {
             var user = _httpContextAccessor.HttpContext?.User;
             if (user == null || user.Identity == null || !user.Identity.IsAuthenticated)
@@ -205,7 +205,7 @@ namespace barber_api.Services
                 {
                     try
                     {
-                        var newAccessToken = RefreshAccessTokenAsync(refreshToken).Result;
+                        var newAccessToken = await RefreshAccessTokenAsync(refreshToken);
                         var handler = new JwtSecurityTokenHandler();
                         var token = handler.ReadJwtToken(newAccessToken);
                         var claims = token.Claims;

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using barber_api.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -93,6 +94,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors("AllowReactApp");
+
+app.UseMiddleware<TokenRefreshMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
