@@ -72,7 +72,7 @@ namespace barber_api.Services
             var openingHours = await _context.OpeningHours.ToListAsync();
             var specialOpeningHours = await _context.SpecialOpeningHours.ToListAsync();
             var reservations = await _context.Reservations
-                .Where(r => r.ReservationDateTime >= startDate && r.ReservationDateTime <= endDate)
+                .Where(r => r.ReservationDateTime >= startDate && r.ReservationDateTime <= endDate && !r.IsCancelled)
                 .ToListAsync();
 
             for (var date = startDate.Date; date <= endDate.Date; date = date.AddDays(1))
