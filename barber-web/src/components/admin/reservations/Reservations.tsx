@@ -9,6 +9,7 @@ import FormInput from '../FormInput';
 import { useState } from 'react';
 import TextButton from '../../TextButton';
 import FlatButton from '../../FlatButton';
+import SearchBar from '../../SearchBar';
 
 interface ReservationModel {
     reservationId: string;
@@ -25,6 +26,7 @@ export default () => {
     const [startDate, setStartDate] = useState(getTodayDate());
     const [endDate, setEndDate] = useState(getTodayDate());
     const [filter, setFilter] = useState<'active' | 'cancelled' | 'past' | 'all'>('active');
+    const [searchTerm, setSearchTerm] = useState('');
 
     const { data = [], error } = useQuery<ReservationModel[]>({
         queryKey: ['fetchedReservations', { startDate, endDate }],
@@ -59,7 +61,11 @@ export default () => {
         } else {
             return true;
         }
-    });
+    }).filter(reservation =>
+        reservation.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        reservation.phone.includes(searchTerm) ||
+        reservation.reservationId.toLowerCase().includes(searchTerm)
+    );
 
     const sortedData = filteredData.sort((a, b) => {
         const dateA = new Date(a.reservationDateTime).getTime();
@@ -111,10 +117,12 @@ export default () => {
                     }} isActive={startDate === new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0] && endDate === new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).toISOString().split('T')[0]}>Ten Miesiąc</FlatButton>
                 </div>
             
-                <div className='flex flex-row items-center justify-center'>
+                <div className='flex flex-row items-center justify-center pb-4'>
                     <FormInput name='startDate' id='startDate' defaultVal={startDate} required onChange={(e) => setStartDate(e.target.value)} type='date' placeholder='Data rozpoczęcia'/>
                     <FormInput name='endDate' id='endDate' defaultVal={endDate} required onChange={(e) => setEndDate(e.target.value)} type='date' placeholder='Data zakończenia'/>
                 </div>
+
+                <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
                 <div className='relative w-auto p-16 pt-8 h-full text-charcoal font-lato'>
                     <ul className='h-fit w-fit'>

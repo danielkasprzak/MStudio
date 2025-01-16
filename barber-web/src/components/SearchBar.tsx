@@ -2,16 +2,17 @@
 interface Props {
     searchTerm: string;
     setSearchTerm: (term: string) => void;
+    forOffers?: boolean;
 }
 
-export default ({ searchTerm, setSearchTerm } : Props) => {
+export default ({ searchTerm, setSearchTerm, forOffers } : Props) => {
     return (
         <input
         type="text"
-        placeholder="Szukaj ofert..."
+        placeholder={forOffers ? "Szukaj ofert..." : "Szukaj po id, adresie email lub numerze telefonu..."}
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="w-full ml-4 uppercase text-xs text-charcoal font-bold font-lato py-2 px-4 outline-none border border-stone-300"
+        className={`w-full ${forOffers ? 'ml-4' : ''} uppercase text-xs text-charcoal font-bold font-lato py-2 px-4 outline-none border border-stone-300`}
         />
     );
 }

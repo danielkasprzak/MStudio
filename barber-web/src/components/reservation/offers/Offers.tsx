@@ -15,12 +15,12 @@ interface OfferModel {
 }
 
 export default () => {
+    const [searchTerm, setSearchTerm] = useState('');
+
     const { data = [], error } = useQuery<OfferModel[]>({
         queryKey: ['offers'],
         queryFn: fetchOffers
     });
-
-    const [searchTerm, setSearchTerm] = useState('');
 
     if (error) return <div>Error loading offers</div>;
 
