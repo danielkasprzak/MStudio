@@ -96,7 +96,7 @@ export default ({imgRef}:Props) => {
                                     transition={{ duration: 0.2 }}
                                 >
                                     <Paragraph textColor="#ffffff">{currentOffer.name}</Paragraph>
-                                    <p className='font-lato font-medium text-justify text-[#f0f0f0] text-xs'>{currentOffer.description}</p>
+                                    <p className='font-lato font-medium text-justify text-stone-100 text-xs'>{currentOffer.description}</p>
                                 </motion.div>
                             </AnimatePresence>
                             

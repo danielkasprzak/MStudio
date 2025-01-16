@@ -7,13 +7,13 @@ export default () => {
 
     const translateY = useTransform(
         scrollYProgress,
-        [0.4, 0.6],  // Start animation at 40% scroll
+        [0.27, 0.32],  // Start animation at 40% scroll
         ["100vh", "0vh"]  // Move from below viewport to final position
     );
 
     const opacity = useTransform(
         scrollYProgress,
-        [0.4, 0.6],
+        [0.29, 0.32],
         [0, 1]
     );
 
