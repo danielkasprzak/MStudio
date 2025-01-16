@@ -1,22 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useAnimation, useScroll, useTransform } from 'motion/react';
 
-import bgImg from '../../assets/bg_img.jpg';
+
 import Paragraph from './Paragraph';
 import Button from './Button';
 
-import tempImg from '../../assets/about_img.jpg';
-import tempImg2 from '../../assets/bg_img.jpg';
+import cutImg from '../../assets/offer_cut.jpg';
+import keratinImg from '../../assets/offer_keratin.jpg';
+
 import OfferImage from './OfferImage';
 
 interface Props {
     imgRef: React.RefObject<HTMLElement>;
 }
-
-const services = [
-    { image: tempImg, title: "strzyżenie męskie" },
-    { image: tempImg2, title: "strzyżenie damskie" },
-];
 
 export default ({imgRef}:Props) => {
     const sectionRef = useRef(null);
@@ -68,8 +64,8 @@ export default ({imgRef}:Props) => {
         <section ref={sectionRef} className="relative h-[300vh]">
             <div className='h-screen sticky top-0'>
                 <div className="absolute inset-0 overflow-hidden">
-                    <motion.div className='absolute w-full h-[120%]' style={{top: y}}>
-                        <img src={bgImg} alt='bg' className='w-full h-full object-cover'/>
+                    <motion.div className='absolute w-full h-[120%] bg-stone-100' style={{top: y}}>
+                        {/* <img src={bgImg} alt='bg' className='w-full h-full object-cover'/> */}
                     </motion.div>
                 </div>
 
@@ -93,8 +89,8 @@ export default ({imgRef}:Props) => {
                             }}
                         >
                             
-                            <OfferImage image={tempImg2} alt="Oferta 2" scrollYProgress={offersScroll} scrollFrom={0.5} scrollTo={0.55} />
-                            <OfferImage image={tempImg} alt="Oferta 1" scrollYProgress={offersScroll} scrollFrom={0.4} scrollTo={0.45} />
+                            <OfferImage image={keratinImg} alt="keratynowe wygladzanie wlosow" scrollYProgress={offersScroll} scrollFrom={0.5} scrollTo={0.55} />
+                            <OfferImage image={cutImg} alt="strzyzenie wlosow" scrollYProgress={offersScroll} scrollFrom={0.4} scrollTo={0.45} />
                         
                         
                         </motion.div>

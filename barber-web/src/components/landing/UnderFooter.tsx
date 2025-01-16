@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from 'motion/react';
-import Image from '../../assets/bg_img.jpg';
+import Image from '../../assets/underfooter.webp';
 import Button from './Button';
 import { useRef } from 'react';
 
