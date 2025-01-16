@@ -11,6 +11,7 @@ import colorationImg from '../../assets/offers/coloration.jpg';
 import stylingImg from '../../assets/offers/styling.webp';
 import saunaImg from '../../assets/offers/sauna.jpg';
 import botoxImg from '../../assets/offers/botox.webp';
+import { Link } from 'react-router-dom';
 
 interface Props {
     imgRef: React.RefObject<HTMLElement>;
@@ -60,9 +61,9 @@ export default ({imgRef}:Props) => {
     
 
     return (  
-        <section ref={sectionRef} className="relative h-[300vh]">
+        <section ref={sectionRef} id="oferty" className="relative h-[300vh]">
             <div className='h-screen sticky top-0'>
-                <div className="absolute inset-0 overflow-hidden">
+                <div className="absolute inset-0 overflow-hidden z-0">
                     <motion.div className='absolute w-full h-[120%] bg-stone-100' style={{top: y}}>
                         {/* <img src={bgImg} alt='bg' className='w-full h-full object-cover'/> */}
                     </motion.div>
@@ -71,9 +72,11 @@ export default ({imgRef}:Props) => {
                 <div className='absolute inset-0 flex flex-row items-center w-full h-full'>
                     <div className='w-1/2 h-full flex flex-col justify-center items-center'>
                         <div className='flex flex-col justify-center'>
-                            <h2 className='font-lato text-white font-bold text-xs tracking-wider uppercase z-20'>Oferta</h2>
-                            <Paragraph textColor="#FFFFFF"></Paragraph>
-                            <Button>Zarezerwuj wizytę</Button>
+                            <h2 className='font-lato text-charcoal font-bold text-xs tracking-wider uppercase z-20'>Oferta</h2>
+                            <Paragraph textColor="#353535"></Paragraph>
+                            <Link to='/rezerwacja'>
+                                <Button>Zarezerwuj wizytę</Button>
+                            </Link>                            
                         </div>
                     </div>
                     <div className='w-1/2 h-full relative'>
@@ -94,8 +97,6 @@ export default ({imgRef}:Props) => {
                             <OfferImage image={keratinImg} isLast={false} alt="keratynowe wygladzanie wlosow" scrollYProgress={offersScroll} scrollFrom={0.6} scrollTo={0.65} />
                             <OfferImage image={colorationImg} isLast={false} alt="koloryzacja wlosow" scrollYProgress={offersScroll} scrollFrom={0.5} scrollTo={0.55} />
                             <OfferImage image={cutImg} isLast={false} alt="strzyzenie wlosow" scrollYProgress={offersScroll} scrollFrom={0.4} scrollTo={0.45} />
-                        
-                        
                         </motion.div>
                     </div>
                 </div>

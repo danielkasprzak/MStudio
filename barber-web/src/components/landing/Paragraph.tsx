@@ -7,6 +7,6 @@ interface Props {
 
 export default ({ children, textColor } : Props) => {
     return (
-        <motion.p className='font-cormorant text-xl font-medium' style={{ color: textColor }}>{children}</motion.p>
+        <motion.p className='font-cormorant text-xl font-medium z-20' style={{ color: textColor }}>{children}</motion.p>
     );
 }

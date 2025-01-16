@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from 'motion/react';
 import Image from '../../assets/underfooter.webp';
 import Button from './Button';
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 export default () => {
     const ref = useRef(null);
@@ -20,7 +21,9 @@ export default () => {
             <div className='w-full h-full flex flex-col items-center justify-center p-48'>
                 <h2 className='font-lato text-white font-bold text-xs tracking-wider uppercase z-20'>Nie zwlekaj</h2>
                 <h1 className='font-cormorant font-medium text-3xl text-white uppercase p-4 z-20'>Podążaj za trendami</h1>
-                <Button>Zarezerwuj wizytę</Button>
+                <Link to='/rezerwacja'>
+                    <Button>Zarezerwuj wizytę</Button>
+                </Link>    
             </div>
         </div>
     );

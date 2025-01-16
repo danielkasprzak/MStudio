@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from 'motion/react';
 
 import NavButton from './NavButton';
+import { Link } from 'react-router-dom';
 
 interface Props {
     heroRef: React.RefObject<HTMLElement>;
@@ -20,7 +21,9 @@ export default ({ heroRef }: Props) => {
             style={{ top: navX, opacity: isVisible }}
         >
             <NavButton>MENU</NavButton>
-            <NavButton>REZERWACJA</NavButton>
+            <Link to='/rezerwacja'>
+                <NavButton>REZERWACJA</NavButton>
+            </Link>                
         </motion.nav>
     );
 }

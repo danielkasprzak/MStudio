@@ -58,11 +58,11 @@ export default ({ heroRef }: Props) => {
         <section ref={heroRef} className="relative h-[300vh]">
             <motion.div className='h-screen sticky top-0' animate={controls}>
                 <div className="absolute h-[200vh] inset-0 flex flex-col" >
-                    <div className="relative w-screen h-screen flex items-center justify-center">
+                    <div id="wstep" className="relative w-screen h-screen flex items-center justify-center">
                         <Introduction textColorFirst={textColorFirst} textColorSecond={textColorSecond} opacityTitle={opacityTitle} opacityParagraph={opacityParagraph} />
                         <Video source={HeroVideo} zClass='-z-40' />
                     </div>
-                    <motion.div className="relative w-screen h-screen" animate={videoOverlay}>
+                    <motion.div id="o-nas" className="relative w-screen h-screen" animate={videoOverlay}>
                         <About />
                         <Video source={SecondVideo} zClass='-z-20' />
                     </motion.div>

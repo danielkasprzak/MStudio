@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import SmallAnchor from "./SmallAnchor";
 
 export default () => {
@@ -9,7 +10,9 @@ export default () => {
                 <SmallAnchor>Wstęp</SmallAnchor>
                 <SmallAnchor>Poznaj nas</SmallAnchor>
                 <SmallAnchor>Oferta</SmallAnchor>
-                <SmallAnchor>Rezerwacja</SmallAnchor>
+                <Link to='/rezerwacja'>
+                    <SmallAnchor>Rezerwacja</SmallAnchor>
+                </Link>   
             </div>
             <div className="flex flex-col justify-center p-16">
                 <SmallAnchor>Facebook</SmallAnchor>
