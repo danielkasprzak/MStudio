@@ -1,24 +1,18 @@
 import { ActionFunction, LoaderFunctionArgs, useParams, useSubmit, useNavigation, redirect } from 'react-router-dom';
 import { queryClient, fetchOpeningHour, updateOpeningHour } from '../../../utils/http';
 import { useQuery } from '@tanstack/react-query';
+import { OpeningHours as OpeningHoursModel } from '../../../interfaces/scheduleInterfaces';
 
 import OpeningHourForm from './OpeningHourForm';
 import Title from '../../Title';
 import TextButton from '../../TextButton';
-
-interface OpeningHourModel {
-    dayOfWeek: string;
-    isOpen: boolean;
-    openHour: string;
-    closeHour: string;
-}
 
 export default () => {
     const { state } = useNavigation();
     const submit = useSubmit();
     const params = useParams();
 
-    const { data, error } = useQuery<OpeningHourModel>({
+    const { data, error } = useQuery<OpeningHoursModel>({
         queryKey: ['openingHour', params.day],
         queryFn: () => fetchOpeningHour({ dayOfWeek: params.day || '' }),
         enabled: !!params.day
@@ -54,7 +48,7 @@ export function loader({ params }: LoaderFunctionArgs) {
 export const action: ActionFunction = async ({ request, params }) => {
     const formData = await request.formData();
     
-    const updatedOpeningHourData: OpeningHourModel = {
+    const updatedOpeningHourData: OpeningHoursModel = {
         dayOfWeek: params.day || '',
         isOpen: formData.get('isOpen') === 'true',
         openHour: formData.get('openHour') as string,

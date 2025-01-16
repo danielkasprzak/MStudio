@@ -1,25 +1,18 @@
-import Title from '../../Title';
 import { ActionFunction, LoaderFunctionArgs, useParams, useSubmit, useNavigation, redirect } from 'react-router-dom';
 import { queryClient, fetchSpecialOpeningHour, updateSpecialOpeningHour } from '../../../utils/http';
 import { useQuery } from '@tanstack/react-query';
+import { SpecialOpeningHours as SpecialOpeningHoursModel } from '../../../interfaces/scheduleInterfaces';
 
+import Title from '../../Title';
 import SpecialOpeningHourForm from './SpecialOpeningHourForm';
 import TextButton from '../../TextButton';
-
-interface SpecialOpeningHourModel {
-    date: string;
-    endDate: string | null;
-    isOpen: boolean;
-    openHour: string;
-    closeHour: string;
-}
 
 export default () => {
     const { state } = useNavigation();
     const submit = useSubmit();
     const params = useParams();
 
-    const { data, error } = useQuery<SpecialOpeningHourModel>({
+    const { data, error } = useQuery<SpecialOpeningHoursModel>({
         queryKey: ['specialOpeningHour', params.date],
         queryFn: () => fetchSpecialOpeningHour({ date: params.date || '' }),
         enabled: !!params.date
@@ -55,7 +48,7 @@ export function loader({ params }: LoaderFunctionArgs) {
 export const action: ActionFunction = async ({ request, params }) => {
     const formData = await request.formData();
     
-    const updatedSpecialOpeningHour: SpecialOpeningHourModel = {
+    const updatedSpecialOpeningHour: SpecialOpeningHoursModel = {
         date: params.date || '',
         endDate: formData.get('endDate') as string || null,
         isOpen: formData.get('isOpen') === 'true',

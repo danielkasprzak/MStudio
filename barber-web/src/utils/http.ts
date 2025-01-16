@@ -1,3 +1,4 @@
+import { NewOffer, UpdateOffer } from '../interfaces/offersInterfaces';
 import axiosInstance from './axiosInstance';
 import { QueryClient } from '@tanstack/react-query';
 
@@ -46,26 +47,6 @@ export async function fetchOffer({ id }: { id: number }) {
     const { data } = await axiosInstance.get(`https://localhost:7190/offers/${id}`);
     return data;
 };
-
-interface Offer {
-    id: number;
-    label: string;
-    description?: string;
-    duration: number;
-    price: number;
-}
-
-interface NewOffer {
-    label: string;
-    description?: string;
-    duration: number;
-    price: number;
-}
-
-interface UpdateOffer {
-    id: number,
-    offer: Offer
-}
 
 export async function updateOffer({ id, offer }: UpdateOffer) { 
     const { data } = await axiosInstance.put(`https://localhost:7190/offers/${id}`, offer);

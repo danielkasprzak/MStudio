@@ -1,17 +1,10 @@
 import Title from '../../Title';
 import { ActionFunction, useSubmit, useNavigation, redirect } from 'react-router-dom';
 import { createSpecialOpeningHour, queryClient } from '../../../utils/http';
+import { SpecialOpeningHours as SpecialOpeningHoursModel } from '../../../interfaces/scheduleInterfaces';
 
 import SpecialOpeningHourForm from './SpecialOpeningHourForm';
 import TextButton from '../../TextButton';
-
-interface NewSpecialOpeningHour {
-    date: string;
-    endDate: string | null;
-    isOpen: boolean;
-    openHour: string;
-    closeHour: string;
-}
 
 export default () => {
     const { state } = useNavigation();
@@ -38,7 +31,7 @@ export default () => {
 export const action: ActionFunction = async ({ request }) => {
     const formData = await request.formData();
     
-    const newSpecialOpeningHour: NewSpecialOpeningHour = {
+    const newSpecialOpeningHour: SpecialOpeningHoursModel = {
         date: formData.get('date') as string,
         endDate: formData.get('endDate') as string || null,
         isOpen: formData.get('isOpen') === 'true',

@@ -1,15 +1,10 @@
-import Title from '../../Title';
 import { ActionFunction, redirect, useNavigation, useSubmit } from 'react-router-dom';
 import { queryClient, createOffer } from '../../../utils/http';
+import { NewOffer } from '../../../interfaces/offersInterfaces';
+
+import Title from '../../Title';
 import OfferForm from './OfferForm';
 import TextButton from '../../TextButton';
-
-interface NewOffer {
-    label: string;
-    price: number;
-    duration: number;
-    description?: string;
-}
 
 export default () => {
     const { state } = useNavigation();

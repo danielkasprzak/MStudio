@@ -1,17 +1,11 @@
-import Title from '../../Title';
 import { ActionFunction, LoaderFunctionArgs, useParams, useSubmit, useNavigation, redirect } from 'react-router-dom';
 import { queryClient, fetchOffer, updateOffer } from '../../../utils/http';
 import { useQuery } from '@tanstack/react-query';
+import { Offer as OfferModel } from '../../../interfaces/offersInterfaces';
+
+import Title from '../../Title';
 import OfferForm from './OfferForm';
 import TextButton from '../../TextButton';
-
-interface OfferModel {
-    id: number;
-    label: string;
-    price: number;
-    duration: number;
-    description?: string;
-}
 
 export default () => {
     const { state } = useNavigation();

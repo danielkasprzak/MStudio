@@ -2,17 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import { queryClient, fetchOpeningHours } from '../../../utils/http';
 import { Link, Outlet } from 'react-router-dom';
 import { WEEK_ORDER } from '../../../utils/utils';
+import { OpeningHours as OpeningHoursModel } from '../../../interfaces/scheduleInterfaces';
 
 import Title from '../../Title';
 import OpeningHour from './OpeningHour';
 import TextButton from '../../TextButton';
-
-interface OpeningHoursModel {
-    dayOfWeek: string;
-    isOpen: boolean;
-    openHour: string;
-    closeHour: string;
-}
 
 export default () => {
     const { data = [], error } = useQuery<OpeningHoursModel[]>({

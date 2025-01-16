@@ -29,8 +29,8 @@ export default () => {
                 <TextButton isActive={period === '1R'} onClick={() => setPeriod('1R')}>1R</TextButton>
                 <TextButton isActive={period === 'ALL'} onClick={() => setPeriod('ALL')}>Całkowita</TextButton>
             </div>
-            <div className="font-lato text-charcoal font-bold text-xl">Całkowity dochód: {data?.totalPayments}</div>
-            <div className="font-lato text-charcoal font-bold text-xl">Średni dochód na rezerwacje: {data?.averagePayment}</div>
+            <div className="font-lato text-charcoal font-bold text-xl">Całkowity dochód: {data?.totalPayments}zł</div>
+            <div className="font-lato text-charcoal font-bold text-xl">Średni dochód na rezerwacje: {data?.averagePayment}zł</div>
         </div>
     );
 }

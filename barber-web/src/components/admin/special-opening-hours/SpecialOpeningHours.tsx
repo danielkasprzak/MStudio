@@ -1,18 +1,11 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { queryClient, fetchSpecialOpeningHours, deleteSpecialOpeningHour } from '../../../utils/http';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { SpecialOpeningHours as SpecialOpeningHoursModel } from '../../../interfaces/scheduleInterfaces';
 
 import Title from '../../Title';
 import SpecialOpeningHour from './SpecialOpeningHour';
 import TextButton from '../../TextButton';
-
-interface SpecialOpeningHoursModel {
-    date: string;
-    endDate: string | null;
-    isOpen: boolean;
-    openHour: string;
-    closeHour: string;
-}
 
 export default () => {
     const navigate = useNavigate();

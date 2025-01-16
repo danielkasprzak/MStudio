@@ -1,9 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 import { logout } from "../../utils/http";
 
 import Title from "../Title";
-import { useMutation } from "@tanstack/react-query";
 import TextButton from "../TextButton";
+import Label from "../Label";
 
 export default () => {
     const navigate = useNavigate();
@@ -40,11 +41,11 @@ export default () => {
                     <TextButton>Harmonogram</TextButton>
                 </Link>
                 <Link to='specjalne-godziny-otwarcia'>
-                    <TextButton>Specjalne</TextButton>
+                    <TextButton>Dni wolne</TextButton>
                 </Link>
             </div>
             <div className="flex flex-col pb-8">
-                {isPending ? <div>Wylogowuje...</div> : <TextButton onClick={handleLogout}>Wyloguj się</TextButton>}
+                {isPending ? <Label>Wylogowuje...</Label> : <TextButton onClick={handleLogout}>Wyloguj się</TextButton>}
             </div>
         </div>
     )

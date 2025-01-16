@@ -1,18 +1,11 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { queryClient, fetchOffers, deleteOffer } from '../../../utils/http';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Offer as OfferModel } from '../../../interfaces/offersInterfaces';
 
 import Offer from './Offer';
 import Title from '../../Title';
 import TextButton from '../../TextButton';
-
-interface OfferModel {
-    id: number;
-    label: string;
-    price: number;
-    duration: number;
-    description?: string;
-}
 
 export default () => {
     const navigate = useNavigate();

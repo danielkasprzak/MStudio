@@ -1,12 +1,5 @@
 import { formatDateNoTime } from "../../../utils/utils";
-
-interface Props {
-    date: string;
-    endDate: string | null;
-    isOpen: boolean;
-    openHour: string;
-    closeHour: string;
-}
+import { SpecialOpeningHours as Props } from '../../../interfaces/scheduleInterfaces';
 
 export default ({ date, endDate, isOpen, openHour, closeHour } : Props) => {
     return (

@@ -1,18 +1,11 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchOffers, queryClient } from '../../../utils/http';
+import { Offer as OfferModel } from '../../../interfaces/offersInterfaces';
 
 import Offer from "./Offer"
 import Title from '../../Title';
 import SearchBar from '../../SearchBar';
-
-interface OfferModel {
-    id: number;
-    label: string;
-    price: number;
-    duration: number;
-    description?: string;
-}
 
 export default () => {
     const [searchTerm, setSearchTerm] = useState('');
