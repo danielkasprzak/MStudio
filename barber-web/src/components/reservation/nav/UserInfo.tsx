@@ -1,11 +1,11 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useEffect, useRef, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { fetchUserInfo, logout } from "../../utils/http";
 import { motion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { fetchUserInfo, logout } from "../../../utils/http";
 
-import NavButton from "./NavButton";
-import FlatButton from "../FlatButton";
+import FlatButton from "../../FlatButton";
+import Label from "../../Label";
 
 interface UserInfo {
     email: string;
@@ -57,8 +57,7 @@ export default () => {
     }
 
     return (
-        <div className='w-[46rem] h-auto py-4 flex flex-row items-center justify-between relative overflow-hidden z-40'>
-            <div onClick={handleImageClick} className="flex flex-row items-center hover:cursor-pointer">
+        <div onClick={handleImageClick} className="flex flex-row items-center hover:cursor-pointer">
             {Array.isArray(data) ? null : (
                     <>
                         <img
@@ -77,29 +76,11 @@ export default () => {
                                 transition={{ duration: 0.2, ease: "easeInOut" }}
                             >
                                 <p className="font-lato text-xs font-medium text-charcoal pb-2">{data.email}</p>
-                                {isPending ? <div className="font-lato text-xs uppercase font-bold text-charcoal">Wylogowuje...</div> : <FlatButton onClick={handleLogout} disabled={false} isActive={false}>Wyloguj</FlatButton>}
+                                {isPending ? <Label>Wylogowuje...</Label> : <FlatButton onClick={handleLogout} disabled={false} isActive={false}>Wyloguj</FlatButton>}
                             </motion.div>
                         )}
                     </>
                 )}
-            </div>
-
-            <div className="flex flex-row items-center">
-                <NavLink to="/rezerwacja/moje-rezerwacje">
-                    {({ isActive }) => (
-                        <NavButton isActive={isActive}>
-                            Moje rezerwacje
-                        </NavButton>
-                    )}
-                </NavLink>
-                <NavLink to="/rezerwacja" end>
-                    {({ isActive }) => (
-                        <NavButton isActive={isActive}>
-                            Rezerwacja
-                        </NavButton>
-                    )}
-                </NavLink>
-            </div>
-        </div>
-    )
+        </div>        
+    );
 }
