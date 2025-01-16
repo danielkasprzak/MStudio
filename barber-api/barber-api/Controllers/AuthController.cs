@@ -42,9 +42,9 @@ namespace barber_api.Controllers
         }
 
         [HttpGet("check")]
-        public async Task<IActionResult> CheckAuth()
+        public IActionResult CheckAuth()
         {
-            var roles = await _authService.CheckAuthAsync();
+            var roles = _authService.CheckAuth();
             if (roles == null)
             {
                 return Unauthorized();

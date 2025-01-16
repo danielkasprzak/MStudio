@@ -195,40 +195,16 @@ namespace barber_api.Services
             return newTokenString;
         }
 
-        public async Task<List<string>?> CheckAuthAsync()
+        public List<string>? CheckAuth()
         {
             var user = _httpContextAccessor.HttpContext?.User;
             if (user == null || user.Identity == null || !user.Identity.IsAuthenticated)
             {
-                var refreshToken = _httpContextAccessor.HttpContext?.Request.Cookies["MSRTOKEN"];
-                if (!string.IsNullOrEmpty(refreshToken))
-                {
-                    try
-                    {
-                        var newAccessToken = await RefreshAccessTokenAsync(refreshToken);
-                        var handler = new JwtSecurityTokenHandler();
-                        var token = handler.ReadJwtToken(newAccessToken);
-                        var claims = token.Claims;
-                        var identity = new ClaimsIdentity(claims, "jwt");
-                        if (_httpContextAccessor.HttpContext != null)
-                        {
-                            _httpContextAccessor.HttpContext.User = new ClaimsPrincipal(identity);
-                            user = _httpContextAccessor.HttpContext.User;
-                        }
-                    }
-                    catch
-                    {
-                        return null;
-                    }
-                }
-                else
-                {
-                    return null;
-                }
+                return null;
             }
 
-            var roles = user?.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList();
-            return roles ?? null;
+            var roles = user.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList();
+            return roles;
         }
 
         public void ClearAuthCookies()
