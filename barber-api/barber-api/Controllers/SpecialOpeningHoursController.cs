@@ -25,7 +25,7 @@ namespace barber_api.Controllers
         }
 
         [HttpGet("{date}")]
-        public async Task<IActionResult> GetSpecialOpeningHourByDate(DateTime date)
+        public async Task<IActionResult> GetSpecialOpeningHourByDate(DateOnly date)
         {
             var specialOpeningHour = await _service.GetSpecialOpeningHourByDateAsync(date);
             if (specialOpeningHour == null)
@@ -45,7 +45,7 @@ namespace barber_api.Controllers
 
         [HttpPut("{date}")]
         [Authorize(Roles = "admin")]
-        public async Task<IActionResult> UpdateSpecialOpeningHour(DateTime date, SpecialOpeningHour specialOpeningHour)
+        public async Task<IActionResult> UpdateSpecialOpeningHour(DateOnly date, SpecialOpeningHour specialOpeningHour)
         {
             try { 
             
@@ -60,7 +60,7 @@ namespace barber_api.Controllers
 
         [HttpDelete("{date}")]
         [Authorize(Roles = "admin")]
-        public async Task<IActionResult> DeleteSpecialOpeningHour(DateTime date)
+        public async Task<IActionResult> DeleteSpecialOpeningHour(DateOnly date)
         {
             try
             {

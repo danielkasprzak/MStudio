@@ -33,7 +33,7 @@ export default () => {
         <div className="h-auto w-[46rem] bg-white border border-stone-300 p-8 z-30">
             <div className='flex flex-row items-center'>
                 <Title>Oferta</Title>
-                <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+                <SearchBar forOffers searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             </div>
             <ul className='w-full h-fit'>
                 {filteredOffers.map((offer) => (

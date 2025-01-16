@@ -21,21 +21,18 @@ namespace barber_api.Services
             return await _context.SpecialOpeningHours.ToListAsync();
         }
 
-        public async Task<SpecialOpeningHour?> GetSpecialOpeningHourByDateAsync(DateTime date)
+        public async Task<SpecialOpeningHour?> GetSpecialOpeningHourByDateAsync(DateOnly date)
         {
             return await _context.SpecialOpeningHours.FindAsync(date);
         }
 
         public async Task AddSpecialOpeningHourAsync(SpecialOpeningHour specialOpeningHour)
         {
-            
-
-
             await _context.SpecialOpeningHours.AddAsync(specialOpeningHour);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateSpecialOpeningHourAsync(DateTime originalDate, SpecialOpeningHour specialOpeningHour)
+        public async Task UpdateSpecialOpeningHourAsync(DateOnly originalDate, SpecialOpeningHour specialOpeningHour)
         {
             var existingEntity = await _context.SpecialOpeningHours.FindAsync(originalDate);
             if (existingEntity == null)
@@ -48,7 +45,7 @@ namespace barber_api.Services
             await _context.SaveChangesAsync();
         }
         
-        public async Task DeleteSpecialOpeningHourAsync(DateTime date)
+        public async Task DeleteSpecialOpeningHourAsync(DateOnly date)
         {
             var specialOpeningHour = await _context.SpecialOpeningHours.FindAsync(date);
             if (specialOpeningHour != null)
