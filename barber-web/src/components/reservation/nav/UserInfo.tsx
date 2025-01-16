@@ -6,6 +6,7 @@ import { fetchUserInfo, logout } from "../../../utils/http";
 
 import FlatButton from "../../FlatButton";
 import Label from "../../Label";
+import { User } from "lucide-react";
 
 interface UserInfo {
     email: string;
@@ -63,12 +64,21 @@ export default () => {
 
     return (
         <div onClick={handleUserContext} className="flex flex-row items-center hover:cursor-pointer">
-            {Array.isArray(data) ? null : (
+            {Array.isArray(data) ?
+                <div className="w-10 h-10 bg-stone-300 rounded-full mr-4 flex items-center justify-center">
+                    <User color="#FFFFFF" size={20} strokeWidth={1.25} />
+                </div> : (
                     <>
                         {imageError ? (
-                            <div className="w-10 h-10 bg-stone-300 rounded-full mr-4 flex items-center justify-center">
-                                <span className="text-white font-bold">{data.name.charAt(0)}</span>
-                            </div>
+                            data.name ? (
+                                <div className="w-10 h-10 bg-stone-300 rounded-full mr-4 flex items-center justify-center">
+                                    <span className="text-white font-bold">{data.name.charAt(0)}</span>
+                                </div>
+                            ) : (
+                                <div className="w-10 h-10 bg-stone-300 rounded-full mr-4 flex items-center justify-center">
+                                    <User color="#FFFFFF" size={20} strokeWidth={1.25} />
+                                </div>
+                            )
                         ) : (
                             <img
                                 src={data.picture}
