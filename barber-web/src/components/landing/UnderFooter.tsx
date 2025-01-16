@@ -21,9 +21,9 @@ export default () => {
             <div className='w-full h-full flex flex-col items-center justify-center p-48'>
                 <h2 className='font-lato text-white font-bold text-xs tracking-wider uppercase z-20'>Nie zwlekaj</h2>
                 <h1 className='font-cormorant font-medium text-3xl text-white uppercase p-4 z-20'>Podążaj za trendami</h1>
-                <Link to='/rezerwacja'>
+                <Link to='/rezerwacja' className='z-20'>
                     <Button>Zarezerwuj wizytę</Button>
-                </Link>    
+                </Link>
             </div>
         </div>
     );

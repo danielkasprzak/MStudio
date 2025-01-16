@@ -19,13 +19,14 @@ import { loader as bookingLoader } from './components/reservation/booking/Bookin
 import Reservations, { loader as reservationsLoader } from './components/admin/reservations/Reservations';
 import ReservationNew, { action as reservationNewAction } from './components/admin/reservations/ReservationNew';
 import { loader as traditionalReservationLoader } from './components/reservation/Traditional';
-import { TransitionedReservation, TransitionedLanding, TransitionedLogin, TransitionedAdmin, TransitionedThankYouPage, TransitionedBooking, TransitionedTraditional } from './components/Lazy';
+import { TransitionedReservation, TransitionedLogin, TransitionedAdmin, TransitionedThankYouPage, TransitionedBooking, TransitionedTraditional } from './components/Lazy';
 import Dashboard from './components/admin/dashboard/Dashboard';
 
 const Error = lazy(() => import('./components/Error'));
+const Landing = lazy(() => import('./components/landing/Landing'));
 
 const router = createBrowserRouter([
-  { index: true, element: <TransitionedLanding />, errorElement: <Error /> },
+  { index: true, element: <Landing />, errorElement: <Error /> },
   { path: 'login', element: <TransitionedLogin />, errorElement: <Error /> },
   { path: 'rezerwacja-tradycyjna', element: <TransitionedTraditional />, errorElement: <Error />, loader: traditionalReservationLoader },
   { path: 'rezerwacja', element: <TransitionedReservation />, errorElement: <Error />, loader: protectedLoader,

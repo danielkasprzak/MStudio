@@ -6,6 +6,7 @@ import { Offer as OfferModel } from '../../../interfaces/offersInterfaces';
 import Offer from "./Offer"
 import Title from '../../Title';
 import SearchBar from '../../SearchBar';
+import Label from '../../Label';
 
 export default () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -15,7 +16,7 @@ export default () => {
         queryFn: fetchOffers
     });
 
-    if (error) return <div>Error loading offers</div>;
+    if (error) return <Label>Błąd wczytywania ofert</Label>;
 
     const filteredOffers = data.filter(offer =>
         offer.label.toLowerCase().includes(searchTerm.toLowerCase())
