@@ -1,14 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useAnimation, useScroll, useTransform } from 'motion/react';
 
-
 import Paragraph from './Paragraph';
 import Button from './Button';
-
-import cutImg from '../../assets/offer_cut.jpg';
-import keratinImg from '../../assets/offer_keratin.jpg';
-
 import OfferImage from './OfferImage';
+
+import cutImg from '../../assets/offers/cut.jpg';
+import keratinImg from '../../assets/offers/keratin.jpg';
+import colorationImg from '../../assets/offers/coloration.jpg';
+import stylingImg from '../../assets/offers/styling.webp';
+import saunaImg from '../../assets/offers/sauna.jpg';
+import botoxImg from '../../assets/offers/botox.webp';
 
 interface Props {
     imgRef: React.RefObject<HTMLElement>;
@@ -16,9 +18,6 @@ interface Props {
 
 export default ({imgRef}:Props) => {
     const sectionRef = useRef(null);
-
-
-
 
     const { scrollYProgress: offersScroll } = useScroll({
         target: sectionRef,
@@ -89,8 +88,12 @@ export default ({imgRef}:Props) => {
                             }}
                         >
                             
-                            <OfferImage image={keratinImg} alt="keratynowe wygladzanie wlosow" scrollYProgress={offersScroll} scrollFrom={0.5} scrollTo={0.55} />
-                            <OfferImage image={cutImg} alt="strzyzenie wlosow" scrollYProgress={offersScroll} scrollFrom={0.4} scrollTo={0.45} />
+                            <OfferImage image={stylingImg} isLast alt="keratynowe wygladzanie wlosow" scrollYProgress={offersScroll} scrollFrom={0.9} scrollTo={0.95} />
+                            <OfferImage image={saunaImg} isLast={false} alt="keratynowe wygladzanie wlosow" scrollYProgress={offersScroll} scrollFrom={0.8} scrollTo={0.85} />
+                            <OfferImage image={botoxImg} isLast={false} alt="keratynowe wygladzanie wlosow" scrollYProgress={offersScroll} scrollFrom={0.7} scrollTo={0.75} />
+                            <OfferImage image={keratinImg} isLast={false} alt="keratynowe wygladzanie wlosow" scrollYProgress={offersScroll} scrollFrom={0.6} scrollTo={0.65} />
+                            <OfferImage image={colorationImg} isLast={false} alt="koloryzacja wlosow" scrollYProgress={offersScroll} scrollFrom={0.5} scrollTo={0.55} />
+                            <OfferImage image={cutImg} isLast={false} alt="strzyzenie wlosow" scrollYProgress={offersScroll} scrollFrom={0.4} scrollTo={0.45} />
                         
                         
                         </motion.div>
