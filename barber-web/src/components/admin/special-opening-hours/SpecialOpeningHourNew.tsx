@@ -17,7 +17,7 @@ export default () => {
 
     return (
         <div className='sticky right-0 top-16 w-fit h-full bg-white border border-stone-300 m-16 ml-8 text-charcoal p-8'>
-            <Title padding='8'>Edytuj godziny</Title>
+            <Title padding='8'>Nowy harmonogram</Title>
 
             <SpecialOpeningHourForm isNew inputData={{ date: '', endDate: null, isOpen: false, openHour: '', closeHour: '' }} onSubmit={handleSubmit}>
                 {state === 'submitting' ? (<Label>Wysyłanie...</Label> 
