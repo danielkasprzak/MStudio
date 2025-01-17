@@ -19,6 +19,7 @@ namespace barber_api.Data
         {
             modelBuilder.Entity<OpeningHour>().HasKey(oh => oh.DayOfWeek);
             modelBuilder.Entity<SpecialOpeningHour>().HasKey(soh => soh.Date);
+            modelBuilder.Entity<Reservation>().Property(r => r.Services).HasColumnType("jsonb");
 
             modelBuilder.Entity<Offer>().Property(o => o.Id).ValueGeneratedOnAdd();
         }
