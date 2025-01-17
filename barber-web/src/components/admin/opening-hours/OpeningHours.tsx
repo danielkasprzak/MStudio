@@ -29,7 +29,7 @@ export default () => {
                     <ul className='h-fit w-fit'>
                         {sortedData.map((date) => (
                             <div className='flex flex-row items-center'>
-                                <OpeningHour key={date.dayOfWeek} date={date.dayOfWeek} isOpen={date.isOpen} openHour={date.openHour} closeHour={date.closeHour} />
+                                <OpeningHour key={date.dayOfWeek} dayOfWeek={date.dayOfWeek} isOpen={date.isOpen} openHour={date.openHour} closeHour={date.closeHour} />
 
                                 <Link to={`${date.dayOfWeek}`}>
                                     <TextButton>Edytuj</TextButton>

@@ -43,7 +43,7 @@ export default () => {
                     <ul className='h-fit w-fit'>
                         {data.map((offer) => (
                             <div className='flex flex-row items-center'>
-                                <Offer key={offer.id} label={offer.label} price={offer.price} time={offer.duration} description={offer.description} />
+                                <Offer key={offer.id} id={offer.id} label={offer.label} price={offer.price} duration={offer.duration} description={offer.description} />
                                 <div className='flex flex-row items-center'>
                                     <Link to={`${offer.id}`}>
                                         <TextButton>Edytuj</TextButton>

@@ -70,9 +70,7 @@ const router = createBrowserRouter([
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AnimatePresence mode="wait">
-        <RouterProvider router={router} />
-      </AnimatePresence>
+      <RouterProvider router={router} />
     </QueryClientProvider>
   );
 }
