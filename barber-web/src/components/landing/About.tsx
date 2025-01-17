@@ -7,8 +7,8 @@ export default () => {
 
     const translateY = useTransform(
         scrollYProgress,
-        [0.27, 0.32],  // Start animation at 40% scroll
-        ["100vh", "0vh"]  // Move from below viewport to final position
+        [0.27, 0.32],
+        ["100vh", "0vh"]
     );
 
     const opacity = useTransform(
@@ -38,8 +38,7 @@ export default () => {
                     </Paragraph>
                 </motion.div>
             </div>
-            <div className='w-full h-full relative'>
-            </div>
+            <div className='w-full h-full relative hidden sm:block'></div>
         </div>
     );
 };

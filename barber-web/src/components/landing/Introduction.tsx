@@ -13,7 +13,7 @@ export default ({ opacityTitle, opacityParagraph, textColorFirst, textColorSecon
     return (
         <>
             <motion.h1
-                className='absolute text-9xl text-center font-cormorant font-medium text-white -z-30'
+                className='absolute text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-center font-cormorant font-medium text-white -z-30'
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, ease: 'easeInOut' }}
