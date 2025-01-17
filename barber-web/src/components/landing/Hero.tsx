@@ -12,7 +12,7 @@ interface Props {
 
 export default ({ heroRef }: Props) => {
     const { scrollYProgress } = useScroll({
-        target: heroRef,
+        target: heroRef
     });
 
     const heroVideoRef = useRef<HTMLVideoElement>(null);

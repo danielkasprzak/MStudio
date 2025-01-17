@@ -26,7 +26,7 @@ const OFFERS = [
     { name: 'strzyżenie włosów', description: 'Nasze strzyżenie włosów to więcej niż zwykła usługa – to doświadczenie tworzenia fryzury, która podkreśla Twoją osobowość i potrzeby.', scrollFrom: 0.25, scrollTo: 0.3 },
 ]
 
-export default ({imgRef}:Props) => {
+export default ({ imgRef } : Props) => {
     const sectionRef = useRef(null);
     const [currentOffer, setCurrentOffer] = useState(OFFERS[0]);
 
@@ -37,6 +37,7 @@ export default ({imgRef}:Props) => {
     
     const { scrollYProgress: globalScroll } = useScroll({
         target: imgRef,
+        layoutEffect: false
     });
 
     const imageTranslateY = useTransform(globalScroll, [0.35, 0.5], ["-100vh", "0vh"]);
