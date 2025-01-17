@@ -11,9 +11,9 @@ interface Props {
 export default ({ image, alt, title, description } : Props) => {
     return (
         <div className="relative flex flex-col justify-center">
-            <div className="flex flex-col justify-center p-8">
+            <div className="flex flex-col justify-center px-8 py-16">
                 <Paragraph textColor="#ffffff">{title}</Paragraph>
-                <p className='font-cormorant font-medium text-justify text-stone-100 text-sm pt-4'>{description}</p>
+                <p className='font-cormorant font-medium text-justify text-white text-sm pt-4'>{description}</p>
             </div>
             <motion.img 
                 src={image}
