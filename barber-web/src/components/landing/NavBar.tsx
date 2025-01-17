@@ -1,9 +1,9 @@
 import { motion, useScroll, useTransform } from 'motion/react';
 import { Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 import { useEffect, useState } from 'react';
 
 import NavButton from './NavButton';
-import SmallAnchor from './SmallAnchor';
 import MenuButton from './MenuButton';
 
 interface Props {
@@ -58,16 +58,15 @@ export default ({ heroRef }: Props) => {
                 animate={{ y: menuOpen ? '0%' : '-100%' }}
                 transition={{ duration: 0.2 }}
             >
-                <Link to="#wstep">
+                <HashLink smooth to="#wstep">
                     <MenuButton>Wstęp</MenuButton>
-                </Link>
-                <Link to="#poznaj-nas">
+                </HashLink>
+                <HashLink smooth to="#poznaj-nas">
                     <MenuButton>Poznaj nas</MenuButton>
-                </Link>
-                <Link to="#oferta">
+                </HashLink>
+                <HashLink smooth to="#oferty">
                     <MenuButton>Oferta</MenuButton>
-                </Link>
-                
+                </HashLink>
             </motion.div>
         </>
     );

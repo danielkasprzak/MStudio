@@ -19,11 +19,11 @@ interface Props {
 
 const OFFERS = [
     { name: 'stylizacja włosów', description: 'Podkreśl swój styl dzięki profesjonalnej stylizacji włosów. Oferujemy szeroką gamę rozwiązań – od codziennych fryzur, przez upięcia, aż po stylizacje na specjalne okazje, takie jak śluby czy wieczorne wyjścia.', scrollFrom: 0.75, scrollTo: 0.8 },
-    { name: 'sauna parowa', description: 'Sauna parowa to luksusowy zabieg, który wzmacnia efekty odżywczych kuracji, otwierając łuski włosów i umożliwiając wniknięcie składników aktywnych w ich głąb. Idealna dla osób z suchymi, zniszczonymi lub matowymi włosami, sauna parowa przywraca nawilżenie, miękkość i zdrowy połysk.', scrollFrom: 0.65, scrollTo: 0.7 },
+    { name: 'sauna parowa', description: 'Sauna parowa to luksusowy zabieg, który wzmacnia efekty odżywczych kuracji, otwierając łuski włosów i umożliwiając wniknięcie składników aktywnych w ich głąb.', scrollFrom: 0.65, scrollTo: 0.7 },
     { name: 'botoks na włosy', description: 'Botoks na włosy to prawdziwa terapia młodości. Zabieg intensywnie nawilża, wzmacnia i odbudowuje włosy od nasady aż po końcówki, eliminując oznaki zniszczenia i matowości.', scrollFrom: 0.55, scrollTo: 0.6 },
     { name: 'keratynowe wygładzanie włosów', description: 'Odmień swoje włosy dzięki keratynowemu wygładzaniu, które dogłębnie regeneruje i ujarzmia nawet najbardziej niesforne pasma. To zabieg idealny dla osób pragnących gładkich, lśniących włosów bez codziennej walki z prostowaniem.', scrollFrom: 0.45, scrollTo: 0.5 },
-    { name: 'koloryzacja włosów', description: 'Koloryzacja włosów w naszym salonie to połączenie najnowszych trendów i najwyższej jakości produktów. Oferujemy zarówno subtelne odświeżenie koloru, jak i pełne metamorfozy. Balayage, ombré, refleksy czy jednolite kolory – każda usługa jest dopasowana do Twojej urody, stylu życia i kondycji włosów.', scrollFrom: 0.35, scrollTo: 0.4 },
-    { name: 'strzyżenie włosów', description: 'Nasze strzyżenie włosów to więcej niż zwykła usługa – to doświadczenie tworzenia fryzury, która podkreśla Twoją osobowość i potrzeby. Niezależnie od tego, czy szukasz klasycznego cięcia, modnych trendów, czy funkcjonalnej fryzury dla najmłodszych, nasz zespół doświadczonych stylistów dostosuje technikę do rodzaju włosów i oczekiwań.', scrollFrom: 0.25, scrollTo: 0.3 },
+    { name: 'koloryzacja włosów', description: 'Koloryzacja włosów w naszym salonie to połączenie najnowszych trendów i najwyższej jakości produktów. Oferujemy zarówno subtelne odświeżenie koloru, jak i pełne metamorfozy.', scrollFrom: 0.35, scrollTo: 0.4 },
+    { name: 'strzyżenie włosów', description: 'Nasze strzyżenie włosów to więcej niż zwykła usługa – to doświadczenie tworzenia fryzury, która podkreśla Twoją osobowość i potrzeby.', scrollFrom: 0.25, scrollTo: 0.3 },
 ]
 
 export default ({imgRef}:Props) => {
@@ -89,14 +89,14 @@ export default ({imgRef}:Props) => {
                             <AnimatePresence mode="wait">
                                 <motion.div
                                     key={currentOffer.name}
-                                    className='flex flex-col justify-center h-32 max-w-96'
+                                    className='flex flex-col justify-center h-32 my-2 max-w-96'
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -10 }}
                                     transition={{ duration: 0.2 }}
                                 >
                                     <Paragraph textColor="#ffffff">{currentOffer.name}</Paragraph>
-                                    <p className='font-lato font-medium text-justify text-stone-100 text-xs'>{currentOffer.description}</p>
+                                    <p className='font-cormorant font-medium text-justify text-stone-100 text-sm'>{currentOffer.description}</p>
                                 </motion.div>
                             </AnimatePresence>
                             

@@ -21,20 +21,20 @@ export default () => {
         <div className='absolute inset-0 flex flex-row items-center w-full h-full'>
             <div className='w-full h-full relative flex flex-col justify-center items-center'>
                 <motion.div 
-                    className='flex flex-col justify-center'
+                    className='flex flex-col justify-center max-w-96'
                     style={{ translateY, opacity }}
                 >
                     <h2 className='font-lato text-white font-bold text-xs tracking-wider uppercase z-20'>
                         Poznaj nas
                     </h2>
                     <Paragraph textColor="#FFFFFF">
-                        jesteśmy salonem fryzjeskim z ponad dwudziestolenią tradycją,
+                        jesteśmy renonowanym salonem fryzjerskim,
                     </Paragraph>
                     <Paragraph textColor="#FFFFFF">
-                        nasz zespół to profesjonaliści z pasją,
+                        od ponad dwudziestu lat specjalizujemy się w,
                     </Paragraph>
                     <Paragraph textColor="#FFFFFF">
-                        zawsze stawiamy na jakość i zadowolenie klienta.
+                        stylizacji i pielęgnacji włosów.
                     </Paragraph>
                 </motion.div>
             </div>
