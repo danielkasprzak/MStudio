@@ -41,11 +41,18 @@ export default ({ imgRef } : Props) => {
         layoutEffect: false
     });
 
-    const imageTranslateY = useTransform(globalScroll, [0.35, 0.5], ["-100vh", "0vh"]);
-    const bgColor = useTransform(globalScroll, [0.5, 0.55], ["#FFFFFF", "#dcbca8"]);
+    const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+
+    
+    const bgColor = useTransform(
+        globalScroll,
+        isDesktop ? [0.5, 0.55] : [0.25, 0.3],
+        ["#FFFFFF", "#dcbca8"]
+    );
     const offersOpacity = useTransform(globalScroll, [0.5, 0.55], [0, 1]);
+
+    const imageTranslateY = useTransform(globalScroll, [0.35, 0.5], ["-100vh", "0vh"]);
     const imageControls = useAnimation();
-    const bgColorAnim = useAnimation();
 
     useEffect(() => {
         const unsubscribe = globalScroll.on('change', (latest) => {
@@ -69,7 +76,7 @@ export default ({ imgRef } : Props) => {
         });
     
         return () => unsubscribe();
-    }, [globalScroll, imageControls, bgColorAnim]);
+    }, [globalScroll, imageControls]);
     
     useEffect(() => {
         const unsubscribe = offersScroll.on('change', (latest) => {
