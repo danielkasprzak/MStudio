@@ -7,6 +7,7 @@ import { OpeningHours as OpeningHoursModel } from '../../../interfaces/scheduleI
 import Title from '../../Title';
 import OpeningHour from './OpeningHour';
 import TextButton from '../../TextButton';
+import Label from '../../Label';
 
 export default () => {
     const { data = [], error } = useQuery<OpeningHoursModel[]>({
@@ -14,7 +15,7 @@ export default () => {
         queryFn: fetchOpeningHours
     });
 
-    if (error) return <div>Error loading offers</div>;
+    if (error) return <Label>Błąd podczas wczytywania</Label>;
 
     const sortedData = data.sort((a, b) => {
         return WEEK_ORDER.indexOf(a.dayOfWeek) - WEEK_ORDER.indexOf(b.dayOfWeek);

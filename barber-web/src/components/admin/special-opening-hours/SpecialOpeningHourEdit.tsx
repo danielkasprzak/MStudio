@@ -6,6 +6,7 @@ import { SpecialOpeningHours as SpecialOpeningHoursModel } from '../../../interf
 import Title from '../../Title';
 import SpecialOpeningHourForm from './SpecialOpeningHourForm';
 import TextButton from '../../TextButton';
+import Label from '../../Label';
 
 export default () => {
     const { state } = useNavigation();
@@ -18,7 +19,7 @@ export default () => {
         enabled: !!params.date
     });
 
-    if (error) return <div>Error loading offers</div>;
+    if (error) return <Label>Błąd podczas wczytywania</Label>;
 
     function handleSubmit(formData: FormData) {
         submit(formData, {method: 'PUT' });
@@ -29,7 +30,7 @@ export default () => {
             <Title padding='8'>Edytuj godziny</Title>
 
             {data && <SpecialOpeningHourForm inputData={data} onSubmit={handleSubmit}>
-                {state === 'submitting' ? (<div>Wysyłanie...</div> 
+                {state === 'submitting' ? (<Label>Wysyłanie...</Label> 
                 ) : (
                     <TextButton type='submit'>Zapisz</TextButton>
                 )}

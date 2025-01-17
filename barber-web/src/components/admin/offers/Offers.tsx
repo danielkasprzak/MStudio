@@ -6,6 +6,7 @@ import { Offer as OfferModel } from '../../../interfaces/offersInterfaces';
 import Offer from './Offer';
 import Title from '../../Title';
 import TextButton from '../../TextButton';
+import Label from '../../Label';
 
 export default () => {
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ export default () => {
         queryFn: fetchOffers
     });
 
-    if (error) return <div>Error loading offers</div>;
+    if (error) return <Label>Błąd podczas wczytywania</Label>;
 
     const { mutate, isPending } = useMutation({
         mutationFn: deleteOffer,
@@ -49,7 +50,7 @@ export default () => {
                                         <TextButton>Edytuj</TextButton>
                                     </Link>                
                            
-                                    {isPending ? <div className='font-lato text-xs uppercase font-bold text-charcoal'>Usuwanie...</div> : 
+                                    {isPending ? <Label>Usuwanie...</Label> : 
                                     <TextButton onClick={() => handleDeleteClick(offer.id)}>Usuń</TextButton>}
                                 </div>
                             </div>

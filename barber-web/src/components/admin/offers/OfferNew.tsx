@@ -5,6 +5,7 @@ import { NewOffer } from '../../../interfaces/offersInterfaces';
 import Title from '../../Title';
 import OfferForm from './OfferForm';
 import TextButton from '../../TextButton';
+import Label from '../../Label';
 
 export default () => {
     const { state } = useNavigation();
@@ -19,7 +20,7 @@ export default () => {
             <Title padding='8'>Dodaj ofertę</Title>
 
             <OfferForm inputData={{ label: '', price: 0, duration: 0, description: '' }} onSubmit={handleSubmit}>
-                {state === 'submitting' ? (<div>Wysyłanie...</div> 
+                {state === 'submitting' ? (<Label>Wysyłanie...</Label> 
                 ) : (
                     <TextButton type='submit'>Dodaj</TextButton>
                 )}

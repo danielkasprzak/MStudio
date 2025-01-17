@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { formatDate } from "../../../utils/utils";
 import TextButton from "../../TextButton";
+import Label from "../../Label";
 
 interface Props {
     isPast: boolean;
@@ -63,7 +64,7 @@ export default ({ isPast, reservationId, email, services, duration, reservationD
                         </Link>
 
                         {isPending ? (
-                            <div className='font-lato text-xs uppercase font-bold text-charcoal'>Anulowanie...</div>
+                            <Label>Anulowanie...</Label>
                         ) : (
                             <TextButton onClick={() => cancelClick(reservationId)}>Anuluj</TextButton>
                         )}

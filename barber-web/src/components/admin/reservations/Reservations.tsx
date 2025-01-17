@@ -11,6 +11,7 @@ import FormInput from '../FormInput';
 import TextButton from '../../TextButton';
 import FlatButton from '../../FlatButton';
 import SearchBar from '../../SearchBar';
+import Label from '../../Label';
 
 export default () => {
     const [startDate, setStartDate] = useState(getTodayDate());
@@ -23,7 +24,7 @@ export default () => {
         queryFn: () => fetchReservations({ startDate, endDate })
     });
 
-    if (error) return <div>Error loading offers</div>;
+    if (error) return <Label>Błąd podczas wczytywania</Label>;
 
     const { mutate, isPending } = useMutation({
         mutationFn: cancelReservation,

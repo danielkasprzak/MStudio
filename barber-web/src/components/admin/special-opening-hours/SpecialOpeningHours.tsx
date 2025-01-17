@@ -6,6 +6,7 @@ import { SpecialOpeningHours as SpecialOpeningHoursModel } from '../../../interf
 import Title from '../../Title';
 import SpecialOpeningHour from './SpecialOpeningHour';
 import TextButton from '../../TextButton';
+import Label from '../../Label';
 
 export default () => {
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ export default () => {
         queryFn: fetchSpecialOpeningHours
     });
 
-    if (error) return <div>Error loading offers</div>;
+    if (error) return <Label>Błąd podczas wczytywania</Label>;
 
     const { mutate, isPending } = useMutation({
         mutationFn: deleteSpecialOpeningHour,
@@ -49,7 +50,7 @@ export default () => {
                                     <Link to={`${date.date}`}>
                                         <TextButton>Edytuj</TextButton>
                                     </Link>   
-                                    {isPending ? <div>Usuwanie...</div> : <TextButton onClick={() => handleDeleteClick(date.date)}>Usuń</TextButton>}
+                                    {isPending ? <Label>Usuwanie...</Label> : <TextButton onClick={() => handleDeleteClick(date.date)}>Usuń</TextButton>}
                                 </div>
                             </div>
                         ))}

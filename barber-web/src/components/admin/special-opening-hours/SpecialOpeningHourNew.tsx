@@ -5,6 +5,7 @@ import { SpecialOpeningHours as SpecialOpeningHoursModel } from '../../../interf
 
 import SpecialOpeningHourForm from './SpecialOpeningHourForm';
 import TextButton from '../../TextButton';
+import Label from '../../Label';
 
 export default () => {
     const { state } = useNavigation();
@@ -19,7 +20,7 @@ export default () => {
             <Title padding='8'>Edytuj godziny</Title>
 
             <SpecialOpeningHourForm isNew inputData={{ date: '', endDate: null, isOpen: false, openHour: '', closeHour: '' }} onSubmit={handleSubmit}>
-                {state === 'submitting' ? (<div>Wysyłanie...</div> 
+                {state === 'submitting' ? (<Label>Wysyłanie...</Label> 
                 ) : (
                     <TextButton type='submit'>Zapisz</TextButton>
                 )}

@@ -6,6 +6,7 @@ import { Offer as OfferModel } from '../../../interfaces/offersInterfaces';
 import Title from '../../Title';
 import OfferForm from './OfferForm';
 import TextButton from '../../TextButton';
+import Label from '../../Label';
 
 export default () => {
     const { state } = useNavigation();
@@ -18,7 +19,7 @@ export default () => {
         enabled: !!params.id
     });
 
-    if (error) return <div>Error loading offers</div>;
+    if (error) return <Label>Błąd podczas wczytywania</Label>;
 
     function handleSubmit(formData: FormData) {
         submit(formData, {method: 'PUT' });
@@ -29,7 +30,7 @@ export default () => {
             <Title padding='8'>Edytuj ofertę</Title>
 
             {data && <OfferForm inputData={data} onSubmit={handleSubmit}>
-                {state === 'submitting' ? (<div>Wysyłanie...</div> 
+                {state === 'submitting' ? (<Label>Wysyłanie...</Label> 
                 ) : (
                     <TextButton type='submit'>Zapisz</TextButton>
                 )}

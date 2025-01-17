@@ -5,6 +5,7 @@ import { Reservation as ReservationModel } from '../../../interfaces/reservation
 import Title from '../../Title';
 import ReservationForm from './ReservationForm';
 import TextButton from '../../TextButton';
+import Label from '../../Label';
 
 export default () => {
     const { state } = useNavigation();
@@ -31,7 +32,7 @@ export default () => {
                 onSubmit={handleSubmit}
             >
                 {state === 'submitting' ? (
-                    <div>Wysyłanie...</div> 
+                    <Label>Wysyłanie...</Label> 
                 ) : (
                     <TextButton type='submit'>Zapisz</TextButton>
                 )}
