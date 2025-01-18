@@ -89,9 +89,9 @@ export default ({ imgRef } : Props) => {
     }, [offersScroll, OFFERS]);
 
     return (  
-        <section ref={sectionRef} id="oferty" className="relative h-full sm:h-[300vh]">
-            <motion.div className='relative h-full sm:h-screen sm:sticky sm:top-0' style={{ backgroundColor: bgColor }}>
-                <div className="relative flex flex-col items-center justify-center sm:hidden">
+        <section ref={sectionRef} id="oferty" className="relative h-full md:h-[300vh]">
+            <motion.div className='relative h-full md:h-screen md:sticky md:top-0' style={{ backgroundColor: bgColor }}>
+                <div className="relative flex flex-col items-center justify-center md:hidden">
                     {OFFERS.map((offer, index) => (
                         <OfferMobile
                             key={index}
@@ -110,7 +110,7 @@ export default ({ imgRef } : Props) => {
                     ))}
                 </div>
 
-                <div className='absolute inset-0 flex-row items-center w-full h-full hidden sm:flex'>
+                <div className='absolute inset-0 flex-row items-center w-full h-full hidden md:flex'>
                     <div className='relative w-1/2 h-full flex flex-col justify-center items-center'>
                         <motion.div className='flex flex-col justify-center' style={{ opacity: offersOpacity }}>
                             <h2 className='font-lato text-white font-bold text-xs tracking-wider uppercase z-20'>Oferta</h2>
@@ -133,7 +133,7 @@ export default ({ imgRef } : Props) => {
                             </Link>                            
                         </motion.div>
                     </div>
-                    <div className='w-1/2 h-full relative hidden sm:block'>
+                    <div className='w-1/2 h-full relative hidden md:block'>
                         <motion.div
                             className='sticky top-0 w-full h-screen flex flex-col justify-start items-stretch z-50 overflow-hidden'
                             initial={{ opacity: 0, translateY: '-100vh' }}
