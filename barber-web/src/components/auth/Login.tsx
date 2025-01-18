@@ -23,7 +23,7 @@ export default () => {
 
     return (
         <div className='w-screen h-screen bg-stone-100 flex justify-center items-center'>
-            <div className='p-16 bg-white border border-stone-300 text-charcoal flex flex-col justify-center items-center'>
+            <div className='py-12 px-4 sm:px-8 sm:py-16 md:px-16 bg-white border border-stone-300 text-charcoal flex flex-col justify-center items-center'>
                 <h1 className="font-cormorant text-xl font-medium uppercase pb-8">MSTUDIO</h1>
 
                     <div className='flex justify-center items-center flex-col'>
