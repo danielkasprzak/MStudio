@@ -18,7 +18,7 @@ export default ({ isActive, onHover, activeHeight, inactiveHeight }: Props) => {
 
     return (
         <motion.div 
-            className='w-[26rem] h-[66%] bg-white border border-stone-300 text-charcoal flex flex-col items-center p-8'
+            className='w-full md:w-[26rem] h-auto md:h-[66%] bg-white border border-stone-300 text-charcoal flex flex-col items-center p-8'
             onMouseEnter={onHover}
             animate={{ height: isActive ? activeHeight : inactiveHeight }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}

@@ -11,7 +11,7 @@ export default ({ isTraditional } : Props) => {
     const [activeSidePanel, setActiveSidePanel] = useState<number | null>(1);
 
     return (
-        <div className='flex flex-col justify-start py-8 mr-4 sticky top-0 h-screen z-20'>
+        <div className='h-auto md:h-screen w-full relative px-8 md:w-auto flex flex-col justify-start py-8 md:px-0 md:sticky md:top-0 md:mr-4 z-20'>
             <Info 
                 isActive={isTraditional ? true : activeSidePanel === 1} 
                 onHover={isTraditional ? undefined : () => setActiveSidePanel(1)} 

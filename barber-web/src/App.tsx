@@ -2,7 +2,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from './utils/http';
 import { lazy } from 'react';
-import { AnimatePresence } from 'motion/react';
 
 import { protectedLoader, adminLoader } from './utils/http';
 import MyReservations, { loader as myReservationsLoader } from './components/reservation/my-reservations/MyReservations';
@@ -35,8 +34,8 @@ const router = createBrowserRouter([
       { path: 'moje-rezerwacje', element: <MyReservations />, loader: myReservationsLoader }
     ]
   },
-  { path: 'rezerwuj', element: <TransitionedBooking />, loader: bookingLoader },
-  { path: 'dziekujemy', element: <TransitionedThankYouPage />},
+  { path: 'rezerwuj', element: <TransitionedBooking />, errorElement: <Error />, loader: bookingLoader },
+  { path: 'dziekujemy', element: <TransitionedThankYouPage />, errorElement: <Error /> },
   { path: 'admin', element: <TransitionedAdmin />, errorElement: <Error />, loader: adminLoader,
     children: [
       { index: true, element: <Dashboard /> },

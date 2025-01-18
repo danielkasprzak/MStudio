@@ -18,10 +18,10 @@ export default () => {
     if (error) return <div>Error loading offers</div>;
 
     return (
-        <div className='bg-stone-100 w-full h-full flex flex-row justify-center'>
+        <div className='bg-stone-100 w-full h-full flex flex-col items-center md:flex-row md:justify-center md:items-start'>
             <SidePanel isTraditional />
-            <div className='flex flex-col justify-start py-8 ml-4 z-10'>
-                <div className="h-auto w-[46rem] bg-white border border-stone-300 p-8 z-30">
+            <div className='flex flex-col justify-start md:py-8 mx-8 md:ml-4 z-10'>
+                <div className="h-auto w-fit md:w-[46rem] bg-white border border-stone-300 p-8 md:p-8 mb-8 md:mb-0 z-30">
                     <Title>Oferta</Title>
 
                     <ul className='w-full h-fit'>

@@ -20,7 +20,7 @@ export default () => {
 
     return (
         <div className='w-screen h-screen bg-stone-100 flex justify-center items-center'>
-            <div className='p-16 bg-white border border-stone-300 text-charcoal flex flex-col justify-center'>
+            <div className='p-10 sm:p-16 bg-white border border-stone-300 text-charcoal flex flex-col justify-center'>
                 <h1 className="font-cormorant text-xl font-medium uppercase">Dziękujemy za rezerwacje!</h1>
 
                 <p className="font-lato text-sm font-medium max-w-80 text-justify py-8">Serdecznie dziękujemy, za dokonanie rezerwacji w naszym salonie.
