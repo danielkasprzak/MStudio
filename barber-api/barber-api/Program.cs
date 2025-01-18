@@ -95,6 +95,13 @@ app.UseHttpsRedirection();
 
 app.UseCors("AllowReactApp");
 
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Add("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+    context.Response.Headers.Add("Content-Security-Policy", "script-src 'self' https://accounts.google.com/gsi/client; frame-src 'self' https://accounts.google.com/gsi/; connect-src 'self' https://accounts.google.com/gsi/;");
+    await next();
+});
+
 app.UseMiddleware<TokenRefreshMiddleware>();
 
 app.UseAuthentication();
