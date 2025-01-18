@@ -1,65 +1,71 @@
+import { lazy } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from './utils/http';
-import { lazy } from 'react';
-
-import { protectedLoader, adminLoader } from './utils/http';
-import MyReservations, { loader as myReservationsLoader } from './components/reservation/my-reservations/MyReservations';
-import Offers, { loader as offersLoader } from './components/reservation/offers/Offers';
-import OffersManage, { loader as offersManageLoader } from './components/admin/offers/Offers';
-import OfferEdit, { loader as offersEditLoader, action as offersEditAction } from './components/admin/offers/OfferEdit';
-import OfferNew, { action as offersNewAction } from './components/admin/offers/OfferNew';
-import OpeningHours, { loader as openingHoursLoader } from './components/admin/opening-hours/OpeningHours';
-import OpeningHoursEdit, { loader as openingHoursEditLoader, action as openingHoursEditAction } from './components/admin/opening-hours/OpeningHoursEdit';
-import SpecialOpeningHours, { loader as specialOpeningHoursLoader } from './components/admin/special-opening-hours/SpecialOpeningHours';
-import SpecialOpeningHourNew, { action as specialOpeningHourNewAction } from './components/admin/special-opening-hours/SpecialOpeningHourNew';
-import SpecialOpeningHourEdit, { loader as specialOpeningHourEditLoader, action as specialOpeningHourEditAction } from './components/admin/special-opening-hours/SpecialOpeningHourEdit';
-import { loader as bookingLoader } from './components/reservation/booking/Booking';
-import Reservations, { loader as reservationsLoader } from './components/admin/reservations/Reservations';
-import ReservationNew, { action as reservationNewAction } from './components/admin/reservations/ReservationNew';
-import { loader as traditionalReservationLoader } from './components/reservation/Traditional';
-import { TransitionedReservation, TransitionedLogin, TransitionedAdmin, TransitionedThankYouPage, TransitionedBooking, TransitionedTraditional } from './components/Lazy';
-import Dashboard from './components/admin/dashboard/Dashboard';
 
 const Error = lazy(() => import('./components/Error'));
 const Landing = lazy(() => import('./components/landing/Landing'));
+const Traditional = lazy(() => import('./components/reservation/Traditional'));
+const Reservation = lazy(() => import('./components/reservation/Reservation'));
+const Login = lazy(() => import('./components/auth/Login'));
+const Admin = lazy(() => import('./components/admin/Admin'));
+const ThankYouPage = lazy(() => import('./components/reservation/booking/ThankYouPage'));
+const Booking = lazy(() => import('./components/reservation/booking/Booking'));
+const MyReservations = lazy(() => import('./components/reservation/my-reservations/MyReservations'));
+const Offers = lazy(() => import('./components/reservation/offers/Offers'));
+const OffersManage = lazy(() => import('./components/admin/offers/Offers'));
+const OfferEdit = lazy(() => import('./components/admin/offers/OfferEdit'));
+const OfferNew = lazy(() => import('./components/admin/offers/OfferNew'));
+const OpeningHours = lazy(() => import('./components/admin/opening-hours/OpeningHours'));
+const OpeningHourEdit = lazy(() => import('./components/admin/opening-hours/OpeningHourEdit'));
+const SpecialOpeningHours = lazy(() => import('./components/admin/special-opening-hours/SpecialOpeningHours'));
+const SpecialOpeningHourNew = lazy(() => import('./components/admin/special-opening-hours/SpecialOpeningHourNew'));
+const SpecialOpeningHourEdit = lazy(() => import('./components/admin/special-opening-hours/SpecialOpeningHourEdit'));
+const Reservations = lazy(() => import('./components/admin/reservations/Reservations'));
+const ReservationNew = lazy(() => import('./components/admin/reservations/ReservationNew'));
+const Dashboard = lazy(() => import('./components/admin/dashboard/Dashboard'));
+
+// import { TransitionedReservation, TransitionedLogin, TransitionedAdmin, TransitionedThankYouPage, TransitionedBooking, TransitionedTraditional } from './components/Lazy';
 
 const router = createBrowserRouter([
   { index: true, element: <Landing />, errorElement: <Error /> },
-  { path: 'login', element: <TransitionedLogin />, errorElement: <Error /> },
-  { path: 'rezerwacja-tradycyjna', element: <TransitionedTraditional />, errorElement: <Error />, loader: traditionalReservationLoader },
-  { path: 'rezerwacja', element: <TransitionedReservation />, errorElement: <Error />, loader: protectedLoader,
+  { path: 'login', element: <Login />, errorElement: <Error /> },
+  { path: 'rezerwacja-tradycyjna', element: <Traditional />, errorElement: <Error />, loader: () => import('./components/reservation/Traditional').then(module => module.loader()) },
+  { path: 'rezerwacja', element: <Reservation />, errorElement: <Error />, loader: () => import('./components/reservation/Reservation').then(module => module.loader()),
     children: [
-      { index: true, element: <Offers />, loader: offersLoader },
-      { path: 'moje-rezerwacje', element: <MyReservations />, loader: myReservationsLoader }
+      { index: true, element: <Offers />, loader: () => import('./components/reservation/offers/Offers').then(module => module.loader()) },
+      { path: 'moje-rezerwacje', element: <MyReservations />, loader: () => import('./components/reservation/my-reservations/MyReservations').then(module => module.loader()) }
     ]
   },
-  { path: 'rezerwuj', element: <TransitionedBooking />, errorElement: <Error />, loader: bookingLoader },
-  { path: 'dziekujemy', element: <TransitionedThankYouPage />, errorElement: <Error /> },
-  { path: 'admin', element: <TransitionedAdmin />, errorElement: <Error />, loader: adminLoader,
+  { path: 'rezerwuj', element: <Booking />, errorElement: <Error />, loader: () => import('./components/reservation/booking/Booking').then(module => module.loader()) },
+  { path: 'dziekujemy', element: <ThankYouPage />, errorElement: <Error /> },
+  { path: 'admin', element: <Admin />, errorElement: <Error />, loader: () => import('./components/admin/Admin').then(module => module.loader()),
     children: [
       { index: true, element: <Dashboard /> },
-      { path: 'rezerwacje', element: <Reservations />, loader: reservationsLoader,
+      { path: 'rezerwacje', element: <Reservations />, loader: () => import('./components/admin/reservations/Reservations').then(module => module.loader()),
         children: [
-          { path: 'dodaj', element: <ReservationNew />, action: reservationNewAction },
+          { path: 'dodaj', element: <ReservationNew />, action: () => import('./components/admin/reservations/ReservationNew').then(module => module.action) },
         ]
       },
       { path: 'oferty', element: <OffersManage />,
-        loader: offersManageLoader,
+        loader: () => import('./components/admin/offers/Offers').then(module => module.loader()),
         children: [
-          { path: 'dodaj', element: <OfferNew />, action: offersNewAction },
-          { path: ':id', element: <OfferEdit />, loader: offersEditLoader, action: offersEditAction }
+          { path: 'dodaj', element: <OfferNew />, action: () => import('./components/admin/offers/OfferNew').then(module => module.action) },
+          { path: ':id', element: <OfferEdit />, loader: (meta) => import('./components/admin/offers/OfferEdit').then(module => module.loader(meta)),
+            action: () => import('./components/admin/offers/OfferEdit').then(module => module.action) }
         ]
       },
-      { path: 'godziny-otwarcia', element: <OpeningHours />, loader: openingHoursLoader,
+      { path: 'godziny-otwarcia', element: <OpeningHours />, loader: () => import('./components/admin/opening-hours/OpeningHours').then(module => module.loader()),
         children: [
-          { path: ':day', element: <OpeningHoursEdit />, loader: openingHoursEditLoader, action: openingHoursEditAction }
+          { path: ':day', element: <OpeningHourEdit />, loader: (meta) => import('./components/admin/opening-hours/OpeningHourEdit').then(module => module.loader(meta)),
+            action: () => import('./components/admin/opening-hours/OpeningHourEdit').then(module => module.action) }
         ]
       },
-      { path: 'specjalne-godziny-otwarcia', element: <SpecialOpeningHours />, loader: specialOpeningHoursLoader,
+      { path: 'specjalne-godziny-otwarcia', element: <SpecialOpeningHours />, loader: () => import('./components/admin/special-opening-hours/SpecialOpeningHours').then(module => module.loader()),
         children: [
-          { path: 'dodaj', element: <SpecialOpeningHourNew />, action: specialOpeningHourNewAction },
-          { path: ':date', element: <SpecialOpeningHourEdit />, loader: specialOpeningHourEditLoader, action: specialOpeningHourEditAction }
+          { path: 'dodaj', element: <SpecialOpeningHourNew />, action: () => import('./components/admin/special-opening-hours/SpecialOpeningHourNew').then(module => module.action) },
+          { path: ':date', element: <SpecialOpeningHourEdit />, loader: (meta) => import('./components/admin/special-opening-hours/SpecialOpeningHourEdit').then(module => module.loader(meta)),
+            action: () => import('./components/admin/special-opening-hours/SpecialOpeningHourEdit').then(module => module.action) }
         ]
       }
     ]

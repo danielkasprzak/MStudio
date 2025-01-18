@@ -6,7 +6,7 @@ export const queryClient = new QueryClient();
 
 // AUTH
 
-const checkAuth = async () => {
+export const checkAuth = async () => {
     try {
       const response = await axiosInstance.get('https://localhost:7190/auth/check');
       return response.data;
@@ -14,22 +14,6 @@ const checkAuth = async () => {
       return null;
     }
 };
-
-export async function protectedLoader() {
-    const auth = await checkAuth();
-    if (!auth) {
-      throw new Response('Forbidden', { status: 403 });
-    }
-    return auth;
-}
-  
-export async function adminLoader() {
-    const auth = await checkAuth();
-    if (!auth || !auth.roles.includes('admin')) {
-      throw new Response('Forbidden', { status: 403 });
-    }
-    return auth;
-}
 
 export async function logout() {
     await axiosInstance.post('https://localhost:7190/auth/logout');

@@ -1,4 +1,5 @@
 import useDocumentTitle from "../../hooks/useDocumentTitle";
+import { checkAuth } from "../../utils/http";
 
 import SidePanel from "./SidePanel";
 import MainPanel from "./MainPanel";
@@ -12,4 +13,12 @@ export default () => {
             <MainPanel />
         </div>
     )
+}
+
+export async function loader() {
+    const auth = await checkAuth();
+    if (!auth) {
+      throw new Response('Forbidden', { status: 403 });
+    }
+    return auth;
 }
