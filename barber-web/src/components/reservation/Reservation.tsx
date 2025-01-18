@@ -12,7 +12,7 @@ export default () => {
             <SidePanel />
             <MainPanel />
         </div>
-    )
+    );
 }
 
 export async function loader() {
