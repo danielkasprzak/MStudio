@@ -29,8 +29,8 @@ export default () => {
                 <div className='relative w-auto p-16 pt-8 h-full text-charcoal font-lato'>
                     <ul className='h-fit w-fit'>
                         {sortedData.map((date) => (
-                            <div className='flex flex-row items-center'>
-                                <OpeningHour key={date.dayOfWeek} dayOfWeek={date.dayOfWeek} isOpen={date.isOpen} openHour={date.openHour} closeHour={date.closeHour} />
+                            <div key={date.dayOfWeek} className='flex flex-row items-center'>
+                                <OpeningHour dayOfWeek={date.dayOfWeek} isOpen={date.isOpen} openHour={date.openHour} closeHour={date.closeHour} />
 
                                 <Link to={`${date.dayOfWeek}`}>
                                     <TextButton>Edytuj</TextButton>

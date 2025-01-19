@@ -43,8 +43,8 @@ export default () => {
                 <div className='relative w-auto p-16 pt-8 h-full text-charcoal font-lato'>
                     <ul className='h-fit w-fit'>
                         {data.map((date) => (
-                            <div className='flex flex-row'>
-                                <SpecialOpeningHour key={date.date} date={date.date} endDate={date.endDate} isOpen={date.isOpen} openHour={date.openHour} closeHour={date.closeHour} />
+                            <div key={date.date} className='flex flex-row'>
+                                <SpecialOpeningHour date={date.date} endDate={date.endDate} isOpen={date.isOpen} openHour={date.openHour} closeHour={date.closeHour} />
                                 
                                 <div className='flex flex-row items-center'>
                                     <Link to={`${date.date}`}>

@@ -19,14 +19,14 @@ interface Props {
 
 export default ({ children, isNew, inputData, onSubmit }: Props) => {
     const [date, setDate] = useState(inputData.date.split('T')[0]);
-    const [endDate, setEndDate] = useState(inputData.endDate ? inputData.endDate.split('T')[0] : null);
+    const [endDate, setEndDate] = useState(inputData.endDate ? inputData.endDate.split('T')[0] : '');
     const [isOpen, setIsOpen] = useState(inputData.isOpen);
     const [openHour, setOpenHour] = useState(inputData.openHour);
     const [closeHour, setCloseHour] = useState(inputData.closeHour);
 
     useEffect(() => {
         setDate(inputData.date.split('T')[0]);
-        setEndDate(inputData.endDate ? inputData.endDate.split('T')[0] : null);
+        setEndDate(inputData.endDate ? inputData.endDate.split('T')[0] : '');
         setIsOpen(inputData.isOpen);
         setOpenHour(inputData.openHour);
         setCloseHour(inputData.closeHour);

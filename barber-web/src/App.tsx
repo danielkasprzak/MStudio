@@ -26,8 +26,6 @@ const Reservations = lazy(() => import('./components/admin/reservations/Reservat
 const ReservationNew = lazy(() => import('./components/admin/reservations/ReservationNew'));
 const Dashboard = lazy(() => import('./components/admin/dashboard/Dashboard'));
 
-// import { TransitionedReservation, TransitionedLogin, TransitionedAdmin, TransitionedThankYouPage, TransitionedBooking, TransitionedTraditional } from './components/Lazy';
-
 const router = createBrowserRouter([
   { index: true, element: <Suspense fallback={<Label>Wczytywanie...</Label>}><Landing /></Suspense>, errorElement: <Error /> },
   { path: 'login', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><Login /></Suspense>, errorElement: <Error /> },
@@ -45,28 +43,28 @@ const router = createBrowserRouter([
       { index: true, element: <Suspense fallback={<Label>Wczytywanie...</Label>}><Dashboard /></Suspense> },
       { path: 'rezerwacje', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><Reservations /></Suspense>, loader: () => import('./components/admin/reservations/Reservations').then(module => module.loader()),
         children: [
-          { path: 'dodaj', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><ReservationNew /></Suspense>, action: () => import('./components/admin/reservations/ReservationNew').then(module => module.action) },
+          { path: 'dodaj', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><ReservationNew /></Suspense>, action: (meta) => import('./components/admin/reservations/ReservationNew').then(module => module.action(meta)) },
         ]
       },
       { path: 'oferty', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><OffersManage /></Suspense>,
         loader: () => import('./components/admin/offers/Offers').then(module => module.loader()),
         children: [
-          { path: 'dodaj', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><OfferNew /></Suspense>, action: () => import('./components/admin/offers/OfferNew').then(module => module.action) },
+          { path: 'dodaj', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><OfferNew /></Suspense>, action: (meta) => import('./components/admin/offers/OfferNew').then(module => module.action(meta)) },
           { path: ':id', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><OfferEdit /></Suspense>, loader: (meta) => import('./components/admin/offers/OfferEdit').then(module => module.loader(meta)),
-            action: () => import('./components/admin/offers/OfferEdit').then(module => module.action) }
+            action: (meta) => import('./components/admin/offers/OfferEdit').then(module => module.action(meta)) }
         ]
       },
       { path: 'godziny-otwarcia', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><OpeningHours /></Suspense>, loader: () => import('./components/admin/opening-hours/OpeningHours').then(module => module.loader()),
         children: [
           { path: ':day', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><OpeningHourEdit /></Suspense>, loader: (meta) => import('./components/admin/opening-hours/OpeningHourEdit').then(module => module.loader(meta)),
-            action: () => import('./components/admin/opening-hours/OpeningHourEdit').then(module => module.action) }
+            action: (meta) => import('./components/admin/opening-hours/OpeningHourEdit').then(module => module.action(meta)) }
         ]
       },
       { path: 'specjalne-godziny-otwarcia', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><SpecialOpeningHours /></Suspense>, loader: () => import('./components/admin/special-opening-hours/SpecialOpeningHours').then(module => module.loader()),
         children: [
-          { path: 'dodaj', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><SpecialOpeningHourNew /></Suspense>, action: () => import('./components/admin/special-opening-hours/SpecialOpeningHourNew').then(module => module.action) },
+          { path: 'dodaj', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><SpecialOpeningHourNew /></Suspense>, action: (meta) => import('./components/admin/special-opening-hours/SpecialOpeningHourNew').then(module => module.action(meta)) },
           { path: ':date', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><SpecialOpeningHourEdit /></Suspense>, loader: (meta) => import('./components/admin/special-opening-hours/SpecialOpeningHourEdit').then(module => module.loader(meta)),
-            action: () => import('./components/admin/special-opening-hours/SpecialOpeningHourEdit').then(module => module.action) }
+            action: (meta) => import('./components/admin/special-opening-hours/SpecialOpeningHourEdit').then(module => module.action(meta)) }
         ]
       }
     ]
