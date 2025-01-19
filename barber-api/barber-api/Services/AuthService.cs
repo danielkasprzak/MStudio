@@ -31,13 +31,13 @@ namespace barber_api.Services
             });
 
             var claims = new List<Claim>
-        {
+            {
             new Claim(JwtRegisteredClaimNames.Sub, payload.Subject),
             new Claim(JwtRegisteredClaimNames.Email, payload.Email),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim("name", payload.Name),
             new Claim("picture", payload.Picture)
-        };
+            };
 
             var adminEmails = _configuration.GetSection("AdminEmails").Get<List<string>>() ?? new List<string>();
             if (adminEmails.Contains(payload.Email))
