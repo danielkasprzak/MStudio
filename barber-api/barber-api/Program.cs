@@ -14,7 +14,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowReactApp", policy =>
     {
         policy.WithOrigins("http://localhost:5173")
-            .WithHeaders("Content-Type", "X-CSRF-TOKEN")
+            .WithHeaders("Content-Type", "X-XSRF-TOKEN")
             .WithMethods("GET", "POST", "PUT", "DELETE")
             .AllowCredentials();
     });
@@ -24,11 +24,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddHttpContextAccessor();
-
-builder.Services.AddAntiforgery(options =>
-{
-    options.HeaderName = "X-CSRF-TOKEN";
-});
 
 builder.Services.AddAuthentication(options =>
 {
@@ -106,15 +101,6 @@ app.UseMiddleware<TokenRefreshMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.Use(async (context, next) =>
-{
-    var antiforgery = context.RequestServices.GetRequiredService<IAntiforgery>();
-    var tokens = antiforgery.GetAndStoreTokens(context);
-    if (tokens.RequestToken != null)
-        context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken, new CookieOptions { HttpOnly = false, Secure = true, SameSite = SameSiteMode.None });
-    await next();
-});
 
 app.MapControllers();
 
