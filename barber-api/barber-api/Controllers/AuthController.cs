@@ -21,26 +21,6 @@ namespace barber_api.Controllers
             return Ok(new { message = "Authenticated successfully" });
         }
 
-        [HttpPost("refresh-token")]
-        public async Task<IActionResult> RefreshToken()
-        {
-            var refreshToken = Request.Cookies["MSRTOKEN"];
-            if (string.IsNullOrEmpty(refreshToken))
-            {
-                return Unauthorized("Refresh token is missing.");
-            }
-
-            try
-            {
-                var newAccessToken = await _authService.RefreshAccessTokenAsync(refreshToken);
-                return Ok(new { accessToken = newAccessToken });
-            }
-            catch
-            {
-                return StatusCode(500, "Internal server error");
-            }
-        }
-
         [HttpGet("check")]
         public IActionResult CheckAuth()
         {
