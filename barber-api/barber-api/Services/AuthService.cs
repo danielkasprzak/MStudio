@@ -23,7 +23,7 @@ namespace barber_api.Services
 
         public async Task AuthenticateWithGoogleAsync(string code)
         {
-            var tokenResponse = await ExchangeAuthorizationCodeForIdTokenAsync(code);
+            var tokenResponse = await ExchangeAuthorizationCodeAsync(code);
 
             var payload = await GoogleJsonWebSignature.ValidateAsync(tokenResponse.IdToken, new GoogleJsonWebSignature.ValidationSettings
             {
@@ -91,7 +91,7 @@ namespace barber_api.Services
             _httpContextAccessor.HttpContext?.Response.Cookies.Append("MSRTOKEN", refreshToken, cookieOptions);
         }
 
-        private async Task<GoogleTokenResponse> ExchangeAuthorizationCodeForIdTokenAsync(string authorizationCode)
+        private async Task<GoogleTokenResponse> ExchangeAuthorizationCodeAsync(string authorizationCode)
         {
             var clientId = _configuration["Authentication:Google:ClientId"];
             var clientSecret = _configuration["Authentication:Google:ClientSecret"];
