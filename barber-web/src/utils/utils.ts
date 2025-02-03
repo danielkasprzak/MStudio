@@ -59,27 +59,43 @@ export const getTodayDate = () => {
 
 export const getDateRange = (period: string) => {
     const now = new Date();
-    let startDate = new Date();
-
+    let startDate = new Date(now);
+    let endDate = new Date(now);
+    
     switch (period) {
         case '1D':
-            startDate.setDate(now.getDate() - 1);
+            startDate.setHours(0, 0, 0, 0);
+            endDate.setHours(23, 59, 59, 999);
             break;
         case '1T':
-            startDate.setMonth(now.getMonth() - 1);
+            const firstDayOfWeek = now.getDate() - now.getDay();
+            startDate = new Date(now.setDate(firstDayOfWeek));
+            startDate.setHours(0, 0, 0, 0);
+            endDate = new Date(now.setDate(firstDayOfWeek + 6));
+            endDate.setHours(23, 59, 59, 999);
             break;
         case '1M':
-            startDate.setMonth(now.getMonth() - 1);
+            startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+            startDate.setHours(0, 0, 0, 0);
+            endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+            endDate.setHours(23, 59, 59, 999);
             break;
         case '1R':
-            startDate.setFullYear(now.getFullYear() - 1);
+            startDate = new Date(now.getFullYear(), 0, 1);
+            startDate.setHours(0, 0, 0, 0);
+            endDate = new Date(now.getFullYear(), 11, 31);
+            endDate.setHours(23, 59, 59, 999);
             break;
         default:
             startDate = new Date(0);
+            endDate = new Date();
+            break;
     }
-
-    return {
-        startDate: startDate.toISOString().split('T')[0],
-        endDate: now.toISOString().split('T')[0]
+    
+    const formatDate = (date: Date) => {
+        return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
     };
+
+    console.log(formatDate(startDate), formatDate(endDate));
+    return { startDate: formatDate(startDate), endDate: formatDate(endDate) };
 };
