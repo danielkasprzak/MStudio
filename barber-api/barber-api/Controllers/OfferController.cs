@@ -7,12 +7,12 @@ namespace barber_api.Controllers
 {
     [ApiController]
     [Route("offers")]
-    public class OffersController : ControllerBase
+    public class OfferController : ControllerBase
     {
         private readonly OfferService _offersService;
-        private readonly ILogger<OffersController> _logger;
+        private readonly ILogger<OfferController> _logger;
 
-        public OffersController(OfferService offersService, ILogger<OffersController> logger)
+        public OfferController(OfferService offersService, ILogger<OfferController> logger)
         {
             _offersService = offersService;
             _logger = logger;

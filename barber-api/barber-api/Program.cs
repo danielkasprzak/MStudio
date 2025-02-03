@@ -70,9 +70,9 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<OfferService>();
-builder.Services.AddScoped<OpeningHoursService>();
-builder.Services.AddScoped<SpecialOpeningHoursService>();
-builder.Services.AddScoped<ReservationsService>();
+builder.Services.AddScoped<OpeningHourService>();
+builder.Services.AddScoped<SpecialOpeningHourService>();
+builder.Services.AddScoped<ReservationService>();
 builder.Services.AddScoped<StatisticsService>();
 
 builder.Services.AddControllers();

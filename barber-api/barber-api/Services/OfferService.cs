@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace barber_api.Services
 {
-    public class OffersService
+    public class OfferService
     {
         private readonly AppDbContext _context;
 
-        public OffersService(AppDbContext context)
+        public OfferService(AppDbContext context)
         {
             _context = context;
         }
