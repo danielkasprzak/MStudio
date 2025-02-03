@@ -18,11 +18,32 @@ namespace barber_api.Controllers
             _statisticsService = statisticsService;
         }
 
-        [HttpGet("reservations")]
+        [HttpGet("total-reservations")]
         public async Task<IActionResult> GetTotalReservations([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
         {
             var totalReservations = await _statisticsService.GetTotalReservations(startDate, endDate);
             return Ok(new { totalReservations });
+        }
+
+        [HttpGet("cancelled-reservations")]
+        public async Task<IActionResult> GetCancelledReservationsCount(DateTime startDate, DateTime endDate)
+        {
+            var result = await _statisticsService.GetCancelledReservationsCount(startDate, endDate);
+            return Ok(result);
+        }
+
+        [HttpGet("completed-reservations")]
+        public async Task<IActionResult> GetCompletedReservationsCount(DateTime startDate, DateTime endDate)
+        {
+            var result = await _statisticsService.GetCompletedReservationsCount(startDate, endDate);
+            return Ok(result);
+        }
+
+        [HttpGet("active-reservations")]
+        public async Task<IActionResult> GetActiveReservationsCount(DateTime startDate, DateTime endDate)
+        {
+            var result = await _statisticsService.GetActiveReservationsCount(startDate, endDate);
+            return Ok(result);
         }
 
         [HttpGet("financial")]
@@ -37,6 +58,27 @@ namespace barber_api.Controllers
         {
             var popularServices = await _statisticsService.GetMostPopularOffers(startDate, endDate);
             return Ok(new { popularServices });
+        }
+
+        [HttpGet("most-popular-hours")]
+        public async Task<IActionResult> GetMostPopularReservationHours(DateTime startDate, DateTime endDate)
+        {
+            var result = await _statisticsService.GetMostPopularReservationHours(startDate, endDate);
+            return Ok(result);
+        }
+
+        [HttpGet("most-popular-days")]
+        public async Task<IActionResult> GetMostPopularDaysOfWeek(DateTime startDate, DateTime endDate)
+        {
+            var result = await _statisticsService.GetMostPopularDaysOfWeek(startDate, endDate);
+            return Ok(result);
+        }
+
+        [HttpGet("average-duration")]
+        public async Task<IActionResult> GetAverageReservationDuration(DateTime startDate, DateTime endDate)
+        {
+            var result = await _statisticsService.GetAverageReservationDuration(startDate, endDate);
+            return Ok(result);
         }
     }
 }

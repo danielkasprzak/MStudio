@@ -45,6 +45,54 @@ namespace barber_api.Services
             return (totalPayments, averagePayment);
         }
 
+        public async Task<List<int>> GetMostPopularReservationHours(DateTime startDate, DateTime endDate)
+        {
+            return await _context.Reservations
+                .Where(r => r.ReservationDateTime >= startDate && r.ReservationDateTime <= endDate)
+                .GroupBy(r => r.ReservationDateTime.Hour)
+                .OrderByDescending(g => g.Count())
+                .Select(g => g.Key)
+                .ToListAsync();
+        }
+
+        public async Task<List<string>> GetMostPopularDaysOfWeek(DateTime startDate, DateTime endDate)
+        {
+            return await _context.Reservations
+                .Where(r => r.ReservationDateTime >= startDate && r.ReservationDateTime <= endDate)
+                .GroupBy(r => r.ReservationDateTime.DayOfWeek)
+                .OrderByDescending(g => g.Count())
+                .Select(g => g.Key.ToString())
+                .ToListAsync();
+        }
+
+        public async Task<int> GetCancelledReservationsCount(DateTime startDate, DateTime endDate)
+        {
+            return await _context.Reservations
+                .Where(r => r.ReservationDateTime >= startDate && r.ReservationDateTime <= endDate && r.IsCancelled)
+                .CountAsync();
+        }
+
+        public async Task<int> GetCompletedReservationsCount(DateTime startDate, DateTime endDate)
+        {
+            return await _context.Reservations
+                .Where(r => r.ReservationDateTime >= startDate && r.ReservationDateTime <= endDate && !r.IsCancelled)
+                .CountAsync();
+        }
+
+        public async Task<int> GetActiveReservationsCount(DateTime startDate, DateTime endDate)
+        {
+            return await _context.Reservations
+                .Where(r => r.ReservationDateTime >= startDate && r.ReservationDateTime <= endDate && !r.IsCancelled && r.ReservationDateTime > DateTime.Now)
+                .CountAsync();
+        }
+
+        public async Task<double> GetAverageReservationDuration(DateTime startDate, DateTime endDate)
+        {
+            return await _context.Reservations
+                .Where(r => r.ReservationDateTime >= startDate && r.ReservationDateTime <= endDate)
+                .AverageAsync(r => r.Duration);
+        }
+
         public async Task<IQueryable<Offer>> GetMostPopularOffers(DateTime startDate, DateTime endDate)
         {
             var popularOffers = _context.Reservations
