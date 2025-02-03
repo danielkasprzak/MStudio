@@ -9,10 +9,10 @@ namespace barber_api.Controllers
     [Route("offers")]
     public class OffersController : ControllerBase
     {
-        private readonly OffersService _offersService;
+        private readonly OfferService _offersService;
         private readonly ILogger<OffersController> _logger;
 
-        public OffersController(OffersService offersService, ILogger<OffersController> logger)
+        public OffersController(OfferService offersService, ILogger<OffersController> logger)
         {
             _offersService = offersService;
             _logger = logger;

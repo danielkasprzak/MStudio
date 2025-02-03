@@ -69,7 +69,7 @@ builder.Services.AddAuthorization(options =>
 
 
 builder.Services.AddScoped<AuthService>();
-builder.Services.AddScoped<OffersService>();
+builder.Services.AddScoped<OfferService>();
 builder.Services.AddScoped<OpeningHoursService>();
 builder.Services.AddScoped<SpecialOpeningHoursService>();
 builder.Services.AddScoped<ReservationsService>();
