@@ -33,9 +33,16 @@ namespace barber_api.Services
 
         public async Task<decimal> GetAveragePayment(DateTime startDate, DateTime endDate)
         {
-            return await _context.Reservations
+            var reservations = await _context.Reservations
                 .Where(r => r.ReservationDateTime >= startDate && r.ReservationDateTime <= endDate)
-                .AverageAsync(r => r.Price);
+                .ToListAsync();
+
+            if (!reservations.Any())
+            {
+                return 0;
+            }
+
+            return reservations.Average(r => r.Price);
         }
 
         public async Task<(decimal totalPayments, decimal averagePayment)> GetPaymentsStatistics(DateTime startDate, DateTime endDate)
@@ -88,9 +95,16 @@ namespace barber_api.Services
 
         public async Task<double> GetAverageReservationDuration(DateTime startDate, DateTime endDate)
         {
-            return await _context.Reservations
+            var reservations = await _context.Reservations
                 .Where(r => r.ReservationDateTime >= startDate && r.ReservationDateTime <= endDate)
-                .AverageAsync(r => r.Duration);
+                .ToListAsync();
+
+            if (!reservations.Any())
+            {
+                return 0;
+            }
+
+            return reservations.Average(r => r.Duration);
         }
 
         public async Task<IQueryable<Offer>> GetMostPopularOffers(DateTime startDate, DateTime endDate)

@@ -18,32 +18,21 @@ namespace barber_api.Controllers
             _statisticsService = statisticsService;
         }
 
-        [HttpGet("total-reservations")]
+        [HttpGet("reservations")]
         public async Task<IActionResult> GetTotalReservations([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
         {
             var totalReservations = await _statisticsService.GetTotalReservations(startDate, endDate);
-            return Ok(new { totalReservations });
-        }
+            var cancelledReservations = await _statisticsService.GetCancelledReservationsCount(startDate, endDate);
+            var completedReservations = await _statisticsService.GetCompletedReservationsCount(startDate, endDate);
+            var activeReservations = await _statisticsService.GetActiveReservationsCount(startDate, endDate);
 
-        [HttpGet("cancelled-reservations")]
-        public async Task<IActionResult> GetCancelledReservationsCount(DateTime startDate, DateTime endDate)
-        {
-            var result = await _statisticsService.GetCancelledReservationsCount(startDate, endDate);
-            return Ok(result);
-        }
-
-        [HttpGet("completed-reservations")]
-        public async Task<IActionResult> GetCompletedReservationsCount(DateTime startDate, DateTime endDate)
-        {
-            var result = await _statisticsService.GetCompletedReservationsCount(startDate, endDate);
-            return Ok(result);
-        }
-
-        [HttpGet("active-reservations")]
-        public async Task<IActionResult> GetActiveReservationsCount(DateTime startDate, DateTime endDate)
-        {
-            var result = await _statisticsService.GetActiveReservationsCount(startDate, endDate);
-            return Ok(result);
+            return Ok(new
+            {
+                totalReservations,
+                cancelledReservations,
+                completedReservations,
+                activeReservations
+            });
         }
 
         [HttpGet("financial")]
