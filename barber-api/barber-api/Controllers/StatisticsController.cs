@@ -8,7 +8,7 @@ namespace barber_api.Controllers
 {
     [ApiController]
     [Route("statistics")]
-    [Authorize(Policy = "AdminOnly")]
+    //[Authorize(Policy = "AdminOnly")]
     public class StatisticsController : ControllerBase
     {
         private readonly StatisticsService _statisticsService;
@@ -40,6 +40,37 @@ namespace barber_api.Controllers
         {
             var (totalPayments, averagePayment) = await _statisticsService.GetPaymentsStatistics(startDate, endDate);
             return Ok(new { totalPayments, averagePayment });
+        }
+
+        [HttpGet("financial/daily")]
+        public async Task<IActionResult> GetDailyAveragePayments([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+        {
+            var result = await _statisticsService.GetDailyAveragePayments(startDate, endDate);
+            return Ok(result);
+        }
+
+        [HttpGet("financial/weekly")]
+        public async Task<IActionResult> GetWeeklyAveragePayments([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+        {
+            var result = await _statisticsService.GetWeeklyAveragePayments(startDate, endDate);
+            return Ok(result);
+        }
+
+        [HttpGet("financial/monthly")]
+        public async Task<IActionResult> GetMonthlyAveragePayments([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+        {
+            var result = await _statisticsService.GetMonthlyAveragePayments(startDate, endDate);
+            return Ok(result);
+        }
+
+        [HttpGet("financial/yearly")]
+        public async Task<IActionResult> GetYearlyAveragePayments()
+        {
+            var endDate = DateTime.Now;
+            var startDate = endDate.AddYears(-5);
+
+            var result = await _statisticsService.GetYearlyAveragePayments(startDate, endDate);
+            return Ok(result);
         }
 
         [HttpGet("popular-services")]

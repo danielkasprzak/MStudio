@@ -3,6 +3,7 @@ using barber_api.Models;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -43,6 +44,94 @@ namespace barber_api.Services
             }
 
             return reservations.Average(r => r.Price);
+        }
+
+        public async Task<Dictionary<int, decimal>> GetDailyAveragePayments(DateTime startDate, DateTime endDate)
+        {
+            var reservations = await _context.Reservations
+                .Where(r => r.ReservationDateTime >= startDate && r.ReservationDateTime <= endDate)
+                .ToListAsync();
+
+            var dailyPayments = reservations
+                .GroupBy(r => (r.ReservationDateTime - startDate).Days)
+                .Select(g => new { Day = g.Key, AveragePayment = g.Average(r => r.Price) })
+                .ToDictionary(g => g.Day, g => g.AveragePayment);
+
+            var result = new Dictionary<int, decimal>();
+            for (var day = 0; day <= (endDate - startDate).Days; day++)
+            {
+                result[day] = dailyPayments.ContainsKey(day) ? dailyPayments[day] : 0;
+            }
+
+            return result;
+        }
+
+
+
+        public async Task<Dictionary<int, decimal>> GetWeeklyAveragePayments(DateTime startDate, DateTime endDate)
+        {
+            var reservations = await _context.Reservations
+                .Where(r => r.ReservationDateTime >= startDate && r.ReservationDateTime <= endDate)
+                .ToListAsync();
+
+            var weeklyPayments = reservations
+                .GroupBy(r => (CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(r.ReservationDateTime, CalendarWeekRule.FirstDay, DayOfWeek.Monday) - CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(startDate, CalendarWeekRule.FirstDay, DayOfWeek.Monday)))
+                .Select(g => new { Week = g.Key, AveragePayment = g.Average(r => r.Price) })
+                .ToDictionary(g => g.Week, g => g.AveragePayment);
+
+            var result = new Dictionary<int, decimal>();
+            var totalWeeks = (endDate - startDate).Days / 7;
+            for (var week = 0; week <= totalWeeks; week++)
+            {
+                result[week] = weeklyPayments.ContainsKey(week) ? weeklyPayments[week] : 0;
+            }
+
+            return result;
+        }
+
+
+        public async Task<Dictionary<int, decimal>> GetMonthlyAveragePayments(DateTime startDate, DateTime endDate)
+        {
+            var reservations = await _context.Reservations
+                .Where(r => r.ReservationDateTime >= startDate && r.ReservationDateTime <= endDate)
+                .ToListAsync();
+
+            var monthlyPayments = reservations
+                .GroupBy(r => ((r.ReservationDateTime.Year - startDate.Year) * 12) + r.ReservationDateTime.Month - startDate.Month)
+                .Select(g => new { Month = g.Key, AveragePayment = g.Average(r => r.Price) })
+                .ToDictionary(g => g.Month, g => g.AveragePayment);
+
+            var result = new Dictionary<int, decimal>();
+            var totalMonths = ((endDate.Year - startDate.Year) * 12) + endDate.Month - startDate.Month;
+            for (var month = 0; month <= totalMonths; month++)
+            {
+                result[month] = monthlyPayments.ContainsKey(month) ? monthlyPayments[month] : 0;
+            }
+
+            return result;
+        }
+
+
+
+        public async Task<Dictionary<int, decimal>> GetYearlyAveragePayments(DateTime startDate, DateTime endDate)
+        {
+            var reservations = await _context.Reservations
+                .Where(r => r.ReservationDateTime >= startDate && r.ReservationDateTime <= endDate)
+                .ToListAsync();
+
+            var yearlyPayments = reservations
+                .GroupBy(r => r.ReservationDateTime.Year - startDate.Year)
+                .Select(g => new { Year = g.Key, AveragePayment = g.Average(r => r.Price) })
+                .ToDictionary(g => g.Year, g => g.AveragePayment);
+
+            var result = new Dictionary<int, decimal>();
+            var totalYears = endDate.Year - startDate.Year;
+            for (var year = 0; year <= totalYears; year++)
+            {
+                result[year] = yearlyPayments.ContainsKey(year) ? yearlyPayments[year] : 0;
+            }
+
+            return result;
         }
 
         public async Task<(decimal totalPayments, decimal averagePayment)> GetPaymentsStatistics(DateTime startDate, DateTime endDate)

@@ -211,3 +211,28 @@ export async function fetchFinancialStatistics({ startDate, endDate }: Reservati
     const { data } = await axiosInstance.get(`https://localhost:7190/statistics/financial?startDate=${startDateTime}&endDate=${endDateTime}`);
     return data;
 };
+
+export async function fetchFinancialChartData({ startDate, endDate, period }: { startDate: string, endDate: string, period: string }) {
+    let endpoint = '';
+    switch (period) {
+        case '1T':
+            endpoint = 'financial/daily';
+            break;
+        case '1M':
+            endpoint = 'financial/weekly';
+            break;
+        case '1R':
+            endpoint = 'financial/monthly';
+            break;
+        case 'ALL':
+            endpoint = 'financial/yearly';
+            break;
+        default:
+            throw new Error('Invalid period for chart data');
+    }
+
+    const startDateTime = `${startDate}T00:00:00`;
+    const endDateTime = `${endDate}T23:59:59`;
+    const { data } = await axiosInstance.get(`https://localhost:7190/statistics/${endpoint}?startDate=${startDateTime}&endDate=${endDateTime}`);
+    return data;
+};
