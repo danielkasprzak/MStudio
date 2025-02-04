@@ -7,7 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import FormInput from '../FormInput';
 import FormLabel from '../FormLabel';
 import Label from '../../Label';
-import { Minus, Plus, Trash2 } from 'lucide-react';
+import { Minus, Plus } from 'lucide-react';
 
 interface Service {
     id: number;
