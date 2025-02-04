@@ -74,13 +74,18 @@ export default ({ heroRef }: Props) => {
         return () => unsubscribe();
     }, [scrollYProgress]);
 
+    const zoomOutAnimation = {
+        initial: { scale: 2 },
+        animate: { scale: 1, transition: { duration: 2 } }
+    };
+
     return (  
         <section ref={heroRef} className="relative h-[300vh]">
             <motion.div className='h-screen sticky top-0' animate={controls}>
                 <div className="absolute h-[200vh] inset-0 flex flex-col" >
                     <div id="wstep" className="relative w-screen h-screen flex items-center justify-center">
                         <Introduction textColorFirst={textColorFirst} textColorSecond={textColorSecond} opacityTitle={opacityTitle} opacityParagraph={opacityParagraph} />
-                        <Video source={HeroVideo} zClass='-z-40' videoRef={heroVideoRef} />
+                        <Video source={HeroVideo} zClass='-z-40' videoRef={heroVideoRef} {...zoomOutAnimation} />
                     </div>
                     <motion.div id="poznaj-nas" className="relative w-screen h-screen" animate={videoOverlay}>
                         <About />
