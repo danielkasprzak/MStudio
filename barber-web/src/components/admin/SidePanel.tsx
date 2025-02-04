@@ -29,19 +29,19 @@ export default () => {
                 <Title padding='16'>MSTUDIO</Title>
 
                 <Link to='/admin'>
-                    <TextButton>Panel</TextButton>
+                    <TextButton padding={2}>Panel</TextButton>
                 </Link>
                 <Link to='rezerwacje'>
-                    <TextButton>Rezerwacje</TextButton>
+                    <TextButton padding={2}>Rezerwacje</TextButton>
                 </Link>
                 <Link to='oferty'>
-                    <TextButton>Oferta</TextButton>
+                    <TextButton padding={2}>Oferta</TextButton>
                 </Link>
                 <Link to='godziny-otwarcia'>
-                    <TextButton>Harmonogram</TextButton>
+                    <TextButton padding={2}>Harmonogram</TextButton>
                 </Link>
                 <Link to='specjalne-godziny-otwarcia'>
-                    <TextButton>Dni wolne</TextButton>
+                    <TextButton padding={2}>Dni wolne</TextButton>
                 </Link>
             </div>
             <div className="flex flex-col pb-8">

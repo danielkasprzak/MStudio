@@ -32,7 +32,7 @@ export default ({ isPast, reservationId, email, services, duration, reservationD
     const secondColor = (isCancelled || isPast) ? "text-stone-400" : "text-stone-500";
 
     return (
-        <li className={`mt-4 w-full font-lato border border-stone-300 ${firstColor} flex flex-col py-4 px-6`}>
+        <li className={`mt-4 w-full font-lato border border-stone-300 ${firstColor} flex flex-col justify-center py-4 px-6`}>
             <div className="flex flex-row justify-between">
                 <div className="flex flex-col justify-center leading-4">
                     <div className="flex flex-row items-center">
@@ -53,13 +53,14 @@ export default ({ isPast, reservationId, email, services, duration, reservationD
 
                 </div>
             </div>
-            <div className="flex flex-row items-center pt-2">
-                <p className="font-medium text-xs text-stone-400">{email}</p>
-                <p className="font-medium text-xs text-stone-400 px-4">{phone}</p>
-                
+            <div className="flex flex-row items-center justify-between pt-2">
+                <div className="flex flex-row items-center">
+                    <p className="font-medium text-xs text-stone-400">{email}</p>
+                    <p className="font-medium text-xs text-stone-400 px-4">{phone === "000000000" ? "BRAK" : phone}</p>
+                </div>
                 {!isPast && !isCancelled && (
-                    <>
-                        <Link to={`${reservationId}`}>
+                    <div className="flex flex-row items-center">
+                        <Link className="flex flex-row items-center" to={`${reservationId}`}>
                             <TextButton>Edytuj</TextButton>
                         </Link>
 
@@ -68,7 +69,7 @@ export default ({ isPast, reservationId, email, services, duration, reservationD
                         ) : (
                             <TextButton onClick={() => cancelClick(reservationId)}>Anuluj</TextButton>
                         )}
-                    </>
+                    </div>
                 )}
             </div>
         </li>            
