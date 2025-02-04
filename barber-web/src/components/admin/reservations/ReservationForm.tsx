@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import FormInput from '../FormInput';
 import FormLabel from '../FormLabel';
 import Label from '../../Label';
+import { Minus, Plus, Trash2 } from 'lucide-react';
 
 interface Service {
     id: number;
@@ -107,26 +108,34 @@ export default ({ children, inputData, onSubmit }: Props) => {
             <FormLabel htmlFor='email'>Email:</FormLabel>
             <FormInput name='email' id="email" defaultVal={email} required onChange={(e) => setEmail(e.target.value)} type='email' placeholder='Email'/>
             
-            <FormLabel htmlFor='services'>Services:</FormLabel>
-            <div>
-            {offers.map((offer, index) => (
-                    <div key={index} className="flex items-center">
-                        <span>{offer.label} - {offer.price}zł - {offer.duration}min</span>
-                        <button type="button" onClick={() => handleAddService(offer)}>+</button>
-                        <button type="button" onClick={() => handleRemoveService(offer)}>-</button>
-                        <span>{selectedServices.find(s => s.id === offer.id)?.quantity || 0}</span>
+            <FormLabel htmlFor='services'>Wybrane oferty:</FormLabel>
+            <div className='my-2'>
+            {offers.map((offer, index) => {
+                const quantity = selectedServices.find(s => s.id === offer.id)?.quantity || 0;
+                return (
+                    <div key={index} className="mt-2 w-full font-lato border border-stone-300 flex flex-row justify-between items-center py-3 px-5">
+                        <h1 className="uppercase font-bold text-xs text-charcoal">
+                            {offer.label.length > 18 ? `${offer.label.substring(0, 18)}...` : offer.label}
+                        </h1>
+
+                        <div className="flex flex-row items-center">
+                            <button onClick={() => handleRemoveService(offer)} ><Minus color="#353535" size={20} strokeWidth={1.25} /></button>
+                            <p className="font-normal text-xs text-stone-500 px-2">{quantity}</p>
+                            <button onClick={() => handleAddService(offer)}><Plus color="#353535" size={24} strokeWidth={1.25} /></button>
+                        </div>
                     </div>
-                ))}
+                );
+            })}
             </div>
 
             <FormLabel htmlFor='duration'>Całkowity czas trwania:</FormLabel>
             <FormInput name='duration' id="duration" defaultVal={duration} required onChange={(e) => setDuration(e.target.value)} type='number' placeholder='Czas trwania'/>
             
-            <FormLabel htmlFor='phone'>Telefon:</FormLabel>
-            <FormInput name='phone' id="phone" defaultVal={phone} required onChange={(e) => setPhone(e.target.value)} type='tel' placeholder='Telefon'/>
-            
             <FormLabel htmlFor='price'>Cena całkowita:</FormLabel>
             <FormInput name='price' id="price" defaultVal={price} required onChange={(e) => setPrice(e.target.value)} type='number' placeholder='Cena całkowita'/>
+
+            <FormLabel htmlFor='phone'>Telefon:</FormLabel>
+            <FormInput name='phone' id="phone" defaultVal={phone} required onChange={(e) => setPhone(e.target.value)} type='tel' placeholder='Telefon'/>
 
             {children}
         </form>
