@@ -22,8 +22,11 @@ export default () => {
     const totalDuration = useAppSelector((state) => state.cart.totalDuration);
     const totalPrice = useAppSelector((state) => state.cart.totalPrice);
     const services = useAppSelector((state) => state.cart.items);
+    
     const [activeDate, setActiveDate] = useState<string | null>(null);
     const [activeSlot, setActiveSlot] = useState<string | null>(null);
+    const [showPhoneInput, setShowPhoneInput] = useState(false);
+    const [phone, setPhone] = useState('');
 
     useEffect(() => {
         if (!totalDuration || totalDuration <= 0) {
@@ -70,13 +73,20 @@ export default () => {
             !totalPrice || totalPrice <= 0 || 
             !services) return;
 
+        let processedPhone = phone;
+        if (processedPhone.startsWith('+48'))
+            processedPhone = processedPhone.slice(3);
+        
+        const phoneRegex = /^\d{9}$/;
+        const isValidPhone = phoneRegex.test(processedPhone);
+
         const newReservation: ReservationModel = {
             reservationId: generateReservationId(),
             email: "BRAK ADRESU EMAIL",
             services: JSON.stringify(services),
             duration: totalDuration,
             reservationDateTime: activeSlot,
-            phone: "123456789", // TODO: get from user
+            phone: isValidPhone ? processedPhone : "000000000",
             price: totalPrice,
             isCancelled: false
         };
@@ -118,6 +128,25 @@ export default () => {
                     <p className="font-lato text-xs font-medium text-left pt-4 pb-2">Całkowity koszt rezerwacji: <span className="font-bold">{totalPrice}zł</span></p>
                     <p className="font-lato text-xs font-medium text-left pb-8">Planowana data rezerwacji: <span className="font-bold">{activeSlot ? formatDate(activeSlot) : '-'}</span></p>
                 </div>
+
+                <div className='w-full h-auto flex flex-row items-center pb-4'>
+                    <input onChange={() => setShowPhoneInput(prev => !prev)} id='phoneBox' type='checkbox' className='w-4 h-4 text-charcoal accent-charcoal bg-stone-300 border-stone-300 border' />
+                    <label htmlFor='phoneBox' className='font-lato text-xs font-medium text-charcoal pl-2'>Chcę udostępnić mój numer telefonu</label>
+                </div>
+                {showPhoneInput && (
+                    <div className='w-full h-auto pb-8'>
+                        <label htmlFor="phone" className='font-lato text-xs uppercase font-bold text-charcoal pr-2'>Numer telefonu:</label>
+                        <input
+                            className='w-full py-2 px-2 outline-none text-charcoal font-lato font-bold text-xs tracking-wider border border-stone-300'
+                            type="tel" 
+                            id="phone" 
+                            value={phone} 
+                            onChange={(e) => setPhone(e.target.value)} 
+                            placeholder="123456789" 
+                        />
+                    </div>
+                )}
+
 
                 {isPending ? <Label>Rezerwowanie...</Label> : <button onClick={handleBooking} className="w-full uppercase font-bold text-xs tracking-wider font-lato border text-charcoal border-stone-300 px-4 py-2 flex flex-row justify-center items-center">Zarezerwuj</button>}
             </div>
