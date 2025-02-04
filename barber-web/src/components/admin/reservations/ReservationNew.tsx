@@ -23,7 +23,7 @@ export default () => {
                 inputData={{ 
                     reservationId: '', 
                     email: '', 
-                    services: '', 
+                    services: [], 
                     duration: 0, 
                     reservationDateTime: '', 
                     phone: '', 

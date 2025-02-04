@@ -1,15 +1,27 @@
 import { useEffect, useState } from 'react';
+import { fetchOffers } from '../../../utils/http';
+import { generateReservationId } from '../../../utils/utils';
+import { Offer as OfferModel } from '../../../interfaces/offersInterfaces';
+import { useQuery } from '@tanstack/react-query';
 
 import FormInput from '../FormInput';
-import { generateReservationId } from '../../../utils/utils';
 import FormLabel from '../FormLabel';
+import Label from '../../Label';
+
+interface Service {
+    id: number;
+    label: string;
+    price: number;
+    time: number;
+    quantity: number;
+}
 
 interface Props {
     children: React.ReactNode;
     inputData: {
         reservationId: string;
         email: string;
-        services: string;
+        services: Service[];
         duration: number;
         reservationDateTime: string;
         phone: string;
@@ -21,21 +33,57 @@ interface Props {
 export default ({ children, inputData, onSubmit }: Props) => {
     const [reservationId, setReservationId] = useState(inputData.reservationId);
     const [email, setEmail] = useState(inputData.email);
-    const [services, setServices] = useState(inputData.services);
     const [duration, setDuration] = useState(inputData.duration);
     const [reservationDateTime, setReservationDateTime] = useState(inputData.reservationDateTime);
     const [phone, setPhone] = useState(inputData.phone);
     const [price, setPrice] = useState(inputData.price);
 
+    const { data: offers = [], error } = useQuery<OfferModel[]>({
+        queryKey: ['offers'],
+        queryFn: fetchOffers
+    });
+
+    if (error) return <Label>Błąd podczas wczytywania ofert</Label>;
+
     useEffect(() => {
         setReservationId(inputData.reservationId);
         setEmail(inputData.email);
-        setServices(inputData.services);
         setDuration(inputData.duration);
         setReservationDateTime(inputData.reservationDateTime);
         setPhone(inputData.phone);
         setPrice(inputData.price);
     }, [inputData]);
+
+    const [selectedServices, setSelectedServices] = useState<Service[]>(inputData.services || []);
+
+    useEffect(() => {
+        const totalDuration = selectedServices.reduce((sum, service) => sum + service.time * service.quantity, 0);
+        const totalPrice = selectedServices.reduce((sum, service) => sum + service.price * service.quantity, 0);
+        setDuration(totalDuration);
+        setPrice(totalPrice);
+    }, [selectedServices]);
+
+    const handleAddService = (service: OfferModel) => {
+        const existingService = selectedServices.find(s => s.id === service.id);
+        if (existingService) {
+            setSelectedServices(selectedServices.map(s => 
+                s.id === service.id ? { ...s, quantity: s.quantity + 1 } : s
+            ));
+        } else {
+            setSelectedServices([...selectedServices, { id: service.id, label: service.label, price: service.price, time: service.duration, quantity: 1 }]);
+        }
+    };
+
+    const handleRemoveService = (service: OfferModel) => {
+        const existingService = selectedServices.find(s => s.id === service.id);
+        if (existingService && existingService.quantity > 1) {
+            setSelectedServices(selectedServices.map(s => 
+                s.id === service.id ? { ...s, quantity: s.quantity - 1 } : s
+            ));
+        } else {
+            setSelectedServices(selectedServices.filter(s => s.id !== service.id));
+        }
+    };
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -45,6 +93,8 @@ export default ({ children, inputData, onSubmit }: Props) => {
 
         if (reservationId === '' || reservationId === null)
             data.reservationId = generateReservationId();
+
+        data.services = JSON.stringify(selectedServices);
 
         onSubmit({ ...data });
     }
@@ -58,8 +108,17 @@ export default ({ children, inputData, onSubmit }: Props) => {
             <FormInput name='email' id="email" defaultVal={email} required onChange={(e) => setEmail(e.target.value)} type='email' placeholder='Email'/>
             
             <FormLabel htmlFor='services'>Services:</FormLabel>
-            <FormInput name='services' id="services" defaultVal={services} required onChange={(e) => setServices(e.target.value)} type='text' placeholder='Services'/>
-            
+            <div>
+            {offers.map((offer, index) => (
+                    <div key={index} className="flex items-center">
+                        <span>{offer.label} - {offer.price}zł - {offer.duration}min</span>
+                        <button type="button" onClick={() => handleAddService(offer)}>+</button>
+                        <button type="button" onClick={() => handleRemoveService(offer)}>-</button>
+                        <span>{selectedServices.find(s => s.id === offer.id)?.quantity || 0}</span>
+                    </div>
+                ))}
+            </div>
+
             <FormLabel htmlFor='duration'>Całkowity czas trwania:</FormLabel>
             <FormInput name='duration' id="duration" defaultVal={duration} required onChange={(e) => setDuration(e.target.value)} type='number' placeholder='Czas trwania'/>
             
