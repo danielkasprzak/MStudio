@@ -119,9 +119,9 @@ export default ({ children, inputData, onSubmit }: Props) => {
                         </h1>
 
                         <div className="flex flex-row items-center">
-                            <button onClick={() => handleRemoveService(offer)} ><Minus color="#353535" size={20} strokeWidth={1.25} /></button>
+                            <button type='button' onClick={() => handleRemoveService(offer)} ><Minus color="#353535" size={20} strokeWidth={1.25} /></button>
                             <p className="font-normal text-xs text-stone-500 px-2">{quantity}</p>
-                            <button onClick={() => handleAddService(offer)}><Plus color="#353535" size={24} strokeWidth={1.25} /></button>
+                            <button type='button' onClick={() => handleAddService(offer)}><Plus color="#353535" size={24} strokeWidth={1.25} /></button>
                         </div>
                     </div>
                 );

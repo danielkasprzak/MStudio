@@ -24,6 +24,7 @@ const SpecialOpeningHourNew = lazy(() => import('./components/admin/special-open
 const SpecialOpeningHourEdit = lazy(() => import('./components/admin/special-opening-hours/SpecialOpeningHourEdit'));
 const Reservations = lazy(() => import('./components/admin/reservations/Reservations'));
 const ReservationNew = lazy(() => import('./components/admin/reservations/ReservationNew'));
+const ReservationEdit = lazy(() => import('./components/admin/reservations/ReservationEdit'));
 const Dashboard = lazy(() => import('./components/admin/dashboard/Dashboard'));
 
 const router = createBrowserRouter([
@@ -44,6 +45,8 @@ const router = createBrowserRouter([
       { path: 'rezerwacje', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><Reservations /></Suspense>, loader: () => import('./components/admin/reservations/Reservations').then(module => module.loader()),
         children: [
           { path: 'dodaj', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><ReservationNew /></Suspense>, action: (meta) => import('./components/admin/reservations/ReservationNew').then(module => module.action(meta)) },
+          { path: ':id', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><ReservationEdit /></Suspense>, loader: (meta) => import('./components/admin/reservations/ReservationEdit').then(module => module.loader(meta)),
+          action: (meta) => import('./components/admin/reservations/ReservationEdit').then(module => module.action(meta)) }
         ]
       },
       { path: 'oferty', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><OffersManage /></Suspense>,

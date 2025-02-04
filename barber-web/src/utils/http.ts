@@ -160,6 +160,12 @@ export async function fetchReservations({ startDate, endDate }: ReservationsFetc
     return data;
 };
 
+export async function fetchReservation({ reservationId }: { reservationId: string }) {
+    const { data } = await axiosInstance.get(`https://localhost:7190/reservation/${reservationId}`);
+    return data;
+}
+
+
 export async function fetchMyReservations() {
     const { data } = await axiosInstance.get('https://localhost:7190/reservation/my');
     return data;
@@ -179,6 +185,16 @@ interface Reservation {
     phone: string;
     price: number;
     isCancelled: boolean;
+}
+
+interface UpdateReservation {
+    reservationId: string;
+    reservation: Reservation;
+}
+
+export async function updateReservation({ reservationId, reservation }: UpdateReservation) {
+    const { data } = await axiosInstance.put(`https://localhost:7190/reservation/${reservationId}`, reservation);
+    return data;
 }
 
 export async function bookNewReservation(newReservation: Reservation) {

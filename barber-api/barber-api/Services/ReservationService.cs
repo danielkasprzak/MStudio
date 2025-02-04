@@ -52,6 +52,12 @@ namespace barber_api.Services
 
         public async Task UpdateReservationAsync(Reservation reservation)
         {
+            var existingReservation = await _context.Reservations.FindAsync(reservation.ReservationId);
+            if (existingReservation != null)
+            {
+                _context.Entry(existingReservation).State = EntityState.Detached;
+            }
+
             _context.Reservations.Update(reservation);
             await _context.SaveChangesAsync();
         }
