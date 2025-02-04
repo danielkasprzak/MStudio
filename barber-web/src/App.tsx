@@ -2,7 +2,8 @@ import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from './utils/http';
-import Label from './components/Label';
+
+import LoadingIndicator from './components/LoadingIndicator';
 
 const Error = lazy(() => import('./components/Error'));
 const Landing = lazy(() => import('./components/landing/Landing'));
@@ -28,45 +29,45 @@ const ReservationEdit = lazy(() => import('./components/admin/reservations/Reser
 const Dashboard = lazy(() => import('./components/admin/dashboard/Dashboard'));
 
 const router = createBrowserRouter([
-  { index: true, element: <Suspense fallback={<Label>Wczytywanie...</Label>}><Landing /></Suspense>, errorElement: <Error /> },
-  { path: 'login', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><Login /></Suspense>, errorElement: <Error /> },
-  { path: 'rezerwacja-tradycyjna', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><Traditional /></Suspense>, errorElement: <Error />, loader: () => import('./components/reservation/Traditional').then(module => module.loader()) },
-  { path: 'rezerwacja', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><Reservation /></Suspense>, errorElement: <Error />, loader: () => import('./components/reservation/Reservation').then(module => module.loader()),
+  { index: true, element: <Suspense fallback={<LoadingIndicator/>}><Landing /></Suspense>, errorElement: <Error /> },
+  { path: 'login', element: <Suspense fallback={<LoadingIndicator/>}><Login /></Suspense>, errorElement: <Error /> },
+  { path: 'rezerwacja-tradycyjna', element: <Suspense fallback={<LoadingIndicator/>}><Traditional /></Suspense>, errorElement: <Error />, loader: () => import('./components/reservation/Traditional').then(module => module.loader()) },
+  { path: 'rezerwacja', element: <Suspense fallback={<LoadingIndicator/>}><Reservation /></Suspense>, errorElement: <Error />, loader: () => import('./components/reservation/Reservation').then(module => module.loader()),
     children: [
-      { index: true, element: <Suspense fallback={<Label>Wczytywanie...</Label>}><Offers /></Suspense>, loader: () => import('./components/reservation/offers/Offers').then(module => module.loader()) },
-      { path: 'moje-rezerwacje', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><MyReservations /></Suspense>, loader: () => import('./components/reservation/my-reservations/MyReservations').then(module => module.loader()) }
+      { index: true, element: <Suspense fallback={<LoadingIndicator/>}><Offers /></Suspense>, loader: () => import('./components/reservation/offers/Offers').then(module => module.loader()) },
+      { path: 'moje-rezerwacje', element: <Suspense fallback={<LoadingIndicator/>}><MyReservations /></Suspense>, loader: () => import('./components/reservation/my-reservations/MyReservations').then(module => module.loader()) }
     ]
   },
-  { path: 'rezerwuj', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><Booking /></Suspense>, errorElement: <Error />, loader: () => import('./components/reservation/booking/Booking').then(module => module.loader()) },
-  { path: 'dziekujemy', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><ThankYouPage /></Suspense>, errorElement: <Error /> },
-  { path: 'admin', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><Admin /></Suspense>, errorElement: <Error />, loader: () => import('./components/admin/Admin').then(module => module.loader()),
+  { path: 'rezerwuj', element: <Suspense fallback={<LoadingIndicator/>}><Booking /></Suspense>, errorElement: <Error />, loader: () => import('./components/reservation/booking/Booking').then(module => module.loader()) },
+  { path: 'dziekujemy', element: <Suspense fallback={<LoadingIndicator/>}><ThankYouPage /></Suspense>, errorElement: <Error /> },
+  { path: 'admin', element: <Suspense fallback={<LoadingIndicator/>}><Admin /></Suspense>, errorElement: <Error />, loader: () => import('./components/admin/Admin').then(module => module.loader()),
     children: [
-      { index: true, element: <Suspense fallback={<Label>Wczytywanie...</Label>}><Dashboard /></Suspense> },
-      { path: 'rezerwacje', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><Reservations /></Suspense>, loader: () => import('./components/admin/reservations/Reservations').then(module => module.loader()),
+      { index: true, element: <Suspense fallback={<LoadingIndicator/>}><Dashboard /></Suspense> },
+      { path: 'rezerwacje', element: <Suspense fallback={<LoadingIndicator/>}><Reservations /></Suspense>, loader: () => import('./components/admin/reservations/Reservations').then(module => module.loader()),
         children: [
-          { path: 'dodaj', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><ReservationNew /></Suspense>, action: (meta) => import('./components/admin/reservations/ReservationNew').then(module => module.action(meta)) },
-          { path: ':id', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><ReservationEdit /></Suspense>, loader: (meta) => import('./components/admin/reservations/ReservationEdit').then(module => module.loader(meta)),
+          { path: 'dodaj', element: <Suspense fallback={<LoadingIndicator/>}><ReservationNew /></Suspense>, action: (meta) => import('./components/admin/reservations/ReservationNew').then(module => module.action(meta)) },
+          { path: ':id', element: <Suspense fallback={<LoadingIndicator/>}><ReservationEdit /></Suspense>, loader: (meta) => import('./components/admin/reservations/ReservationEdit').then(module => module.loader(meta)),
           action: (meta) => import('./components/admin/reservations/ReservationEdit').then(module => module.action(meta)) }
         ]
       },
-      { path: 'oferty', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><OffersManage /></Suspense>,
+      { path: 'oferty', element: <Suspense fallback={<LoadingIndicator/>}><OffersManage /></Suspense>,
         loader: () => import('./components/admin/offers/Offers').then(module => module.loader()),
         children: [
-          { path: 'dodaj', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><OfferNew /></Suspense>, action: (meta) => import('./components/admin/offers/OfferNew').then(module => module.action(meta)) },
-          { path: ':id', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><OfferEdit /></Suspense>, loader: (meta) => import('./components/admin/offers/OfferEdit').then(module => module.loader(meta)),
+          { path: 'dodaj', element: <Suspense fallback={<LoadingIndicator/>}><OfferNew /></Suspense>, action: (meta) => import('./components/admin/offers/OfferNew').then(module => module.action(meta)) },
+          { path: ':id', element: <Suspense fallback={<LoadingIndicator/>}><OfferEdit /></Suspense>, loader: (meta) => import('./components/admin/offers/OfferEdit').then(module => module.loader(meta)),
             action: (meta) => import('./components/admin/offers/OfferEdit').then(module => module.action(meta)) }
         ]
       },
-      { path: 'godziny-otwarcia', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><OpeningHours /></Suspense>, loader: () => import('./components/admin/opening-hours/OpeningHours').then(module => module.loader()),
+      { path: 'godziny-otwarcia', element: <Suspense fallback={<LoadingIndicator/>}><OpeningHours /></Suspense>, loader: () => import('./components/admin/opening-hours/OpeningHours').then(module => module.loader()),
         children: [
-          { path: ':day', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><OpeningHourEdit /></Suspense>, loader: (meta) => import('./components/admin/opening-hours/OpeningHourEdit').then(module => module.loader(meta)),
+          { path: ':day', element: <Suspense fallback={<LoadingIndicator/>}><OpeningHourEdit /></Suspense>, loader: (meta) => import('./components/admin/opening-hours/OpeningHourEdit').then(module => module.loader(meta)),
             action: (meta) => import('./components/admin/opening-hours/OpeningHourEdit').then(module => module.action(meta)) }
         ]
       },
-      { path: 'specjalne-godziny-otwarcia', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><SpecialOpeningHours /></Suspense>, loader: () => import('./components/admin/special-opening-hours/SpecialOpeningHours').then(module => module.loader()),
+      { path: 'specjalne-godziny-otwarcia', element: <Suspense fallback={<LoadingIndicator/>}><SpecialOpeningHours /></Suspense>, loader: () => import('./components/admin/special-opening-hours/SpecialOpeningHours').then(module => module.loader()),
         children: [
-          { path: 'dodaj', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><SpecialOpeningHourNew /></Suspense>, action: (meta) => import('./components/admin/special-opening-hours/SpecialOpeningHourNew').then(module => module.action(meta)) },
-          { path: ':date', element: <Suspense fallback={<Label>Wczytywanie...</Label>}><SpecialOpeningHourEdit /></Suspense>, loader: (meta) => import('./components/admin/special-opening-hours/SpecialOpeningHourEdit').then(module => module.loader(meta)),
+          { path: 'dodaj', element: <Suspense fallback={<LoadingIndicator/>}><SpecialOpeningHourNew /></Suspense>, action: (meta) => import('./components/admin/special-opening-hours/SpecialOpeningHourNew').then(module => module.action(meta)) },
+          { path: ':date', element: <Suspense fallback={<LoadingIndicator/>}><SpecialOpeningHourEdit /></Suspense>, loader: (meta) => import('./components/admin/special-opening-hours/SpecialOpeningHourEdit').then(module => module.loader(meta)),
             action: (meta) => import('./components/admin/special-opening-hours/SpecialOpeningHourEdit').then(module => module.action(meta)) }
         ]
       }
