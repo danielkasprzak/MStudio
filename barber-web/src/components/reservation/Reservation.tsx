@@ -8,7 +8,7 @@ export default () => {
     useDocumentTitle("MStudio - rezerwacja");
 
     return (
-        <div className='bg-stone-100 w-full h-full flex flex-row justify-center'>
+        <div className='bg-stone-100 w-full h-full flex flex-col items-center md:flex-row md:justify-center md:items-start'>
             <SidePanel />
             <MainPanel />
         </div>
