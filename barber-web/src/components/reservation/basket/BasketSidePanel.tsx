@@ -3,6 +3,7 @@ import { useAppSelector } from '../../../store/hooks';
 import { basketActions } from "../../../store/basket-slice";
 import { useAppDispatch } from "../../../store/hooks";
 import { Link } from 'react-router-dom';
+import { X } from 'lucide-react';
 
 import Title from '../../Title';
 import Price from './Price';
@@ -11,12 +12,14 @@ import FlatButton from '../../FlatButton';
 
 interface Props {
   isActive: boolean;
-  onHover: () => void;
+  onHover?: () => void;
   activeHeight: string;
   inactiveHeight: string;
+  isMobile?: boolean;
 }
 
-export default ({ isActive, onHover, activeHeight, inactiveHeight }: Props) => {
+export default ({ isActive, onHover, activeHeight, inactiveHeight, isMobile }: Props) => {
+    const isVisible = useAppSelector((state) => state.cart.isVisible);
     const totalPrice = useAppSelector((state) => state.cart.totalPrice);
     const dispatch = useAppDispatch();
 
@@ -24,16 +27,23 @@ export default ({ isActive, onHover, activeHeight, inactiveHeight }: Props) => {
         dispatch(basketActions.clearItems());
     }
 
+    const closePanel = () => {
+        dispatch(basketActions.hidePanel());
+    };
+
     return (
         <motion.div
-            className='w-[26rem] h-full md:h-[33%] bg-white border border-stone-300 mt-8 p-8 absolute top-0 left-0 md:relative flex flex-col justify-between'
+            className='fixed top-0 left-0 md:relative w-3/4 md:w-[26rem] h-full md:h-[33%] bg-white border-r md:border border-stone-300 md:mt-8 p-8 flex flex-col justify-between z-40'
             onMouseEnter={onHover}
-            animate={{ height: isActive ? activeHeight : inactiveHeight }}
+            initial={isMobile && { x: '-100%' }}
+            animate={isMobile ? { x: isVisible ? 0 : '-100%' } : { height: isActive ? activeHeight : inactiveHeight }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
         >
-            <div className="flex flex-row items-center">
+            <div className="flex flex-row items-center justify-between">
                 <Title>Koszyk</Title>
-                <button onClick={clearItemsHandler} className='text-white pl-3'>U</button>
+                <button onClick={closePanel} className="relative md:hidden outline-none">
+                    <X color="#353535" size={24} strokeWidth={1.25} />
+                </button>
             </div>
 
             <Cart isActive={isActive} />

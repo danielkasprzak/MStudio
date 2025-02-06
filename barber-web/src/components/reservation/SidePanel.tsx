@@ -20,7 +20,14 @@ export default ({ isTraditional, isMobile } : Props) => {
                 inactiveHeight={isTraditional ? "auto" : "40%"}
                 isMobile={isMobile}
             />   
-            {(!isTraditional || (isTraditional && isMobile)) && <Basket isActive={activeSidePanel === 2} onHover={() => setActiveSidePanel(2)} activeHeight="66%" inactiveHeight="33%" />}
+            {(!isTraditional) && 
+                <Basket 
+                isActive={activeSidePanel === 1} 
+                onHover={() => setActiveSidePanel(1)} 
+                activeHeight="66%"
+                inactiveHeight="33%"
+                />
+            }
         </div>
     )
 }

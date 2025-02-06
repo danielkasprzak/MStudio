@@ -14,13 +14,15 @@ interface Cart {
     totalPrice: number;
     totalDuration: number;
     reservationDateTime: string | null;
+    isVisible: boolean;
 }
 
 const initialState: Cart = {
     items: [],
     totalPrice: 0,
     totalDuration: 0,
-    reservationDateTime: null
+    reservationDateTime: null,
+    isVisible: false
 }
 
 const basketSlice = createSlice({
@@ -68,6 +70,12 @@ const basketSlice = createSlice({
             state.totalDuration = 0;
             state.totalPrice = 0;
             state.reservationDateTime = null;
+        },
+        showPanel: (state) => {
+            state.isVisible = true;
+        },
+        hidePanel: (state) => {
+            state.isVisible = false;
         }
     } 
 });
