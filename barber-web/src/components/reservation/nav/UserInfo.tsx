@@ -63,19 +63,19 @@ export default () => {
     }
 
     return (
-        <div onClick={handleUserContext} className="flex flex-row items-center hover:cursor-pointer">
+        <div onClick={handleUserContext} className="flex flex-row ml-4 md:ml-0 items-center hover:cursor-pointer">
             {Array.isArray(data) ?
-                <div className="w-10 h-10 bg-stone-300 rounded-full mr-4 flex items-center justify-center">
+                <div className="w-8 h-auto md:w-10 md:h-10 bg-stone-300 rounded-full mr-4 flex items-center justify-center">
                     <User color="#FFFFFF" size={20} strokeWidth={1.25} />
                 </div> : (
                     <>
                         {imageError ? (
                             data.name ? (
-                                <div className="w-10 h-10 bg-stone-300 rounded-full mr-4 flex items-center justify-center">
+                                <div className="w-8 h-auto md:w-10 md:h-10 bg-stone-300 rounded-full mr-4 flex items-center justify-center">
                                     <span className="text-white font-bold">{data.name.charAt(0)}</span>
                                 </div>
                             ) : (
-                                <div className="w-10 h-10 bg-stone-300 rounded-full mr-4 flex items-center justify-center">
+                                <div className="w-8 h-auto md:w-10 md:h-10 bg-stone-300 rounded-full mr-4 flex items-center justify-center">
                                     <User color="#FFFFFF" size={20} strokeWidth={1.25} />
                                 </div>
                             )
@@ -83,15 +83,15 @@ export default () => {
                             <img
                                 src={data.picture}
                                 alt={data.name}
-                                className="w-10 h-auto rounded-full mr-4"
+                                className="w-8 h-auto md:w-10 rounded-full mr-4"
                                 onError={handleImageError}
                             />
                         )}
-                        <p className="font-medium font-cormorant text-xl text-charcoal">{data.name}</p>
+                        <p className="font-medium font-cormorant text-normal md:text-xl text-charcoal">{data.name}</p>
                         {isContextVisible && (
                             <motion.div
                                 ref={contextRef}
-                                className="z-50 absolute top-0 left-16 bg-white border border-stone-300 p-4 flex flex-col justify-center"
+                                className="z-50 absolute top-4 left-16 bg-white border border-stone-300 p-4 flex flex-col justify-center"
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}

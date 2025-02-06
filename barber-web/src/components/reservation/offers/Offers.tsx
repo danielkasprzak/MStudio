@@ -28,7 +28,7 @@ export default ({ isTraditional } : Props) => {
     .sort((a, b) => a.label.localeCompare(b.label));
 
     return (
-        <div className="h-auto w-fit md:w-[46rem] bg-white border border-stone-300 p-8 md:p-8 mb-8 md:mb-0 z-30">
+        <div className="h-auto w-[calc(100%-4rem)] md:w-[46rem] bg-white border border-stone-300 p-8 z-30">
             <div className='flex flex-row items-center'>
                 <Title>Oferta</Title>
                 <SearchBar forOffers searchTerm={searchTerm} setSearchTerm={setSearchTerm} />

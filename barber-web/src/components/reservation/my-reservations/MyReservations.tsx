@@ -46,15 +46,27 @@ export default () => {
     });
 
     return (
-        <div className="h-auto w-[46rem] bg-white border border-stone-300 p-8">
-            <Title>Moje rezerwacje</Title>
-
-            <div className='w-full flex flex-row justify-center items-center py-8 z-30'>
-                <FlatButton margin='2' disabled={false} onClick={() => setFilter('active')} isActive={filter === 'active'}>Aktywne</FlatButton>
-                <FlatButton margin='2' disabled={false} onClick={() => setFilter('cancelled')} isActive={filter === 'cancelled'}>Odwołane</FlatButton>
-                <FlatButton margin='2' disabled={false} onClick={() => setFilter('past')} isActive={filter === 'past'}>Historia</FlatButton>
-                <FlatButton margin='2' disabled={false} onClick={() => setFilter('all')} isActive={filter === 'all'}>Wszystkie</FlatButton>
+        <div className="h-auto w-[calc(100%-4rem)] md:w-[46rem] bg-white border border-stone-300 p-8 z-30">
+            <div className='flex flex-col justify-center'>
+                <Title>Moje rezerwacje</Title>
+                <div className='w-full hidden md:flex flex-row justify-between items-center py-6 z-30'>
+                    <FlatButton margin='2' disabled={false} onClick={() => setFilter('active')} isActive={filter === 'active'}>Aktywne</FlatButton>
+                    <FlatButton margin='2' disabled={false} onClick={() => setFilter('cancelled')} isActive={filter === 'cancelled'}>Odwołane</FlatButton>
+                    <FlatButton margin='2' disabled={false} onClick={() => setFilter('past')} isActive={filter === 'past'}>Historia</FlatButton>
+                    <FlatButton margin='2' disabled={false} onClick={() => setFilter('all')} isActive={filter === 'all'}>Wszystkie</FlatButton>
+                </div>
+                <div className='w-full h-auto md:hidden flex flex-col justify-center py-4 z-30'>
+                    <div className='w-full flex flex-row justify-between items-center py-1'>
+                        <FlatButton margin='2' disabled={false} onClick={() => setFilter('active')} isActive={filter === 'active'}>Aktywne</FlatButton>
+                        <FlatButton margin='2' disabled={false} onClick={() => setFilter('cancelled')} isActive={filter === 'cancelled'}>Odwołane</FlatButton>
+                    </div>
+                    <div className='w-full flex flex-row justify-between items-center py-1'>
+                        <FlatButton margin='2' disabled={false} onClick={() => setFilter('past')} isActive={filter === 'past'}>Historia</FlatButton>
+                        <FlatButton margin='2' disabled={false} onClick={() => setFilter('all')} isActive={filter === 'all'}>Wszystkie</FlatButton>
+                    </div>
+                </div>
             </div>
+
 
             <ul className='w-full h-fit'>
                 {sortedData.map((reservation) => {
