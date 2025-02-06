@@ -65,17 +65,17 @@ export default () => {
     return (
         <div onClick={handleUserContext} className="flex flex-row ml-4 md:ml-0 items-center hover:cursor-pointer">
             {Array.isArray(data) ?
-                <div className="w-8 h-auto md:w-10 md:h-10 bg-stone-300 rounded-full mr-2 md:mr-4 flex items-center justify-center">
+                <div className="w-8 h-8 md:w-10 md:h-10 bg-stone-300 rounded-full mr-2 md:mr-4 flex items-center justify-center">
                     <User color="#FFFFFF" size={20} strokeWidth={1.25} />
                 </div> : (
                     <>
                         {imageError ? (
                             data.name ? (
-                                <div className="w-8 h-auto md:w-10 md:h-10 bg-stone-300 rounded-full mr-2 md:mr-4 flex items-center justify-center">
+                                <div className="w-8 h-8 md:w-10 md:h-10 bg-stone-300 rounded-full mr-2 md:mr-4 flex items-center justify-center">
                                     <span className="text-white font-bold">{data.name.charAt(0)}</span>
                                 </div>
                             ) : (
-                                <div className="w-8 h-auto md:w-10 md:h-10 bg-stone-300 rounded-full mr-2 md:mr-4 flex items-center justify-center">
+                                <div className="w-8 h-8 md:w-10 md:h-10 bg-stone-300 rounded-full mr-2 md:mr-4 flex items-center justify-center">
                                     <User color="#FFFFFF" size={20} strokeWidth={1.25} />
                                 </div>
                             )
@@ -83,7 +83,7 @@ export default () => {
                             <img
                                 src={data.picture}
                                 alt={data.name}
-                                className="w-8 h-auto md:w-10 rounded-full mr-2 md:mr-4"
+                                className="w-8 h-8 md:w-10 rounded-full mr-2 md:mr-4"
                                 onError={handleImageError}
                             />
                         )}

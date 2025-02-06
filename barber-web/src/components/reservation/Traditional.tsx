@@ -8,7 +8,7 @@ export default () => {
     return (
         <div className='bg-stone-100 w-full h-full flex flex-col items-center md:flex-row md:justify-center md:items-start'>
             <SidePanel isTraditional />
-            <div className='w-full flex justify-center items-center mb-8 md:mb-0 md:py-8 md:ml-4 z-10'>
+            <div className='w-full md:w-auto flex justify-center md:justify-start items-center md:items-start mb-8 md:mb-0 md:py-8 md:ml-4 z-10'>
                 <Offers isTraditional />
             </div>
         </div>
