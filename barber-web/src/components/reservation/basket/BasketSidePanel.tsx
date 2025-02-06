@@ -23,10 +23,6 @@ export default ({ isActive, onHover, activeHeight, inactiveHeight, isMobile }: P
     const totalPrice = useAppSelector((state) => state.cart.totalPrice);
     const dispatch = useAppDispatch();
 
-    const clearItemsHandler = () => {
-        dispatch(basketActions.clearItems());
-    }
-
     const closePanel = () => {
         dispatch(basketActions.hidePanel());
     };
