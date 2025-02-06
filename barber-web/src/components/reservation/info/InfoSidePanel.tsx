@@ -12,9 +12,10 @@ interface Props {
     onHover?: () => void;
     activeHeight: string;
     inactiveHeight: string;
+    isMobile?: boolean;
 }
 
-export default ({ isActive, onHover, activeHeight, inactiveHeight }: Props) => {
+export default ({ isActive, onHover, activeHeight, inactiveHeight, isMobile }: Props) => {
 
     return (
         <motion.div 
@@ -25,7 +26,7 @@ export default ({ isActive, onHover, activeHeight, inactiveHeight }: Props) => {
         >
             <Title>MSTUDIO</Title>
             <Phone>622 371 764</Phone>
-            {onHover === undefined && (
+            {(onHover === undefined && !isMobile) && (
                 <Link to="/rezerwacja" className='w-full my-4'>
                     <FlatButton isActive={false} disabled={false}>Rezerwacja online</FlatButton>
                 </Link>

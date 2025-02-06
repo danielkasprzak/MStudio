@@ -15,7 +15,7 @@ export default () => {
             </div>
             <div className='bg-stone-100 w-full h-full relative md:hidden flex flex-col items-center md:flex-row md:justify-center md:items-start'>
                 <MainPanel />
-                <SidePanel />
+                <SidePanel isTraditional isMobile />
             </div>
         </>
     );

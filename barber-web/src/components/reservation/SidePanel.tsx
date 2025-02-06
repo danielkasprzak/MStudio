@@ -5,9 +5,10 @@ import Info from "./info/InfoSidePanel";
 
 interface Props {
     isTraditional?: boolean;
+    isMobile?: boolean;
 }
 
-export default ({ isTraditional } : Props) => {
+export default ({ isTraditional, isMobile } : Props) => {
     const [activeSidePanel, setActiveSidePanel] = useState<number | null>(1);
 
     return (
@@ -17,6 +18,7 @@ export default ({ isTraditional } : Props) => {
                 onHover={isTraditional ? undefined : () => setActiveSidePanel(1)} 
                 activeHeight={isTraditional ? "auto" : "66%"} 
                 inactiveHeight={isTraditional ? "auto" : "40%"}
+                isMobile={isMobile}
             />   
             {!isTraditional && <Basket isActive={activeSidePanel === 2} onHover={() => setActiveSidePanel(2)} activeHeight="66%" inactiveHeight="33%" />}
         </div>
