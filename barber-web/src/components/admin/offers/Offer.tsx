@@ -2,7 +2,7 @@ import { Offer as Props } from '../../../interfaces/offersInterfaces';
 
 export default ({ label, description, price, duration } : Props) => {
     return (
-        <div className="border border-stone-300 py-4 px-6 w-full h-auto flex flex-row items-center justify-between">
+        <div className="border border-stone-300 p-4 w-full h-auto flex flex-row items-center justify-between">
             <div className="flex flex-col justify-center leading-4 px-4">
                 <h1 className="uppercase font-extrabold text-xs">{label}</h1>
                 <p className="font-normal text-xs text-stone-500">{description}</p>
