@@ -2,14 +2,14 @@ import useDocumentTitle from "../../hooks/useDocumentTitle";
 import { checkAuth } from "../../utils/http";
 
 import MainPanel from "./MainPanel"
-import SidePanel from "./SidePanel"
+import NavPanel from "./NavPanel"
 
 export default () => {
     useDocumentTitle("MStudio - panel administratora");
 
     return (
-        <div className="bg-stone-100 h-full w-full flex flex-row justify-center">
-            <SidePanel />
+        <div className="bg-stone-100 h-full w-full flex flex-col items-center justify-start md:flex-row md:items-start md:justify-center">
+            <NavPanel />
             <MainPanel />
         </div>
     )

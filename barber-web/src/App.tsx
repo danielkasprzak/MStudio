@@ -31,10 +31,10 @@ const Dashboard = lazy(() => import('./components/admin/dashboard/Dashboard'));
 const router = createBrowserRouter([
   { index: true, element: <Suspense fallback={<LoadingIndicator/>}><Landing /></Suspense>, errorElement: <Error /> },
   { path: 'login', element: <Suspense fallback={<LoadingIndicator/>}><Login /></Suspense>, errorElement: <Error /> },
-  { path: 'rezerwacja-tradycyjna', element: <Suspense fallback={<LoadingIndicator/>}><Traditional /></Suspense>, errorElement: <Error />, loader: () => import('./components/reservation/Traditional').then(module => module.loader()) },
+  { path: 'rezerwacja-tradycyjna', element: <Suspense fallback={<LoadingIndicator/>}><Traditional /></Suspense>, errorElement: <Error /> },
   { path: 'rezerwacja', element: <Suspense fallback={<LoadingIndicator/>}><Reservation /></Suspense>, errorElement: <Error />, loader: () => import('./components/reservation/Reservation').then(module => module.loader()),
     children: [
-      { index: true, element: <Suspense fallback={<LoadingIndicator/>}><Offers /></Suspense>, loader: () => import('./components/reservation/offers/Offers').then(module => module.loader()) },
+      { index: true, element: <Suspense fallback={<LoadingIndicator/>}><Offers isTraditional={false} /></Suspense>, loader: () => import('./components/reservation/offers/Offers').then(module => module.loader()) },
       { path: 'moje-rezerwacje', element: <Suspense fallback={<LoadingIndicator/>}><MyReservations /></Suspense>, loader: () => import('./components/reservation/my-reservations/MyReservations').then(module => module.loader()) }
     ]
   },
