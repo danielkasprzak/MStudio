@@ -31,8 +31,8 @@ export default () => {
     }    
 
     return (
-        <div className='flex flex-row justify-center'>
-            <div className='relative w-fit h-full bg-white m-16 mr-8 text-charcoal font-lato p-8 border border-stone-300'>
+        <div className='w-full relative flex flex-col items-center md:flex-row md:justify-center md:items-start'>
+            <div className='relative w-full h-full bg-white m-8 md:m-16 md:mr-8 text-charcoal font-lato p-4 md:p-8 border border-stone-300'>
                 <div className='flex flex-row items-center'>
                     <Title padding='8'>Oferta</Title>
                     <Link to='dodaj'>
@@ -40,20 +40,20 @@ export default () => {
                     </Link>     
                 </div>
             
-                <div className='relative w-auto p-12 pt-8 h-full text-charcoal font-lato'>
+                <div className='relative w-auto p-4 h-full text-charcoal font-lato'>
                     <ul className='h-fit w-fit'>
                         {data.map((offer) => (
-                            <div key={offer.id} className='flex flex-row items-center'>
+                            <li key={offer.id} className='flex flex-row items-center mt-4'>
                                 <Offer id={offer.id} label={offer.label} price={offer.price} duration={offer.duration} description={offer.description} />
                                 <div className='flex flex-row items-center'>
-                                    <Link to={`${offer.id}`}>
+                                    <Link className="flex flex-row items-center" to={`${offer.id}`}>
                                         <TextButton>Edytuj</TextButton>
                                     </Link>                
                            
                                     {isPending ? <Label>Usuwanie...</Label> : 
                                     <TextButton onClick={() => handleDeleteClick(offer.id)}>Usuń</TextButton>}
                                 </div>
-                            </div>
+                            </li>
                         ))}
                     </ul>
                 </div>
