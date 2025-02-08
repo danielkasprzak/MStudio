@@ -31,8 +31,8 @@ export default () => {
     }    
 
     return (
-        <div className='flex flex-row justify-center'>
-            <div className='relative w-fit h-full bg-white border border-stone-300 m-16 mr-8 text-charcoal font-lato p-8'>
+        <div className='w-full relative flex flex-col items-center md:flex-row md:justify-center md:items-start'>
+            <div className='relative w-[calc(100%-4rem)] md:w-fit h-full bg-white border border-stone-300 m-8 md:m-16 md:mr-8 text-charcoal font-lato p-8'>
                 <div className='flex flex-row items-center'>
                     <Title padding='8'>Specjalny harmonogram otwarcia</Title>
                     <Link to="dodaj">
@@ -40,14 +40,14 @@ export default () => {
                     </Link>                    
                 </div>
 
-                <div className='relative w-auto p-16 pt-8 h-full text-charcoal font-lato'>
-                    <ul className='h-fit w-fit'>
+                <div className='relative w-auto p-8 pt-8 h-full text-charcoal font-lato'>
+                    <ul className='h-fit w-full flex flex-col justify-center'>
                         {data.map((date) => (
-                            <div key={date.date} className='flex flex-row'>
+                            <div key={date.date} className='flex flex-col md:flex-row items-center'>
                                 <SpecialOpeningHour date={date.date} endDate={date.endDate} isOpen={date.isOpen} openHour={date.openHour} closeHour={date.closeHour} />
                                 
-                                <div className='flex flex-row items-center'>
-                                    <Link to={`${date.date}`}>
+                                <div className='flex flex-row items-center pb-4 md:pb-0'>
+                                    <Link className="flex flex-row items-center" to={`${date.date}`}>
                                         <TextButton>Edytuj</TextButton>
                                     </Link>   
                                     {isPending ? <Label>Usuwanie...</Label> : <TextButton onClick={() => handleDeleteClick(date.date)}>Usuń</TextButton>}

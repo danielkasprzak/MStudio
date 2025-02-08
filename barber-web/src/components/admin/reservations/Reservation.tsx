@@ -53,13 +53,13 @@ export default ({ isPast, reservationId, email, services, duration, reservationD
 
                 </div>
             </div>
-            <div className="flex flex-row items-center justify-between pt-2">
-                <div className="flex flex-row items-center">
+            <div className="flex flex-col md:flex-row items-center pt-2">
+                <div className="flex flex-row items-center justify-between">
                     <p className="font-medium text-xs text-stone-400">{email}</p>
                     <p className="font-medium text-xs text-stone-400 px-4">{phone === "000000000" ? "BRAK" : phone}</p>
                 </div>
                 {!isPast && !isCancelled && (
-                    <div className="flex flex-row items-center">
+                    <div className="flex flex-row items-center pt-4 md:pt-0">
                         <Link className="flex flex-row items-center" to={`${reservationId}`}>
                             <TextButton>Edytuj</TextButton>
                         </Link>

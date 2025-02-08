@@ -70,8 +70,8 @@ export default () => {
     });
 
     return (
-        <div className='flex flex-row justify-center'>
-            <div className='relative w-fit h-full border border-stone-300 bg-white m-16 mr-8 text-charcoal font-lato p-8'>
+        <div className='w-full relative flex flex-col items-center md:flex-row md:justify-center md:items-start'>
+            <div className='relative w-[calc(100%-4rem)] md:w-fit h-full border border-stone-300 bg-white m-8 md:m-16 md:mr-8 text-charcoal font-lato p-4 md:p-8'>
                 <div className='flex flex-row'>
                     <Title padding='8'>Rezerwacje</Title>
                     <TextButton>
@@ -115,31 +115,31 @@ export default () => {
 
                 <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
-                <div className='relative w-auto p-16 pt-8 h-full text-charcoal font-lato'>
-                    <ul className='h-fit w-fit'>
-                        {sortedData.map((reservation) => {
-                            const reservationDate = new Date(reservation.reservationDateTime);
-                            const isPast = reservationDate < now;
-                            return (
-                                <div className="flex flex-row" key={reservation.reservationId}>
-                                    <Reservation
-                                        isPast={isPast}
-                                        reservationId={reservation.reservationId}
-                                        email={reservation.email}
-                                        services={reservation.services}
-                                        duration={reservation.duration}
-                                        reservationDateTime={reservation.reservationDateTime}
-                                        phone={reservation.phone}
-                                        price={reservation.price}
-                                        isCancelled={reservation.isCancelled}
-                                        isPending={isPending}
-                                        cancelClick={handleCancelClick}
-                                    />
-                                </div>
-                            );
-                        })}
-                    </ul>
-                </div>
+
+                <ul className='relative w-full p-8 md:p-16 pt-8 h-full text-charcoal font-lato'>
+                    {sortedData.map((reservation) => {
+                        const reservationDate = new Date(reservation.reservationDateTime);
+                        const isPast = reservationDate < now;
+                        return (
+                             <div className="flex flex-row" key={reservation.reservationId}>
+                                <Reservation
+                                    isPast={isPast}
+                                    reservationId={reservation.reservationId}
+                                    email={reservation.email}
+                                    services={reservation.services}
+                                    duration={reservation.duration}
+                                    reservationDateTime={reservation.reservationDateTime}
+                                    phone={reservation.phone}
+                                    price={reservation.price}
+                                    isCancelled={reservation.isCancelled}
+                                    isPending={isPending}
+                                    cancelClick={handleCancelClick}
+                                />
+                            </div>
+                        );
+                    })}
+                 </ul>
+
             </div>
         
             <Outlet />

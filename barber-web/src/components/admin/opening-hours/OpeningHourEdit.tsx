@@ -26,7 +26,7 @@ export default () => {
     }
 
     return (
-        <div className='sticky right-0 top-16 w-fit h-full bg-white border border-stone-300 m-16 ml-8 text-charcoal p-8'>
+        <div className='sticky right-0 top-16 w-[calc(100%-4rem)] md:w-fit h-full bg-white border border-stone-300 mb-8 md:m-16 md:ml-8 text-charcoal p-8'>
             <Title padding='8'>Edytuj godziny</Title>
 
             {data && <OpeningHourForm inputData={data} onSubmit={handleSubmit}>
