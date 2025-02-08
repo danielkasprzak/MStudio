@@ -32,7 +32,7 @@ export default () => {
 
     return (
         <div className='w-full relative flex flex-col items-center md:flex-row md:justify-center md:items-start'>
-            <div className='relative w-[calc(100%-4rem)] md:w-full h-full bg-white m-8 md:m-16 md:mr-8 text-charcoal font-lato p-4 md:p-8 border border-stone-300'>
+            <div className='relative w-[calc(100%-4rem)] md:w-fit h-full bg-white m-8 md:m-16 md:mr-8 text-charcoal font-lato p-4 md:p-8 border border-stone-300'>
                 <div className='flex flex-row items-center'>
                     <Title padding='8'>Oferta</Title>
                     <Link to='dodaj'>
