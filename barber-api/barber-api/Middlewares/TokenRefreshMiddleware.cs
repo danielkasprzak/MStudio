@@ -19,7 +19,7 @@ namespace barber_api.Middlewares
 
             if (string.IsNullOrEmpty(accessToken) && !string.IsNullOrEmpty(refreshToken))
             {
-                var authService = serviceProvider.GetRequiredService<AuthService>();
+                var authService = serviceProvider.GetRequiredService<IAuthService>();
                 try
                 {
                     var newAccessToken = await authService.RefreshAccessTokenAsync(refreshToken);
