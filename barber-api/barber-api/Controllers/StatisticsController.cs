@@ -8,12 +8,12 @@ namespace barber_api.Controllers
 {
     [ApiController]
     [Route("statistics")]
-    //[Authorize(Policy = "AdminOnly")]
+    [Authorize(Policy = "AdminOnly")]
     public class StatisticsController : ControllerBase
     {
-        private readonly StatisticsService _statisticsService;
+        private readonly IStatisticsService _statisticsService;
 
-        public StatisticsController(StatisticsService statisticsService)
+        public StatisticsController(IStatisticsService statisticsService)
         {
             _statisticsService = statisticsService;
         }

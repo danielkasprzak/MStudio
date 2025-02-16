@@ -10,9 +10,8 @@ namespace barber_api.Controllers
     [Route("specialopeninghours")]
     public class SpecialOpeningHourController : ControllerBase
     {
-        private readonly SpecialOpeningHourService _service;
-
-        public SpecialOpeningHourController(SpecialOpeningHourService service)
+        private readonly ISpecialOpeningHourService _service;
+        public SpecialOpeningHourController(ISpecialOpeningHourService service)
         {
             _service = service;
         }

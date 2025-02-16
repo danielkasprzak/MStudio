@@ -12,8 +12,6 @@ namespace barber_api.Middlewares
         {
             _next = next;
         }
-
-
         public async Task InvokeAsync(HttpContext context, IServiceProvider serviceProvider)
         {
             var accessToken = context.Request.Cookies["MSTOKEN"];

@@ -68,12 +68,12 @@ builder.Services.AddAuthorization(options =>
 });
 
 
-builder.Services.AddScoped<AuthService>();
-builder.Services.AddScoped<OfferService>();
-builder.Services.AddScoped<OpeningHourService>();
-builder.Services.AddScoped<SpecialOpeningHourService>();
-builder.Services.AddScoped<ReservationService>();
-builder.Services.AddScoped<StatisticsService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IOfferService, OfferService>();
+builder.Services.AddScoped<IOpeningHourService, OpeningHourService>();
+builder.Services.AddScoped<IReservationService, ReservationService>();
+builder.Services.AddScoped<ISpecialOpeningHourService, SpecialOpeningHourService>();
+builder.Services.AddScoped<IStatisticsService, StatisticsService>();
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();

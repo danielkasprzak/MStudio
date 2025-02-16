@@ -3,3 +3,6 @@
 /barber-api/barber-api/bin
 /barber-api/barber-api/obj
 barber-api/barber-api/appsettings.json
+/barber-api/xUnit Test/bin
+/barber-api/xUnit Test/obj
+barber-api/xUnit Test/xUnit Test.csproj

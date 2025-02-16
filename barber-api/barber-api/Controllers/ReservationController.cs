@@ -9,11 +9,11 @@ namespace barber_api.Controllers
     [Route("reservation")]
     public class ReservationController : ControllerBase
     {
-        private readonly ReservationService _reservationService;
-        private readonly AuthService _authorizationService;
+        private readonly IReservationService _reservationService;
+        private readonly IAuthService _authorizationService;
         private readonly ILogger<ReservationController> _logger;
 
-        public ReservationController(ReservationService reservationService, AuthService authorizationService, ILogger<ReservationController> logger)
+        public ReservationController(IReservationService reservationService, IAuthService authorizationService, ILogger<ReservationController> logger)
         {
             _reservationService = reservationService;
             _authorizationService = authorizationService;

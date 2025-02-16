@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace barber_api.Services
 {
-    public class StatisticsService
+    public class StatisticsService : IStatisticsService
     {
         private readonly AppDbContext _context;
 

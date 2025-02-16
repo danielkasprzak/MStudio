@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace barber_api.Services
 {
-    public class OpeningHourService
+    public class OpeningHourService : IOpeningHourService
     {
         private readonly AppDbContext _context;
 

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace barber_api.Services
 {
-    public class ReservationService
+    public class ReservationService : IReservationService
     {
         private readonly AppDbContext _context;
 
@@ -87,7 +87,8 @@ namespace barber_api.Services
             for (var date = startDate.Date; date <= endDate.Date; date = date.AddDays(1))
             {
                 var dayOfWeek = date.DayOfWeek.ToString();
-                var specialOpeningHour = specialOpeningHours.FirstOrDefault(soh => soh.Date <= DateOnly.FromDateTime(date) && (soh.EndDate == null || soh.EndDate.Value >= DateOnly.FromDateTime(date)));
+                var specialOpeningHour = specialOpeningHours.FirstOrDefault(soh => soh.Date <= DateOnly.FromDateTime(date)
+                && (soh.EndDate == null || soh.EndDate.Value >= DateOnly.FromDateTime(date)));
                 OpeningHour? openingHour = null;
 
                 if (specialOpeningHour != null)

@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 
 namespace barber_api.Services
 {
-    public class AuthService
+    public class AuthService : IAuthService
     {
         private readonly IConfiguration _configuration;
         private readonly HttpClient _httpClient;
@@ -25,7 +25,8 @@ namespace barber_api.Services
         {
             var tokenResponse = await ExchangeAuthorizationCodeAsync(code);
 
-            var payload = await GoogleJsonWebSignature.ValidateAsync(tokenResponse.IdToken, new GoogleJsonWebSignature.ValidationSettings
+            var payload = await GoogleJsonWebSignature.ValidateAsync(tokenResponse.IdToken, 
+                new GoogleJsonWebSignature.ValidationSettings
             {
                 Audience = new[] { _configuration["Authentication:Google:ClientId"] }
             });
