@@ -1,23 +1,18 @@
 # MStudio
+A web application for a barbershop, consisting of a client-side application built with React, which communicates with an API developed in ASP.NET Core 9. The API utilizes Entity Framework Core for interacting with a PostgreSQL database.
 
- ## Tech stack
- - React
- - React Router
- - Redux
- - TailwindCSS
- - motion
- - Lenis
- - TanStack Query
- - axios
- - Vite
+### Front-end
+- [React 18](https://18.react.dev/)
+- [React Router 6](https://reactrouter.com/6.30.0)
+- [Redux](https://redux.js.org/)
+- [TailwindCSS 3](https://v3.tailwindcss.com/)
+- [motion](https://motion.dev/)
+- [lenis](https://lenis.darkroom.engineering/)
+- [TanStack Query](https://tanstack.com/query/latest)
+- [axios](https://axios-http.com/docs/intro)
 
- - ASP.NET
- - Entity Framework
- - PostgreSQL
+### Back-end
+- [ASP.NET Core 9](https://dotnet.microsoft.com/en-us/apps/aspnet)
+- [Entity Framework Core 9](https://learn.microsoft.com/en-us/ef/core/)
+- [PostgreSQL](https://www.postgresql.org/)
 
-
-####
-
-Przybliżenie na wstępie video (wejściówka)
-Jakieś MENU, REZERWACJA? Po prawej stronie ekranu, przekręcone i kontrastujące
-Może clipPath zamiast tych białych prostokątów
