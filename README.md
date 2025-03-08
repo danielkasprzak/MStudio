@@ -1,5 +1,5 @@
 # MStudio
-A web application for a barbershop, consisting of a client-side application built with React, which communicates with an API developed in ASP.NET Core 9. The API utilizes Entity Framework Core for interacting with a PostgreSQL database.
+A web application for a barbershop, consisting of a client-side application built with React 18, which communicates with an API developed in ASP.NET Core 9. The API utilizes Entity Framework Core for interacting with a PostgreSQL database.
 
 ### Front-end
 - [React 18](https://18.react.dev/)
